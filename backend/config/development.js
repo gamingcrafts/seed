@@ -12,5 +12,8 @@ module.exports = {
     maxSockets: 20,
     requestTimeout: 120000,
     httpAuth: 'elastic:i8GUm9s4Wph3o7GUOi4bf7GU'
+  },
+  indexes: {
+    sample: 'sample__sample'
   }
 }

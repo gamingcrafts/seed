@@ -14,6 +14,6 @@ module.exports = {
     httpAuth: 'elastic:i8GUm9s4Wph3o7GUOi4bf7GU'
   },
   indexes: {
-    sample: 'sample'
+    sample: 'sample__sample'
   }
 }

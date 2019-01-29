@@ -9,8 +9,15 @@ const index = async (sample, id) => {
   return { ...sample, id: resp._id };
 };
 
+const list = () => {
+  return client
+    .onResults(resp => resp.hits.hits.map(h => ({ ...h._source, id: h._id })))
+    .search({ size: 1000 });
+};
+
 module.exports = {
   index,
+  list,
   del: client.delete.bind(client),
   get: client.get.bind(client)
 };
