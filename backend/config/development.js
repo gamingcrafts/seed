@@ -5,7 +5,7 @@ module.exports = {
     port: 8000
   },
   elasticsearch: {
-    host: "",
+    host: "http://localhost:9200",
     log: "trace",
     keepAlive: true,
     minSockets: 5,

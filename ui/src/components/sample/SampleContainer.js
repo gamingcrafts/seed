@@ -5,6 +5,11 @@ import {
   getSamples
 } from '../store/actions/samples-action';
 
+import {
+  EuiPage,
+  EuiPageBody,
+  EuiPageContent
+} from '@elastic/eui'
 class SampleContainer extends React.Component {
 
   componentDidMount() {
@@ -13,7 +18,13 @@ class SampleContainer extends React.Component {
 
   render() {
     return (
-      <p>Works!!!</p>
+      <EuiPage>
+        <EuiPageBody>
+          <EuiPageContent>
+            <p>Works!!!</p>
+          </EuiPageContent>
+        </EuiPageBody>
+      </EuiPage>
     )
   }
 }
