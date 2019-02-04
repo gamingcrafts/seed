@@ -2,9 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import {
-  EuiBasicTable
+  EuiBasicTable,
+  EuiButton
 } from '@elastic/eui';
 import ReactJson from 'react-json-view';
+import {
+  deleteSample
+} from '../store/actions/samples-action'
 
 
 class ViewSamples extends React.Component {
@@ -19,7 +23,18 @@ class ViewSamples extends React.Component {
       field: 'content',
       name: 'Content',
       render: c => (<ReactJson src={c} collapsed={true}/>)
-    }];
+    },{
+      field:'deleteButton',
+      name:"Delete",
+      render : c =>(<EuiButton color="danger"
+      size="s"
+      fill
+        onClick={(e) =>this.props.deleteSample(c)}
+      >
+        Delete
+      </EuiButton>)
+    }
+  ];
 
 
     return (
@@ -35,4 +50,4 @@ const mapStateToProps = ({ sampleReducer }) => {
   return { sampleReducer }
 }
 
-export default connect(mapStateToProps, null)(ViewSamples)
+export default connect(mapStateToProps, {deleteSample})(ViewSamples)

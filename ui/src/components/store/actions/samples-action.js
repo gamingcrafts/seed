@@ -20,6 +20,8 @@ const getSamples = () => {
 }
 
 const createSample = sample => {
+  console.log("Create Sample")
+  console.log(sample)
   return (dispatch, getState, http) => {
     http.post('/samples', sample)
       .then(res => {
@@ -37,7 +39,25 @@ const createSample = sample => {
   }
 }
 
+const deleteSample = sample => {
+  console.log("Delete Sample")
+  console.log(sample)
+  return (dispatch, getState, http) => {
+    http.delete('/samples/'+sample.id )
+      .then(res => {
+        this.getSamples();
+      })
+      .catch(err => {
+        dispatch({
+          type: SAMPLE_CREATE_FAILURE,
+          pauload: err
+        })
+      })
+  }
+}
+
 export {
   getSamples,
-  createSample
+  createSample,
+  deleteSample
 }
