@@ -26,10 +26,10 @@ class ViewSamples extends React.Component {
     },{
       field:'deleteButton',
       name:"Delete",
-      render : c =>(<EuiButton color="danger"
+      render : (c,item) =>(<EuiButton color="danger"
       size="s"
       fill
-        onClick={(e) =>this.props.deleteSample(c)}
+        onClick={(e) =>this.props.deleteSample(item)}
       >
         Delete
       </EuiButton>)

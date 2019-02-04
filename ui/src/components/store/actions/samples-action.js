@@ -1,4 +1,4 @@
-import { SAMPLE_GET_ALL_SUCCESS, SAMPLE_GET_ALL_FAILURE, SAMPLE_CREATE_SUCCESS, SAMPLE_CREATE_FAILURE } from "./types";
+import { SAMPLE_GET_ALL_SUCCESS, SAMPLE_GET_ALL_FAILURE, SAMPLE_CREATE_SUCCESS, SAMPLE_CREATE_FAILURE,SAMPLE_DELETE_SUCCESS } from "./types";
 
 
 const getSamples = () => {
@@ -33,7 +33,7 @@ const createSample = sample => {
       .catch(err => {
         dispatch({
           type: SAMPLE_CREATE_FAILURE,
-          pauload: err
+          payload: err
         })
       })
   }
@@ -45,7 +45,10 @@ const deleteSample = sample => {
   return (dispatch, getState, http) => {
     http.delete('/samples/'+sample.id )
       .then(res => {
-        this.getSamples();
+        dispatch({
+          type:SAMPLE_DELETE_SUCCESS,
+          payload:{id:sample.id}
+        })
       })
       .catch(err => {
         dispatch({

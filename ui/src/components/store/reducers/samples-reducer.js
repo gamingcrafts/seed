@@ -1,4 +1,4 @@
-import { SAMPLE_GET_ALL_SUCCESS, SAMPLE_GET_ALL_FAILURE, SAMPLE_CREATE_SUCCESS, SAMPLE_CREATE_FAILURE } from "../actions/types";
+import { SAMPLE_GET_ALL_SUCCESS, SAMPLE_GET_ALL_FAILURE, SAMPLE_CREATE_SUCCESS, SAMPLE_CREATE_FAILURE ,SAMPLE_DELETE_SUCCESS} from "../actions/types";
 import update from 'react-addons-update';
 
 
@@ -29,7 +29,11 @@ export default (state = INIT_STATE, action) => {
       return update(state, {
         samples: { $push: [action.payload] }
       })
-
+      case SAMPLE_DELETE_SUCCESS:{
+        let updatedSamples = state.samples.filter(sample=>sample.id!==action.payload.id);
+      return update(state, {
+        samples: { $set: updatedSamples }
+      })}
     case SAMPLE_CREATE_FAILURE:
       return update(state, {})
 
