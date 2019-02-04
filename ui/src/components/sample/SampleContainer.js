@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
+import CreateSample from './create';
+import ViewSamples from './view';
 import {
   getSamples
 } from '../store/actions/samples-action';
@@ -10,6 +11,7 @@ import {
   EuiPageBody,
   EuiPageContent
 } from '@elastic/eui'
+import { EuiSpacer } from '@elastic/eui';
 class SampleContainer extends React.Component {
 
   componentDidMount() {
@@ -21,7 +23,9 @@ class SampleContainer extends React.Component {
       <EuiPage>
         <EuiPageBody>
           <EuiPageContent>
-            <p>Works!!!</p>
+            <ViewSamples />
+            <EuiSpacer size="xl"/>
+            <CreateSample />
           </EuiPageContent>
         </EuiPageBody>
       </EuiPage>
