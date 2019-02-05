@@ -5,12 +5,15 @@ const Vision = require('vision');
 const HapiSwagger = require('hapi-swagger');
 const Pack = require('./package');
 const server = Hapi.server(config.server);
+const prerun = require('./prerun');
 
 const sampleRoute = require('./samples/routes/sample-routes');
 
 sampleRoute(server);
 
 const init = async () => {
+
+  prerun.run();
 
   const swaggerOptions = {
     info: {
