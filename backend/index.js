@@ -6,13 +6,18 @@ const HapiSwagger = require('hapi-swagger');
 const Pack = require('./package');
 const server = Hapi.server(config.server);
 const prerun = require('./prerun');
+const _ = require('lodash');
 
 const sampleRoute = require('./samples/routes/sample-routes');
+const customMappingRoute = require('./custom-mappings/routes/custom-mapping-routes');
+const indicesRoute = require('./indices/routes/indices-routes');
 
-const customMappingRoute = require('./indices/routes/custom-mapping-routes');
+const routesArray = [sampleRoute,customMappingRoute,indicesRoute];
 
-sampleRoute(server);
-customMappingRoute(server);
+// sampleRoute(server);
+// customMappingRoute(server);
+// indicesRoutes(server);
+_.invokeMap(routesArray,_.call,null,server);
 
 const init = async () => {
 

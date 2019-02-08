@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const customMappingService = require('../service/custom-mapping-service');
+const customMappingService = require('../services/custom-mapping-service');
 
 module.exports = function (server) {
   server.route({
@@ -10,18 +10,6 @@ module.exports = function (server) {
     },
     options: {
       description: 'Gets the list of CustomMappings',
-      tags: ['api']
-    }
-  });
-
-  server.route({
-    path: '/indices',
-    method: 'GET',
-    handler(req, h) {
-      return customMappingService.getAllindices();
-    },
-    options: {
-      description: 'Gets the list of Indices in the DB',
       tags: ['api']
     }
   });
