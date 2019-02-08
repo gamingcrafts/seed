@@ -25,7 +25,8 @@ module.exports = function (server) {
       tags: ['api'],
       validate: {
         payload: {
-          content: Joi.object().required(),
+          postName: Joi.string().required(),
+          postContent:Joi.string().required()
         },
         failAction: async (request, h, err) => { throw err; }
       }
@@ -47,7 +48,8 @@ module.exports = function (server) {
           id: Joi.string().required()
         },
         payload: {
-          content: Joi.object().required(),
+          postName: Joi.string().required(),
+          postContent:Joi.string().required()
         }
       }
     }

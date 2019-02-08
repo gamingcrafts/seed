@@ -21,7 +21,7 @@ module.exports = function (server) {
       return customMappingService.index(req.payload);
     },
     options: {
-      description: 'Create a Sample',
+      description: 'Create a Custom Mapping',
       tags: ['api'],
       validate: {
         payload: {
