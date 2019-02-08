@@ -1,7 +1,6 @@
 const ESClient = require('./server/esclient');
 
 const kpis = require('./mappings/player_daily_kpis');
-const custom_mappings = require('./mappings/custom_mappings');
 
 const run = async () => {
   let c = new ESClient();
@@ -21,15 +20,6 @@ const run = async () => {
         }
       }
     });
-
-    new ESClient().client().indices.create({
-      index: 'custom_mappings',
-      body: {
-        mappings: {
-          ...custom_mappings
-        }
-      }
-    })
   }
 
   c.client().indices.get({index:"*"},(err,res)=>{

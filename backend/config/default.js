@@ -14,6 +14,7 @@ module.exports = {
     httpAuth: ''
   },
   indexes: {
-    sample: 'sample__sample'
+    sample: 'sample__sample',
+    customMapping:'custom_mapping'
   }
 }

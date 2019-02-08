@@ -9,7 +9,10 @@ const prerun = require('./prerun');
 
 const sampleRoute = require('./samples/routes/sample-routes');
 
+const customMappingRoute = require('./indices/routes/custom-mapping-routes');
+
 sampleRoute(server);
+customMappingRoute(server);
 
 const init = async () => {
 
