@@ -6,6 +6,7 @@ import reducers from './components/store/reducers';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import SampleContainer from './components/sample/SampleContainer';
+import ColumnDefinitionContainer from './components/columnDefinition/ColumnDefinitionContainer';
 
 const axiosInstance = axios.create({
 });
@@ -22,7 +23,8 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <SampleContainer />
+        <ColumnDefinitionContainer />
+        {/* <SampleContainer/> */}
       </Provider>
     );
   }

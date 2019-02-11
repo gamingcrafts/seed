@@ -14,6 +14,7 @@ import {
 class ViewSamples extends React.Component {
 
   render() {
+    console.log(this.props.sampleReducer);
     const { samples } = this.props.sampleReducer;
 
     const columns = [{
