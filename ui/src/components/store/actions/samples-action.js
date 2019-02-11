@@ -20,8 +20,7 @@ const getSamples = () => {
 }
 
 const createSample = sample => {
-  console.log("Create Sample")
-  console.log(sample)
+  
   return (dispatch, getState, http) => {
     http.post('/samples', sample)
       .then(res => {

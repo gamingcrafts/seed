@@ -19,6 +19,20 @@ const getIndices = () => {
     }
   }
 
+  const getIndexCustomMapping=selectedIndex=>{
+    return(dispatch,getState,http) => {
+      http.get('/custommappings/'+selectedIndex).then(res=>{
+        console.log(res);
+        http.get('/indices/'+selectedIndex).then(res=>{
+          console.log(res);
+        })
+      }).catch(err =>{
+
+      })
+    }
+  }
+
   export {
-      getIndices
+      getIndices,
+      getIndexCustomMapping
   }

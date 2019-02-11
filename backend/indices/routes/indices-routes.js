@@ -16,6 +16,18 @@ module.exports = function (server) {
     }
   });
 
+  server.route({
+    path: '/indices/{indexName}',
+    method: 'GET',
+    handler(req, h) {
+      return indicesService.getOneIndex(req.params.indexName);
+    },
+    options: {
+      description: 'Gets the details of the index in the DB',
+      tags: ['api']
+    }
+  });
+
   
 
   

@@ -15,6 +15,18 @@ module.exports = function (server) {
   });
 
   server.route({
+    path: '/custommappings/{indexName}',
+    method: 'GET',
+    handler(req, h) {
+      return customMappingService.getOneCustomMapping(req.params.indexName);
+    },
+    options: {
+      description: 'Gets the customMapping for the index',
+      tags: ['api']
+    }
+  });
+
+  server.route({
     path: '/custommappings',
     method: 'POST',
     handler(req, h) {

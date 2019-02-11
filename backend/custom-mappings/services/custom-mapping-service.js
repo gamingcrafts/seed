@@ -15,21 +15,21 @@ const index = async (customMapping, id) => {
     };
 };
 
-const getAllindices = async () => {
-   let resp=  await new ESClient().client().indices.get({
-        index: "*"
+const getOneCustomMapping = async (indexName) => {
+    return client
+    .onResults(resp => 
+       
+        resp.hits.hits.filter((r)=>r._source.indexName==indexName).map(h => ({
+        ...h._source,
+        id: h._id
+    })))
+    .search({
+        size: 1000
     });
+     
+ }
 
-    
-        if (!resp){
-            return new Error("Get all Indices Error");
-        }
-        else{
-            console.log(resp)
-            return resp;
-        }
-    
-}
+
 const list = () => {
     return client
         .onResults(resp => resp.hits.hits.map(h => ({
@@ -45,5 +45,5 @@ module.exports = {
     index,
     list,
     get: client.get.bind(client),
-    getAllindices
+    getOneCustomMapping
 };

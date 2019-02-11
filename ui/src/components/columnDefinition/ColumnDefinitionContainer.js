@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  getIndices
+  getIndices,getIndexCustomMapping
 } from '../store/actions/column-definition-actions';
 import {
   EuiPage,
@@ -26,22 +26,13 @@ class ColumnDefinitionContainer extends React.Component {
 
   onChange = (selectedOption) => {
     this.setState({ selectedOption });
+    console.log(selectedOption)
+    this.props.getIndexCustomMapping(selectedOption[0].label)
   };
-  onCreateOption = (searchValue, flattenedOptions) => {
-    // this.setState(prevState => ({
-    //   selectedOptions: [].concat(searchValue),
-    // }));
-  }
 
   render() {
     let { indices } = this.props.columnDefinitionReducer;
-    if (this.indices.length === 0) {
-      Object.keys(indices).forEach((index) => {
-        if (index !== 'custom_mapping') {
-          this.indices.push({ label: index });
-        }
-      });
-    }
+    this.indices=indices;
     if (indices === undefined) {
       return null;
     }
@@ -64,4 +55,4 @@ const mapStateToProps = ({ columnDefinitionReducer }) => {
   return { columnDefinitionReducer }
 }
 
-export default connect(mapStateToProps, { getIndices })(ColumnDefinitionContainer)
+export default connect(mapStateToProps, { getIndices,getIndexCustomMapping })(ColumnDefinitionContainer)
