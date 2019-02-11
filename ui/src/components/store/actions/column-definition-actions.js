@@ -1,4 +1,4 @@
-import { INDICES_GET_ALL_SUCCESS, INDICES_GET_ALL_FAILURE} from './types';
+import { INDICES_GET_ALL_SUCCESS, INDICES_GET_ALL_FAILURE,POPULATE_CUSTOM_MAPPING_SUCCESS} from './types';
 
 
 const getIndices = () => {
@@ -21,10 +21,18 @@ const getIndices = () => {
 
   const getIndexCustomMapping=selectedIndex=>{
     return(dispatch,getState,http) => {
-      http.get('/custommappings/'+selectedIndex).then(res=>{
-        console.log(res);
-        http.get('/indices/'+selectedIndex).then(res=>{
-          console.log(res);
+      let mappings={};
+      http.get('/indices/'+selectedIndex).then(indexProperties=>{
+        // let properties = Object.keys(res.mappings)[0].properties;
+        // console.log(properties);
+        mappings.indexProperties=indexProperties;
+        http.get('/custommappings/'+selectedIndex).then(customMapping=>{
+         mappings.customMapping=customMapping;
+         dispatch({
+          type: POPULATE_CUSTOM_MAPPING_SUCCESS,
+          payload: mappings
+        })
+
         })
       }).catch(err =>{
 

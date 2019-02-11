@@ -26,7 +26,6 @@ class ColumnDefinitionContainer extends React.Component {
 
   onChange = (selectedOption) => {
     this.setState({ selectedOption });
-    console.log(selectedOption)
     this.props.getIndexCustomMapping(selectedOption[0].label)
   };
 

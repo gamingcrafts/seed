@@ -1,6 +1,7 @@
 import {
     INDICES_GET_ALL_SUCCESS,
-    INDICES_GET_ALL_FAILURE
+    INDICES_GET_ALL_FAILURE,
+    POPULATE_CUSTOM_MAPPING_SUCCESS
 } from "../actions/types";
 import update from 'react-addons-update';
 
@@ -8,7 +9,8 @@ import update from 'react-addons-update';
 const INIT_STATE = {
     loading: true,
     loaded: false,
-    indices: []
+    indices: [],
+    mappings:[]
 }
 
 export default (state = INIT_STATE, action) => {
@@ -42,7 +44,34 @@ export default (state = INIT_STATE, action) => {
                     $set: false
                 }
             })
+        case POPULATE_CUSTOM_MAPPING_SUCCESS:{
             
+            let indexPropertiesKeyName = Object.keys(action.payload.indexProperties.data.mappings)[0];
+            let mappings=[];
+            let indexProperties = action.payload.indexProperties.data.mappings[indexPropertiesKeyName].properties;
+            let customMapping = action.payload.customMapping.data;
+            Object.keys(indexProperties).forEach((key)=>{
+                mappings.push({fieldName:key,fieldDefinition:indexProperties[key].type,selected:false,sorted:false,dateColumn:false,currencyColumn:false,label:'',format:''})
+            })
+            Object.keys(mappings).forEach((key)=>{
+                if(customMapping[key]!==undefined){
+                    mappings[key].fieldDefinition = customMapping[key].fieldDefinition;
+                    mappings[key].selected =  customMapping[key].selected
+                    mappings[key].sorted =  customMapping[key].sorted
+                    mappings[key].dateColumn =  customMapping[key].dateColumn
+                    mappings[key].currencyColumn =  customMapping[key].currencyColumn
+                    mappings[key].format = customMapping[key].format
+                    mappings[key].label = customMapping[key].label
+
+                }
+            })
+            console.log(mappings)
+            return update(state, {
+                mappings:{
+                    $set:mappings
+                }
+            })
+        }
         default:
             return update(state, {})
     }
