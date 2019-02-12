@@ -45,7 +45,8 @@ export default (state = INIT_STATE, action) => {
                 }
             })
         case POPULATE_CUSTOM_MAPPING_SUCCESS:{
-            
+            //JS does not maintain order of the keys. But I have used this as there is only one propety 
+            //for action.payload.indexProperties.data.mappings. 
             let indexPropertiesKeyName = Object.keys(action.payload.indexProperties.data.mappings)[0];
             let mappings=[];
             let indexProperties = action.payload.indexProperties.data.mappings[indexPropertiesKeyName].properties;

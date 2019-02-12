@@ -21,6 +21,7 @@ const getAllindices = async () => {
 }
 
 const getOneIndex =async indexName=>{
+    //Need to replace this with another method that gets properties of a single index.
     let resp=  await new ESClient().client().indices.get({
         index: "*"
     });
