@@ -49,7 +49,7 @@ export default (state = INIT_STATE, action) => {
             let indexProperties = action.payload.indexProperties;
             let customMapping = action.payload.customMapping.data;
             Object.keys(indexProperties).forEach((key)=>{
-                mappings.push({fieldName:key,fieldDefinition:indexProperties[key].type,selected:false,sortable:false,dateColumn:false,currencyColumn:false,label:'',format:''})
+                mappings.push({fieldName:key,fieldDefinition:indexProperties[key],selected:false,sortable:false,dateColumn:false,currencyColumn:false,label:'',format:''})
             })
             Object.keys(mappings).forEach((key)=>{
                 if(customMapping[key]!==undefined){

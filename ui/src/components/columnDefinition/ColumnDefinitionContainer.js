@@ -1,5 +1,6 @@
-import React,{Component,Fragment} from 'react';
+import React,{Component} from 'react';
 import { connect } from 'react-redux';
+import ReactJson from 'react-json-view';
 import {
   getIndices,getIndexCustomMapping
 } from '../store/actions/column-definition-actions';
@@ -13,7 +14,7 @@ import {
   EuiPageHeader,
   EuiPageHeaderSection,
   EuiTitle, EuiSpacer, EuiBasicTable,
-  EuiButton,EuiCheckbox,
+  EuiButton,EuiCheckbox,EuiFieldText,
   EuiComboBox,
   EuiFlexGroup,
   EuiFlexItem
@@ -29,8 +30,11 @@ class ColumnDefinitionContainer extends Component {
     this.mappings=[];
     this.state = {
       selectedOption: [],
-      mappings:[]
-    };
+      mappings:[],
+      pageIndex: 0,
+      pageSize: 5,
+      showPerPageOptions: true
+    }
   }
   componentDidMount() {
     this.props.getIndices();
@@ -61,6 +65,18 @@ class ColumnDefinitionContainer extends Component {
     onSearchChange=(arg)=>{
       console.log(arg);
     };
+
+    onTableChange = ({ page = {} }) => {
+      const {
+        index: pageIndex,
+        size: pageSize,
+      } = page;
+  
+      this.setState({
+        pageIndex,
+        pageSize,
+      });
+    };
   
   render() {
     let { indices,mappings } = this.props.columnDefinitionReducer;
@@ -72,10 +88,23 @@ class ColumnDefinitionContainer extends Component {
       return null;
     }
     else {
+      const {
+        pageIndex,
+        pageSize,
+        showPerPageOptions
+      } = this.state;
+      const pagination = {
+        pageIndex ,
+        pageSize ,
+        totalItemCount:20,
+        pageSizeOptions: [10, 20, 30],
+        showPerPageOptions
+      };
       const columns = [{
         field: 'fieldName',
         name: 'Column Name',
         sortable: true,
+        width:'15%',
         hideForMobile: false,
         'data-test-subj': 'columnNameCell',
       },
@@ -83,20 +112,29 @@ class ColumnDefinitionContainer extends Component {
         field: 'fieldDefinition',
         name: 'Column Type',
         sortable: true,
+        width:'25%',
         hideForMobile: false,
+        render: c => (<ReactJson src={c} collapsed={true}/>),
         'data-test-subj': 'columnTypeCell',
       },
       {
         field: 'label',
         name: 'Label',
         sortable: false,
+        width:'20%',
         hideForMobile: true,
+        render:l=>(<EuiFieldText
+          placeholder=""
+          onChange={this.onChange}
+          aria-label="Use aria labels when no actual label is in use"
+        />),
         'data-test-subj': 'labelCell',
       },
       {
         field: 'seleted',
         name: 'Selected',
         sortable: false,
+        width:'10%',
         hideForMobile: true,
         render:(isSelected,item)=>{
          return( <EuiCheckbox
@@ -113,6 +151,7 @@ class ColumnDefinitionContainer extends Component {
         field: 'sortable',
         name: 'Sortable',
         sortable: false,
+        width:'10%',
         hideForMobile: true,
         render:(isSortable,item)=>{
          return( <EuiCheckbox
@@ -129,6 +168,7 @@ class ColumnDefinitionContainer extends Component {
         field: 'dateColumn',
         name: 'Date Column',
         sortable: false,
+        width:'10%',
         hideForMobile: true,
         render:(isDateColumn,item)=>{
          return( <EuiCheckbox
@@ -145,6 +185,7 @@ class ColumnDefinitionContainer extends Component {
         field: 'currencyColumn',
         name: 'Currency Column',
         sortable: false,
+        width:'10%',
         hideForMobile: true,
         render:(isCurrencyColumn,item)=>{
          return( <EuiCheckbox
@@ -161,6 +202,7 @@ class ColumnDefinitionContainer extends Component {
         field: 'format',
         name: 'Format',
         sortable: false,
+        width:'20%',
         hideForMobile: true,
         'data-test-subj': 'formatCell',
       }
@@ -205,6 +247,8 @@ class ColumnDefinitionContainer extends Component {
         <EuiBasicTable
       items={this.mappings}
       columns={columns}
+      pagination = {pagination}
+      onChange={this.onTableChange}
     />
     </EuiFlexItem>
     </EuiFlexGroup>
