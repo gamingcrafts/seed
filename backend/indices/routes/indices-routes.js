@@ -20,11 +20,16 @@ module.exports = function (server) {
     path: '/indices/{indexName}',
     method: 'GET',
     handler(req, h) {
-      return indicesService.getOneIndex(req.params.indexName);
+      return indicesService.getMapping(req.params.indexName);
     },
     options: {
       description: 'Gets the details of the index in the DB',
-      tags: ['api']
+      tags: ['api'],
+      validate: {
+        params: {
+          indexName: Joi.string().required()
+        }
+      }
     }
   });
 

@@ -1,43 +1,22 @@
-
 const ESClient = require('../../server/esclient');
 
-
-
-
 const getAllindices = async () => {
-   let resp=  await new ESClient().client().indices.get({
-        index: "*"
-    });
-
-    
-        if (!resp){
-            return new Error("Get all Indices Error");
-        }
-        else{
-            console.log(resp)
-            return resp;
-        }
-    
+  return await new ESClient().client().indices.get({
+    index: "*"
+  });
 }
 
-const getOneIndex =async indexName=>{
-    //Need to replace this with another method that gets properties of a single index.
-    let resp=  await new ESClient().client().indices.get({
-        index: "*"
-    });
-    
-    
-        if (!resp){
-            return new Error("Get all Indices Error");
-        }
-        else{
-            
-            return resp[indexName];
-        }
+const getMapping = async indexName => {
+  let resp = await new ESClient().client().indices.getMapping({ 
+    index: indexName
+  });
+
+  let type = Object.keys(resp[indexName].mappings)[0];
+  return resp[indexName].mappings[type].properties;
 }
 
 
 module.exports = {
-    getAllindices,
-    getOneIndex
+  getAllindices,
+  getMapping
 };

@@ -22,10 +22,8 @@ const getIndices = () => {
   const getIndexCustomMapping=selectedIndex=>{
     return(dispatch,getState,http) => {
       let mappings={};
-      http.get('/indices/'+selectedIndex).then(indexProperties=>{
-        // let properties = Object.keys(res.mappings)[0].properties;
-        // console.log(properties);
-        mappings.indexProperties=indexProperties;
+      http.get('/indices/'+selectedIndex).then(resp=>{
+        mappings.indexProperties=resp.data;
         http.get('/custommappings/'+selectedIndex).then(customMapping=>{
          mappings.customMapping=customMapping;
          dispatch({
