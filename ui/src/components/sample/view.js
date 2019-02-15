@@ -23,7 +23,7 @@ class ViewSamples extends React.Component {
     }, {
       field: 'content',
       name: 'Content',
-      render: c => (<ReactJson src={c} collapsed={true}/>)
+      render: c => (<ReactJson src={c} name={null} collapsed={true}/>)
     },{
       field:'deleteButton',
       name:"Delete",

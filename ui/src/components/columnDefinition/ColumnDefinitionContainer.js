@@ -32,7 +32,7 @@ class ColumnDefinitionContainer extends Component {
       selectedOption: [],
       mappings:[],
       pageIndex: 0,
-      pageSize: 5,
+      pageSize: 6,
       showPerPageOptions: true
     }
   }
@@ -41,7 +41,7 @@ class ColumnDefinitionContainer extends Component {
     
   }
 
-  onCheckBoxChange = e => {
+  onCheckBoxChange = (e) => {
     console.log(e);
   };
   
@@ -67,6 +67,7 @@ class ColumnDefinitionContainer extends Component {
     };
 
     onTableChange = ({ page = {} }) => {
+      
       const {
         index: pageIndex,
         size: pageSize,
@@ -100,6 +101,8 @@ class ColumnDefinitionContainer extends Component {
         pageSizeOptions: [10, 20, 30],
         showPerPageOptions
       };
+      console.log("------Pagination----------")
+      console.log(pagination);
       const columns = [{
         field: 'fieldName',
         name: 'Column Name',
@@ -114,7 +117,7 @@ class ColumnDefinitionContainer extends Component {
         sortable: true,
         width:'25%',
         hideForMobile: false,
-        render: c => (<ReactJson src={c} collapsed={true}/>),
+        render: c => (<ReactJson src={c} name={false} collapsed={true}/>),
         'data-test-subj': 'columnTypeCell',
       },
       {
@@ -125,7 +128,6 @@ class ColumnDefinitionContainer extends Component {
         hideForMobile: true,
         render:l=>(<EuiFieldText
           placeholder=""
-          onChange={this.onChange}
           aria-label="Use aria labels when no actual label is in use"
         />),
         'data-test-subj': 'labelCell',
@@ -141,7 +143,7 @@ class ColumnDefinitionContainer extends Component {
           id={item.fieldName}
           
           checked={isSelected}
-          onChange={this.onCheckBoxChange}
+          onChange={()=>this.onCheckBoxChange(item)}
           
         />)
         },
@@ -204,6 +206,10 @@ class ColumnDefinitionContainer extends Component {
         sortable: false,
         width:'20%',
         hideForMobile: true,
+        render:f=>(<EuiFieldText
+          placeholder=""
+          aria-label="Use aria labels when no actual label is in use"
+        />),
         'data-test-subj': 'formatCell',
       }
     ] 
@@ -237,9 +243,17 @@ class ColumnDefinitionContainer extends Component {
           singleSelection={{ asPlainText: true }}
         />
         </EuiFlexItem>
+        <EuiFlexItem>
+        <EuiButton
+          fill
+          color="secondary"
+        >
+          Save
+        </EuiButton>
+        </EuiFlexItem>
         </EuiFlexGroup>
         <EuiSpacer/>
-     
+        
 
     
     <EuiFlexGroup>
