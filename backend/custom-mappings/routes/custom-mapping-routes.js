@@ -27,7 +27,7 @@ module.exports = function (server) {
   });
 
   server.route({
-    path: '/custommappings',
+    path: '/custommappings/',
     method: 'POST',
     handler(req, h) {
       return customMappingService.index(req.payload);
@@ -38,7 +38,7 @@ module.exports = function (server) {
       validate: {
         payload: {
           indexName: Joi.string().required(),
-          properties:Joi.array().required()
+          properties:Joi.object().required()
         },
         failAction: async (request, h, err) => { throw err; }
       }

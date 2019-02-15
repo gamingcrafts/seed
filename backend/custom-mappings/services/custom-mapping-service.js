@@ -26,6 +26,8 @@ const getOneCustomMapping = async (indexName) => {
     .search({
         size: 1000
     });
+
+  
      
  }
 

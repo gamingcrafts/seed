@@ -28,7 +28,7 @@ const getIndices = () => {
          mappings.customMapping=customMapping;
          dispatch({
           type: POPULATE_CUSTOM_MAPPING_SUCCESS,
-          payload: mappings
+          payload:{indexName:selectedIndex,...mappings}
         })
 
         })
@@ -38,7 +38,21 @@ const getIndices = () => {
     }
   }
 
+  const createCustomMapping = customMap =>{
+
+    return(dispatch,getState,http) => {
+      
+      http.post('/custommappings/',customMap).then(resp=>{
+      }).catch(err =>{
+
+      })
+    }
+
+
+  }
+
   export {
       getIndices,
-      getIndexCustomMapping
+      getIndexCustomMapping,
+      createCustomMapping
   }

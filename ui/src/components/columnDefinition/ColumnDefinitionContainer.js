@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactJson from 'react-json-view';
 import {
-  getIndices, getIndexCustomMapping
+  getIndices, getIndexCustomMapping,createCustomMapping
 } from '../store/actions/column-definition-actions';
 import {
   EuiPage,
@@ -79,6 +79,10 @@ onCheckBoxChange = (e, item, type) => {
     });
   }
   };
+  createCustomMapping = ()=>{
+    let {indexData} = this.props.columnDefinitionReducer;
+     this.props.createCustomMapping({indexName:indexData.name,properties:this.state.columnDefinitions})
+  }
 onTextBoxChange = (e, item, type) => {
     const { columnDefinitions } = this.state;
     
@@ -107,6 +111,17 @@ onTextBoxChange = (e, item, type) => {
   render() {
     let { indices, mappings } = this.props.columnDefinitionReducer;
     const { columnDefinitions } = this.state
+
+    mappings.forEach((map)=>{
+      if(map.selected){
+        this.setState({
+          columnDefinitions:{
+            ...columnDefinitions,
+            map
+          }
+        })
+      }
+    })
 
     const columns = [{
       field: 'fieldName',
@@ -257,7 +272,7 @@ onTextBoxChange = (e, item, type) => {
                 <EuiFlexItem>
                   <EuiButton
                     fill
-                    onClick={() => console.log(this.state.columnDefinitions)}
+                    onClick={this.createCustomMapping}
                     color="secondary">Save</EuiButton>
                 </EuiFlexItem>
               </EuiFlexGroup>
@@ -280,4 +295,4 @@ onTextBoxChange = (e, item, type) => {
 const mapStateToProps = ({ columnDefinitionReducer }) => {
   return { columnDefinitionReducer }
 }
-export default connect(mapStateToProps, { getIndices, getIndexCustomMapping })(ColumnDefinitionContainer)
+export default connect(mapStateToProps, { getIndices, getIndexCustomMapping,createCustomMapping })(ColumnDefinitionContainer)

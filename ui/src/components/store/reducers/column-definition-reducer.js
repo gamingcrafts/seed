@@ -10,7 +10,10 @@ const INIT_STATE = {
     loading: true,
     loaded: false,
     indices: [],
-    mappings:[]
+    mappings:[],
+    indexData:{
+
+    }
 }
 
 export default (state = INIT_STATE, action) => {
@@ -47,25 +50,29 @@ export default (state = INIT_STATE, action) => {
         case POPULATE_CUSTOM_MAPPING_SUCCESS:{
             let mappings=[];
             let indexProperties = action.payload.indexProperties;
-            let customMapping = action.payload.customMapping.data;
+            let customMapping = action.payload.customMapping.data[0];
             Object.keys(indexProperties).forEach((key)=>{
                 mappings.push({fieldName:key,fieldDefinition:indexProperties[key],selected:false,sortable:false,dateColumn:false,currencyColumn:false,label:'',format:''})
             })
-            Object.keys(mappings).forEach((key)=>{
-                if(customMapping[key]!==undefined){
-                    mappings[key].fieldDefinition = customMapping[key].fieldDefinition;
-                    mappings[key].selected =  customMapping[key].selected
-                    mappings[key].sortable =  customMapping[key].sorted
-                    mappings[key].dateColumn =  customMapping[key].dateColumn
-                    mappings[key].currencyColumn =  customMapping[key].currencyColumn
-                    mappings[key].format = customMapping[key].format
-                    mappings[key].label = customMapping[key].label
+            mappings.forEach((key)=>{
+                let propertyKey = key.fieldName;
+              
+                if(customMapping['properties'][propertyKey]!==undefined){
+                    
+                    key.selected =  customMapping['properties'][propertyKey].selected
+                    key.sortable =  customMapping['properties'][propertyKey].sorted
+                    key.dateColumn =  customMapping['properties'][propertyKey].dateColumn
+                    key.currencyColumn =  customMapping['properties'][propertyKey].currencyColumn
+                    key.format = customMapping['properties'][propertyKey].format
+                    key.label = customMapping['properties'][propertyKey].label
 
                 }
                 
             })
-            console.log(mappings)
             return update(state, {
+                indexData:{
+                    $set:{name:action.payload.indexName}
+                },
                 mappings:{
                     $set:mappings
                 }
