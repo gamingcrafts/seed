@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactJson from 'react-json-view';
 import {
-  getIndices, getIndexCustomMapping,createCustomMapping
+  getIndices, getIndexCustomMapping,saveCustomMapping,toogleCheckBox,updateTextBox
 } from '../store/actions/column-definition-actions';
 import {
   EuiPage,
@@ -17,112 +17,65 @@ import {
   EuiButton, EuiCheckbox, EuiFieldText,
   EuiComboBox,
   EuiFlexGroup,
-  EuiFlexItem
+  EuiFlexItem,
+  EuiLoadingSpinner,
+  EuiLoadingChart
 } from '@elastic/eui';
 
 class ColumnDefinitionContainer extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      columnDefinitions: {
-
-      }
-    }
+    this.state = {}
   }
-componentDidMount() {
+
+  componentDidMount() {
     this.props.getIndices();
   }
-onCheckBoxChange = (e, item, type) => {
-    const { columnDefinitions } = this.state;
-    let checkBoxValidation ;
-    if(type==='dateColumn'){
-      checkBoxValidation={
-        dateColumn:e.target.checked,
-        currencyColumn:!e.target.checked
-      }
-    }
-    else if(type==='currencyColumn'){
-      checkBoxValidation={
-        dateColumn:!e.target.checked,
-        currencyColumn:e.target.checked
-      }
-    }
-    else if(type==='sortable'){
-      checkBoxValidation={
-        sortable:e.target.checked
-      }
-    }
-    else if(type==='selected'&&e.target.checked==true){
-      checkBoxValidation={
-        selected:true
-      }
-    }
-  
-  if(type==='selected'&&e.target.checked==false){
-    this.setState({
-      columnDefinitions: {
-        ...columnDefinitions,
-        [item]: null
-      }
-    });
-  }
-  else{
-    this.setState({
-      columnDefinitions: {
-        ...columnDefinitions,
-        [item]: {
-          ...columnDefinitions[item],
-          ...checkBoxValidation
-        }
-      }
-    });
-  }
+
+  onCheckBoxChange = (e, item, type) => {
+    this.props.toogleCheckBox({
+      event: e,
+      item: item,
+      type: type
+    })
   };
-  createCustomMapping = ()=>{
-    let {indexData} = this.props.columnDefinitionReducer;
-     this.props.createCustomMapping({indexName:indexData.name,properties:this.state.columnDefinitions})
+
+  saveCustomMapping = () => {
+    let{indexData,columnDefinition} = this.props.columnDefinitionReducer;
+    this.props.saveCustomMapping({
+      indexName: indexData.name,
+      mappingId:indexData.id,
+      properties: columnDefinition
+    })
   }
-onTextBoxChange = (e, item, type) => {
-    const { columnDefinitions } = this.state;
-    
-  this.setState({
-      columnDefinitions: {
-        ...columnDefinitions,
-        [item]: {
-          ...columnDefinitions[item],
-          [type]:e.target.value
-        }
-      }
-    });
+
+  onTextBoxChange = (e, item, type) => {
+    this.props.updateTextBox({
+      event: e,
+      item: item,
+      type: type
+    })
+
   }
+
   onChange = (selectedOption) => {
     if (selectedOption.length === 0) {
       this.setState({
         selectedOption: [],
         mappings: []
       })
-    }
-    else {
-      this.setState({ selectedOption });
+    } else {
+      this.setState({
+        selectedOption
+      });
       this.props.getIndexCustomMapping(selectedOption[0].label);
     }
   };
+  
   render() {
-    let { indices, mappings } = this.props.columnDefinitionReducer;
-    const { columnDefinitions } = this.state
-
-    mappings.forEach((map)=>{
-      if(map.selected){
-        this.setState({
-          columnDefinitions:{
-            ...columnDefinitions,
-            map
-          }
-        })
-      }
-    })
-
+    
+    let { indices, mappings,columnDefinition } = this.props.columnDefinitionReducer;
     const columns = [{
       field: 'fieldName',
       name: 'Column Name',
@@ -150,7 +103,7 @@ onTextBoxChange = (e, item, type) => {
         return (
           <EuiCheckbox
             id={item.fieldName}
-            checked={columnDefinitions[item.fieldName] ? columnDefinitions[item.fieldName].selected : false}
+            checked={columnDefinition[item.fieldName] ? columnDefinition[item.fieldName].selected : false}
             onChange={(e) => this.onCheckBoxChange(e, item.fieldName, 'selected')} />
         )
       },
@@ -165,8 +118,8 @@ onTextBoxChange = (e, item, type) => {
       render: (value, item) => (
         <EuiFieldText
           placeholder="Label to represent in table"
-         disabled= {columnDefinitions[item.fieldName] ? !columnDefinitions[item.fieldName].selected : true}
-          value={columnDefinitions[item.fieldName] ? columnDefinitions[item.fieldName].label : ''}
+         disabled= {columnDefinition[item.fieldName] ? !columnDefinition[item.fieldName].selected : true}
+          value={columnDefinition[item.fieldName] ? columnDefinition[item.fieldName].label : ''}
           onChange={(e) => this.onTextBoxChange(e, item.fieldName, 'label')}
           aria-label="Use aria labels when no actual label is in use"
         />
@@ -183,8 +136,8 @@ onTextBoxChange = (e, item, type) => {
       render: (isSortable, item) => (
         <EuiCheckbox
           id={item.fieldName}
-          checked={columnDefinitions[item.fieldName] ? columnDefinitions[item.fieldName].sortable : false}
-          disabled = {columnDefinitions[item.fieldName] ? !columnDefinitions[item.fieldName].selected : true}
+          checked={columnDefinition[item.fieldName] ? columnDefinition[item.fieldName].sortable : false}
+          disabled = {columnDefinition[item.fieldName] ? !columnDefinition[item.fieldName].selected : true}
           onChange={(e) => this.onCheckBoxChange(e, item.fieldName, 'sortable')} 
         />
       ),
@@ -200,8 +153,8 @@ onTextBoxChange = (e, item, type) => {
         return (<EuiCheckbox
           id={item.fieldName}
 
-          checked={columnDefinitions[item.fieldName] ? columnDefinitions[item.fieldName].dateColumn : false}
-          disabled = {columnDefinitions[item.fieldName] ? !columnDefinitions[item.fieldName].selected : true}
+          checked={columnDefinition[item.fieldName] ? columnDefinition[item.fieldName].dateColumn : false}
+          disabled = {columnDefinition[item.fieldName] ? !columnDefinition[item.fieldName].selected : true}
           onChange={(e) => this.onCheckBoxChange(e, item.fieldName, 'dateColumn')} 
         />)
       },
@@ -216,8 +169,8 @@ onTextBoxChange = (e, item, type) => {
       render: (isCurrencyColumn, item) => {
         return (<EuiCheckbox
           id={item.fieldName}
-          checked={columnDefinitions[item.fieldName] ? columnDefinitions[item.fieldName].currencyColumn : false}
-          disabled = {columnDefinitions[item.fieldName] ? !columnDefinitions[item.fieldName].selected : true}
+          checked={columnDefinition[item.fieldName] ? columnDefinition[item.fieldName].currencyColumn : false}
+          disabled = {columnDefinition[item.fieldName] ? !columnDefinition[item.fieldName].selected : true}
           onChange={(e) => this.onCheckBoxChange(e, item.fieldName, 'currencyColumn')}
         />)
       },
@@ -231,8 +184,8 @@ onTextBoxChange = (e, item, type) => {
       hideForMobile: true,
       render: (f,item) => (<EuiFieldText
         placeholder="Display Format"
-        disabled= {columnDefinitions[item.fieldName] ? !columnDefinitions[item.fieldName].selected : true}
-        value={columnDefinitions[item.fieldName] ? columnDefinitions[item.fieldName].format : ''}
+        disabled= {columnDefinition[item.fieldName] ? !columnDefinition[item.fieldName].selected : true}
+        value={columnDefinition[item.fieldName] ? columnDefinition[item.fieldName].format : ''}
         aria-label="Use aria labels when no actual label is in use"
         onChange={(e) => this.onTextBoxChange(e, item.fieldName, 'format')}
       />),
@@ -269,10 +222,15 @@ onTextBoxChange = (e, item, type) => {
                     singleSelection={{ asPlainText: true }}
                   />
                 </EuiFlexItem>
+                {/* <EuiLoadingChart size="xl" mono/> */}
+
+                <EuiFlexItem>
+                {/* <EuiLoadingSpinner size="xl"/> */}
+                </EuiFlexItem>
                 <EuiFlexItem>
                   <EuiButton
                     fill
-                    onClick={this.createCustomMapping}
+                    onClick={this.saveCustomMapping}
                     color="secondary">Save</EuiButton>
                 </EuiFlexItem>
               </EuiFlexGroup>
@@ -292,7 +250,18 @@ onTextBoxChange = (e, item, type) => {
     );
   }
 }
-const mapStateToProps = ({ columnDefinitionReducer }) => {
-  return { columnDefinitionReducer }
+const mapStateToProps = ({
+  columnDefinitionReducer
+}) => {
+  return {
+    columnDefinitionReducer
+  }
 }
-export default connect(mapStateToProps, { getIndices, getIndexCustomMapping,createCustomMapping })(ColumnDefinitionContainer)
+const actions = {
+  getIndices,
+  getIndexCustomMapping,
+  saveCustomMapping,
+  toogleCheckBox,
+  updateTextBox
+}
+export default connect(mapStateToProps, actions)(ColumnDefinitionContainer)

@@ -61,7 +61,8 @@ module.exports = function (server) {
         },
         payload: {
             indexName: Joi.string().required(),
-            properties:Joi.array().required()
+            mappingId: Joi.string().optional(),
+            properties:Joi.object().required()
           }
       }
     }
