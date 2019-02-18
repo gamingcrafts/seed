@@ -29,9 +29,9 @@ class ColumnDefinitionContainer extends Component {
     this.state = {}
   }
 
-  componentDidMount() {
-    this.props.getIndices();
-  }
+  // componentDidMount() {
+  //   this.props.getIndices();
+  // }
 
   onCheckBoxChange = (e, item, type) => {
     this.props.toogleCheckBox({
