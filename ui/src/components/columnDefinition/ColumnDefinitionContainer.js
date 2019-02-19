@@ -195,9 +195,9 @@ class ColumnDefinitionContainer extends Component {
         <EuiPageBody>
           <EuiPageHeader>
             <EuiPageHeaderSection>
-              <EuiTitle size="l">
+              {/* <EuiTitle size="l">
                 <h1>Indices Column Definition</h1>
-              </EuiTitle>
+              </EuiTitle> */}
             </EuiPageHeaderSection>
           </EuiPageHeader>
           <EuiPageContent>

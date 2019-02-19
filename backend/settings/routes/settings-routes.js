@@ -18,8 +18,8 @@ module.exports = function (server) {
     path: '/settings/{id}',
     method: 'PUT',
     handler(req, h) {
-      const { id, ...settings } = req.payload;
-      return settingsService.index(settings, req.params.id);
+      const { id, ...properties } = req.payload;
+      return settingsService.index(properties, req.params.id);
     },
     options: {
       description: 'Update the Settings',
@@ -29,7 +29,8 @@ module.exports = function (server) {
           id: Joi.string().required()
         },
         payload: {
-            properties:Joi.object().required()
+          id:Joi.string().optional(),
+          properties:Joi.object().required()
           }
       }
     }

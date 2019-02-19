@@ -1,9 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import ColumnDefinitionContainer from '../columnDefinition/ColumnDefinitionContainer';
+import RuleEngine from '../rule-engine/RuleEngine';
 import { connect } from 'react-redux';
 import {
   getIndices
 } from '../store/actions/column-definition-actions';
+import {
+  getSettings
+} from '../store/actions/rule-engine-actions';
 
 import {
   EuiTabbedContent
@@ -33,14 +37,13 @@ class HomePage extends Component {
       id: 'segmentation',
       name: 'Segmentation',
       content: (
-        <Fragment>
-         Segmentation
-        </Fragment>
+        <RuleEngine/>
       ),
     }];
   }
   componentDidMount() {
     this.props.getIndices();
+    this.props.getSettings();
   }
 
 
@@ -63,6 +66,6 @@ const mapStateToProps = ({
     }
   }
   const actions = {
-    getIndices
+    getIndices,getSettings
   }
   export default connect(mapStateToProps, actions)(HomePage)
