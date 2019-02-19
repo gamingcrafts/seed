@@ -5,8 +5,8 @@ import thunk from 'redux-thunk';
 import reducers from './components/store/reducers';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
-import SampleContainer from './components/sample/SampleContainer';
-import ColumnDefinitionContainer from './components/columnDefinition/ColumnDefinitionContainer';
+// import SampleContainer from './components/sample/SampleContainer';
+// import ColumnDefinitionContainer from './components/columnDefinition/ColumnDefinitionContainer';
 import HomePage from './components/home/HomePage';
 
 const axiosInstance = axios.create({

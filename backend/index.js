@@ -11,8 +11,9 @@ const _ = require('lodash');
 const sampleRoute = require('./samples/routes/sample-routes');
 const customMappingRoute = require('./custom-mappings/routes/custom-mapping-routes');
 const indicesRoute = require('./indices/routes/indices-routes');
+const settingsRoute = require('./settings/routes/settings-routes');
 
-const routesArray = [sampleRoute,customMappingRoute,indicesRoute];
+const routesArray = [sampleRoute,customMappingRoute,indicesRoute,settingsRoute];
 
 // sampleRoute(server);
 // customMappingRoute(server);

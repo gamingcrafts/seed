@@ -2,14 +2,11 @@ import React, { Component, Fragment } from 'react';
 import ColumnDefinitionContainer from '../columnDefinition/ColumnDefinitionContainer';
 import { connect } from 'react-redux';
 import {
-  getIndices, getIndexCustomMapping,saveCustomMapping,toogleCheckBox,updateTextBox
+  getIndices
 } from '../store/actions/column-definition-actions';
 
 import {
-  EuiTabbedContent,
-  EuiTitle,
-  EuiText,
-  EuiSpacer,
+  EuiTabbedContent
 } from '@elastic/eui';
 
 class HomePage extends Component {

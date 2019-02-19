@@ -17,9 +17,7 @@ import {
   EuiButton, EuiCheckbox, EuiFieldText,
   EuiComboBox,
   EuiFlexGroup,
-  EuiFlexItem,
-  EuiLoadingSpinner,
-  EuiLoadingChart
+  EuiFlexItem
 } from '@elastic/eui';
 
 class ColumnDefinitionContainer extends Component {

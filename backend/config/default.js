@@ -15,6 +15,7 @@ module.exports = {
   },
   indexes: {
     sample: 'sample__sample',
-    customMapping:'custom_mapping'
+    customMapping:'custom_mapping',
+    settings:'custom_settings'
   }
 }
