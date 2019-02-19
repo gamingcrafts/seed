@@ -54,8 +54,8 @@ const run = async () => {
     canLeaveEmptyGroup: false, //after deletion
     canReorder: true
     };
-  let resp = settingsService.index(defaultSettings);
-  console.log(resp);
+  let resp = await settingsService.index(defaultSettings);
+
 }
  
 module.exports = {

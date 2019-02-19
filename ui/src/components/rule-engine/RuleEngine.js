@@ -35,17 +35,12 @@ onCheckBoxChange = (e, type,item) => {
 }
 
 updateSettings = () => {
-  let{settingsId,settings} = this.props.RuleEngineReducer;
-  this.props.updateSettings({
-    id: settingsId,
-    properties:settings,
-    
-  })
+  let{settings} = this.props.RuleEngineReducer;
+  this.props.updateSettings(settings);
 }
 render(){
   const {settings} = this.props.RuleEngineReducer;
   if(settings!=={}){
-    console.log(settings);
   }
     return( 
       

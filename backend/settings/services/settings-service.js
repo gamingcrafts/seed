@@ -5,29 +5,25 @@ const TYPE = 'settings';
 const client = new ESClient(INDEX, TYPE);
 
 const index = async (settings) => {
-    console.log(settings)
-    const settingsString = JSON.stringify(settings);
-    const resp = await client.index({
-        body: {properties:settingsString},
-        id:"1zsdf22322n2hjh2h2-settings-324kj23jkg32hg327"
-    });
+    console.log("-----------------Settings---------------------")
     console.log(settings);
+    const resp = await client.index({
+        body: {config:JSON.stringify(settings)},
+        id:"52ca246b-c595-4f9f-959b-2196ea411e8d"
+    });
     return {
-        ...settings,
-        id: resp._id
+        ...settings
     };
 };
 
-const list = () => {
-    return client
-        .onResults(resp => resp.hits.hits.map(h => {
-            const settings = {properties:JSON.parse(h._source.properties),
-            id: h._id}
-            return settings;
-        }))
+const list = async () => {
+    let resp = await client
+        .onResults()
         .search({
             size: 1000
         });
+        console.log(JSON.parse(resp['hits']['hits'][0]._source.config));
+        return JSON.parse(resp['hits']['hits'][0]._source.config);
 };
 
 module.exports = {

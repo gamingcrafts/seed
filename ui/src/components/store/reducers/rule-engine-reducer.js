@@ -1,8 +1,6 @@
 import {
     SETTINGS_GET_SUCCESS,
-    SETTINGS_GET_FAILURE,
     SETTINGS_UPDATE_SUCCESS,
-    SETTINGS_UPDATE_FAILURE,
     UPDATE_SEGMENTATION_TEXT_BOX,
     UPDATE_SEGMENTATION_CHECK_BOX,
     UPDATE_SEGMENTATION_NUMBER_BOX
@@ -21,8 +19,7 @@ export default (state = INIT_STATE, action) => {
     switch (action.type) {
         case SETTINGS_GET_SUCCESS:{
             return update(state, {
-                settingsId: { $set: action.payload.id },
-                settings: { $set: action.payload.properties },
+                settings: { $set: action.payload },
                 
               })
         }

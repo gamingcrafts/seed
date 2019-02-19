@@ -3,7 +3,7 @@ import {
   INDICES_GET_ALL_FAILURE,
   POPULATE_CUSTOM_MAPPING_SUCCESS,
   TOGGLE_CHECK_BOX,
-  UPDATE_TEXT_BOX,UPDATE_NUMBER_BOX
+  UPDATE_TEXT_BOX
 } from './types';
 
 
@@ -53,20 +53,15 @@ const saveCustomMapping = customMap => {
 
   return (dispatch, getState, http) => {
 
-    if(customMap.mappingId===undefined){
-    http.post('/custommappings/', customMap).then(resp => {
-      console.log(resp)
-    }).catch(err => {
+    if (customMap.mappingId === undefined) {
+      http.post('/custommappings/', customMap).then(resp => {}).catch(err => {
 
-    })
-  }
-  else{
-    http.put('/custommappings/'+customMap.mappingId, customMap).then(resp => {
-      console.log(resp)
-    }).catch(err => {
+      })
+    } else {
+      http.put('/custommappings/' + customMap.mappingId, customMap).then(resp => {}).catch(err => {
 
-    })
-  }
+      })
+    }
   }
 }
 const toogleCheckBox = checkBoxOptions => {
