@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  getSettings,updateTextBox,toogleCheckBox,updateSettings
+  getSettings,updateTextBox,toogleCheckBox,updateSettings,updateNumberBox
 } from '../store/actions/rule-engine-actions';
 import {
   EuiFieldText,
   EuiPanel,
   EuiForm,
-  EuiFormRow,EuiSwitch,EuiButton
+  EuiFormRow,EuiSwitch,EuiButton,EuiFieldNumber
 
 } from '@elastic/eui';
 class RuleEngine extends Component {
@@ -18,6 +18,13 @@ class RuleEngine extends Component {
       item: item,
       type: type
     })
+}
+onNumberBoxChange = (e, type, item) => {
+  this.props.updateNumberBox({
+    event: e,
+    item: item,
+    type: type
+  })
 }
 onCheckBoxChange = (e, type,item) => {
   this.props.toogleCheckBox({
@@ -43,7 +50,7 @@ render(){
     return( 
       
   
-      <EuiPanel style={{ maxWidth: 300 }}>
+      <EuiPanel style={{ maxWidth: 600 }}>
         <EuiButton
       fill
       onClick={this.updateSettings}
@@ -58,13 +65,20 @@ render(){
             value={settings['renderSize'] ? settings['renderSize']: ''}
             onChange={(e) => this.onTextBoxChange(e,'renderSize')}/>
           </EuiFormRow>
-          <EuiFormRow>
+          <EuiFormRow label="Hide Conj for One">
           <EuiSwitch
-          label="hideConjForOne"
+          
           checked={settings['hideConjForOne']}
           onChange={(e) => this.onCheckBoxChange(e,'hideConjForOne')}
         />
           </EuiFormRow>
+          <EuiFieldNumber
+          
+         
+          value={settings['maxLabelsLength'] ? settings['maxLabelsLength']: 0}
+          onChange={(e) => this.onNumberBoxChange(e,'maxLabelsLength')}
+          compressed
+        />
         </EuiForm>
       </EuiPanel>
     )
@@ -78,6 +92,6 @@ const mapStateToProps = ({
     }
   }
   const actions = {
-    getSettings,updateTextBox,toogleCheckBox,updateSettings
+    getSettings,updateTextBox,toogleCheckBox,updateSettings,updateNumberBox
   }
   export default connect(mapStateToProps, actions)(RuleEngine)

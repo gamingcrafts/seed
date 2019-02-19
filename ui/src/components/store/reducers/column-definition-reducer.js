@@ -3,7 +3,8 @@ import {
     INDICES_GET_ALL_FAILURE,
     POPULATE_CUSTOM_MAPPING_SUCCESS,
     TOGGLE_CHECK_BOX,
-    UPDATE_TEXT_BOX
+    UPDATE_TEXT_BOX,
+    
 } from "../actions/types";
 import update from 'react-addons-update';
 
@@ -153,6 +154,8 @@ export default (state = INIT_STATE, action) => {
                       }
                 }
         })}
+
+       
    
         default:
             return update(state, {})

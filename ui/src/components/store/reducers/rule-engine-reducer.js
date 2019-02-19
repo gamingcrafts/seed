@@ -4,7 +4,8 @@ import {
     SETTINGS_UPDATE_SUCCESS,
     SETTINGS_UPDATE_FAILURE,
     UPDATE_SEGMENTATION_TEXT_BOX,
-    UPDATE_SEGMENTATION_CHECK_BOX
+    UPDATE_SEGMENTATION_CHECK_BOX,
+    UPDATE_SEGMENTATION_NUMBER_BOX
 } from "../actions/types";
 
 import update from 'react-addons-update';
@@ -48,6 +49,17 @@ export default (state = INIT_STATE, action) => {
                       
                 }
         })}
+
+        case UPDATE_SEGMENTATION_NUMBER_BOX:{
+            let type = action.payload.type;
+            let e = action.payload.event;
+            return update(state, {
+                settings: {
+                    $merge:{[type]:parseInt(e.target.value,10)}
+                      
+                }
+        })
+        }
 
         default:
             return update(state, {})

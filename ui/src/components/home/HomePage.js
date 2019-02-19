@@ -52,8 +52,7 @@ class HomePage extends Component {
     return (
       <EuiTabbedContent
         tabs={this.tabs}
-        initialSelectedTab={this.tabs[1]}
-        onTabClick={(tab) => { console.log('clicked tab', tab); }}
+        initialSelectedTab={this.tabs[2]}
       />
     );
   }

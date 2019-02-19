@@ -4,7 +4,8 @@ import {
     SETTINGS_UPDATE_SUCCESS,
     SETTINGS_UPDATE_FAILURE,
     UPDATE_SEGMENTATION_TEXT_BOX,
-    UPDATE_SEGMENTATION_CHECK_BOX
+    UPDATE_SEGMENTATION_CHECK_BOX,
+    UPDATE_SEGMENTATION_NUMBER_BOX
 } from "../actions/types";
 
 const getSettings = () => {
@@ -55,9 +56,18 @@ const getSettings = () => {
       })
     }
   }
+  const updateNumberBox = textBoxValue => {
+    return (dispatch) => {
+      dispatch({
+        type: UPDATE_SEGMENTATION_NUMBER_BOX,
+        payload: textBoxValue
+      })
+    }
+  }
   export{
     getSettings,
     updateTextBox,
     toogleCheckBox,
-    updateSettings
+    updateSettings,
+    updateNumberBox
   }

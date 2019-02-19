@@ -3,7 +3,7 @@ import {
   INDICES_GET_ALL_FAILURE,
   POPULATE_CUSTOM_MAPPING_SUCCESS,
   TOGGLE_CHECK_BOX,
-  UPDATE_TEXT_BOX
+  UPDATE_TEXT_BOX,UPDATE_NUMBER_BOX
 } from './types';
 
 
@@ -86,6 +86,8 @@ const updateTextBox = textBoxValue => {
     })
   }
 }
+
+
 
 
 
