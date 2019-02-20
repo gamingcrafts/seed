@@ -27,10 +27,6 @@ class ColumnDefinitionContainer extends Component {
     this.state = {}
   }
 
-  // componentDidMount() {
-  //   this.props.getIndices();
-  // }
-
   onCheckBoxChange = (e, item, type) => {
     this.props.toogleCheckBox({
       event: e,
@@ -193,18 +189,11 @@ class ColumnDefinitionContainer extends Component {
     return (
       <EuiPage>
         <EuiPageBody>
-          <EuiPageHeader>
-            <EuiPageHeaderSection>
-              {/* <EuiTitle size="l">
-                <h1>Indices Column Definition</h1>
-              </EuiTitle> */}
-            </EuiPageHeaderSection>
-          </EuiPageHeader>
           <EuiPageContent>
             <EuiPageContentHeader>
               <EuiPageContentHeaderSection>
                 <EuiTitle>
-                  <h2>Index :</h2>
+                  <h4>Index :</h4>
                 </EuiTitle>
               </EuiPageContentHeaderSection>
             </EuiPageContentHeader>

@@ -7,7 +7,7 @@ import {
   EuiFieldText,
   EuiPanel,
   EuiForm,
-  EuiFormRow,EuiSwitch,EuiButton,EuiFieldNumber
+  EuiFormRow,EuiSwitch,EuiButton,EuiFieldNumber,EuiSelect
 
 } from '@elastic/eui';
 class RuleEngine extends Component {
@@ -40,6 +40,14 @@ updateSettings = () => {
 }
 render(){
   const {settings} = this.props.RuleEngineReducer;
+  const selectOptions = [
+    { value: 'topLeft', text: 'topLeft' },
+    { value: 'topCenter', text: 'topCenter' },
+    { value: 'topRight', text: 'topRight' },
+    { value: 'bottomLeft', text: 'bottomLeft' },
+    { value: 'bottomCenter', text: 'bottomCenter' },
+    { value: 'bottomRight', text: 'bottomRight' }
+  ];
   if(settings!=={}){
   }
     return( 
@@ -51,6 +59,22 @@ render(){
       onClick={this.updateSettings}
       color="secondary">Save</EuiButton>
         <EuiForm>
+        <EuiFormRow
+            label="Dropdown Placement"
+            compressed>
+            <EuiSelect
+            options={selectOptions}
+            value={settings['dropdownPlacement'] ? settings['dropdownPlacement']: 'topLeft'}
+            onChange={(e) => this.onTextBoxChange(e,'dropdownPlacement')}/>
+          </EuiFormRow>
+          <EuiFormRow
+            label="Group Actions Position"
+            compressed>
+            <EuiSelect
+            options={selectOptions}
+            value={settings['groupActionsPosition'] ? settings['groupActionsPosition']: 'topLeft'}
+            onChange={(e) => this.onTextBoxChange(e,'groupActionsPosition')}/>
+          </EuiFormRow>
           <EuiFormRow
             label="Render Size"
             helpText="Help text about render size"
