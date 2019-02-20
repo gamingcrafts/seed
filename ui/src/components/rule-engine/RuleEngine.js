@@ -4,6 +4,12 @@ import {
   getSettings,updateTextBox,toogleCheckBox,updateSettings,updateNumberBox
 } from '../store/actions/rule-engine-actions';
 import {
+  EuiPage,
+  EuiPageBody,
+  EuiPageContent,
+  EuiPageContentBody,
+  EuiFlexGroup,
+  EuiFlexItem,
   EuiFieldText,
   EuiPanel,
   EuiForm,
@@ -33,7 +39,6 @@ onCheckBoxChange = (e, type,item) => {
     type: type
   })
 }
-
 updateSettings = () => {
   let{settings} = this.props.RuleEngineReducer;
   this.props.updateSettings(settings);
@@ -51,14 +56,18 @@ render(){
   if(settings!=={}){
   }
     return( 
-      
-  
+      <EuiPage>
+        <EuiPageBody>
+          <EuiPageContent>
+          <EuiPageContentBody>
+          <EuiButton
+          fill
+          onClick={this.updateSettings}
+          color="secondary">Save</EuiButton>
       <EuiPanel style={{ maxWidth: 600 }}>
-        <EuiButton
-      fill
-      onClick={this.updateSettings}
-      color="secondary">Save</EuiButton>
-        <EuiForm>
+      <EuiFlexGroup>
+      <EuiForm>
+        <EuiFlexItem >
         <EuiFormRow
             label="Dropdown Placement"
             compressed>
@@ -142,6 +151,8 @@ render(){
             value={settings['operatorPlaceholder'] ? settings['operatorPlaceholder']: ''}
             onChange={(e) => this.onTextBoxChange(e,'operatorPlaceholder')}/>
           </EuiFormRow>
+         
+      
           <EuiFormRow
             label="Delete Label"
             helpText="Help text about render size"
@@ -201,6 +212,9 @@ render(){
           onChange={(e) => this.onCheckBoxChange(e,'clearValueOnChangeField')}
           />
           </EuiFormRow>
+          </EuiFlexItem >
+          
+          <EuiFlexItem >
           <EuiFormRow label="Clear Value On Change Operator">
           <EuiSwitch
           checked={settings['clearValueOnChangeOp']}
@@ -261,19 +275,28 @@ render(){
           compressed
         />
         </EuiFormRow>
+        
+        </EuiFlexItem >
         </EuiForm>
+        </EuiFlexGroup>
       </EuiPanel>
+      </EuiPageContentBody>
+          </EuiPageContent>
+        </EuiPageBody>
+      </EuiPage>
     )
 }
 }
-const mapStateToProps = ({
-    RuleEngineReducer
-  }) => {
+const mapStateToProps = ({RuleEngineReducer}) => {
     return {
         RuleEngineReducer
     }
   }
-  const actions = {
-    getSettings,updateTextBox,toogleCheckBox,updateSettings,updateNumberBox
-  }
-  export default connect(mapStateToProps, actions)(RuleEngine)
+const actions = {
+  getSettings,
+  updateTextBox,
+  toogleCheckBox,
+  updateSettings,
+  updateNumberBox
+}
+export default connect(mapStateToProps, actions)(RuleEngine)

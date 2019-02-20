@@ -11,8 +11,6 @@ import {
   EuiPageContentBody,
   EuiPageContentHeader,
   EuiPageContentHeaderSection,
-  EuiPageHeader,
-  EuiPageHeaderSection,
   EuiTitle, EuiSpacer, EuiBasicTable,
   EuiButton, EuiCheckbox, EuiFieldText,
   EuiComboBox,
