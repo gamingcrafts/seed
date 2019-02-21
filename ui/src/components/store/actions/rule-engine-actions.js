@@ -8,7 +8,7 @@ import {
 
 const getSettings = () => {
   return (dispatch, getState, http) => {
-    http.get('/settings')
+    http.get('/ruleengine/settings/')
       .then(res => {
         dispatch({
           type: SETTINGS_GET_SUCCESS,
@@ -28,7 +28,7 @@ const updateSettings = settings => {
 
   return (dispatch, getState, http) => {
 
-    http.put('/settings/', settings).then(resp => {
+    http.put('/ruleengine/settings/', settings).then(resp => {
       console.log(resp);
     }).catch(err => {
 

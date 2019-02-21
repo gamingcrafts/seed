@@ -1,8 +1,7 @@
 const ESClient = require('./server/esclient');
-
 const kpis = require('./mappings/player_daily_kpis');
-
-const settingsService = require('./settings/services/settings-service');
+const ruleEngineSettingsService = require('./rule-engine/services/settings-service');
+const ruleEngineOperatorsService = require('./rule-engine/services/operators-service');
 
 const run = async () => {
   let c = new ESClient();
@@ -10,10 +9,7 @@ const run = async () => {
   let res = await c.client().indices.exists({
     index: 'kpis'
   })
-
-  
-
-  if(!res) {
+  if (!res) {
     new ESClient().client().indices.create({
       index: 'kpis',
       body: {
@@ -53,11 +49,28 @@ const run = async () => {
     delGroupLabel: "Remove group",
     canLeaveEmptyGroup: false, //after deletion
     canReorder: true
-    };
-  let resp = await settingsService.index(defaultSettings);
+  };
+  let resp = await ruleEngineSettingsService.index(defaultSettings);
+
+  let defaultOperators = {
+    label: 'Between',
+    labelForFormat: 'BETWEEN',
+    cardinality: 2,
+    formatOp: (field, op, values, valueSrcs, valueTypes, opDef, operatorOptions, isForDisplay) => {
+      let valFrom = values.first();
+      let valTo = values.get(1);
+      if (isForDisplay)
+        return `${field} >= ${valFrom} AND ${field} <= ${valTo}`;
+      else
+        return `${field} >= ${valFrom} && ${field} <= ${valTo}`;
+    },
+    reversedOp: 'not_between'
+  }
+  defaultOperators['formatOp'] = defaultOperators['formatOp'].toString();
+  let respForOperators = await ruleEngineOperatorsService.index(defaultOperators);
 
 }
- 
+
 module.exports = {
   run
 }

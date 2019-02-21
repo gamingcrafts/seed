@@ -11,9 +11,10 @@ const _ = require('lodash');
 const sampleRoute = require('./samples/routes/sample-routes');
 const customMappingRoute = require('./custom-mappings/routes/custom-mapping-routes');
 const indicesRoute = require('./indices/routes/indices-routes');
-const settingsRoute = require('./settings/routes/settings-routes');
+const ruleEngineSettingsRoute = require('./rule-engine/routes/settings-routes');
+const ruleEngineOperatorsRoute = require('./rule-engine/routes/operators-routes');
 
-const routesArray = [sampleRoute,customMappingRoute,indicesRoute,settingsRoute];
+const routesArray = [sampleRoute,customMappingRoute,indicesRoute,ruleEngineSettingsRoute,ruleEngineOperatorsRoute];
 
 // sampleRoute(server);
 // customMappingRoute(server);
