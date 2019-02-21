@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import ColumnDefinitionContainer from '../columnDefinition/ColumnDefinitionContainer';
-import RuleEngine from '../rule-engine/RuleEngine';
+import RuleEngineHome from '../rule-engine/RuleEngineHome';
 import { connect } from 'react-redux';
 import {
   getIndices
@@ -34,10 +34,10 @@ class HomePage extends Component {
         <ColumnDefinitionContainer />
       ),
     }, {
-      id: 'segmentation',
-      name: 'Segmentation',
+      id: 'ruleEngine',
+      name: 'Rule Engine',
       content: (
-        <RuleEngine/>
+        <RuleEngineHome/>
       ),
     }];
   }

@@ -16,7 +16,7 @@ import {
   EuiFormRow,EuiSwitch,EuiButton,EuiFieldNumber,EuiSelect
 
 } from '@elastic/eui';
-class RuleEngine extends Component {
+class RuleEngineSettings extends Component {
   
   onTextBoxChange = (e, type, item) => {
     this.props.updateTextBox({
@@ -299,4 +299,4 @@ const actions = {
   updateSettings,
   updateNumberBox
 }
-export default connect(mapStateToProps, actions)(RuleEngine)
+export default connect(mapStateToProps, actions)(RuleEngineSettings)
