@@ -3,7 +3,9 @@ import {
     SETTINGS_UPDATE_SUCCESS,
     UPDATE_SEGMENTATION_TEXT_BOX,
     UPDATE_SEGMENTATION_CHECK_BOX,
-    UPDATE_SEGMENTATION_NUMBER_BOX
+    UPDATE_SEGMENTATION_NUMBER_BOX,
+    OPERATORS_GET_SUCCESS,
+  OPERATORS_GET_FAILURE
 } from "../actions/types";
 
 import update from 'react-addons-update';
@@ -12,7 +14,8 @@ const INIT_STATE = {
     loading: true,
     loaded: false,
     settingsId:'',
-    settings:{}
+    settings:{},
+    operators:{}
 }
 
 export default (state = INIT_STATE, action) => {
@@ -56,6 +59,13 @@ export default (state = INIT_STATE, action) => {
                       
                 }
         })
+        }
+
+        case OPERATORS_GET_SUCCESS:{
+            return update(state, {
+                operators: { $set: action.payload },
+                
+              })
         }
 
         default:

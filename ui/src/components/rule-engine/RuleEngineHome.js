@@ -6,7 +6,7 @@ import {
   getIndices
 } from '../store/actions/column-definition-actions';
 import {
-  getSettings
+  getSettings,getOperators
 } from '../store/actions/rule-engine-actions';
 
 import {
@@ -32,13 +32,13 @@ class RuleEngineHome extends Component {
     }];
   }
   componentDidMount() {
-    
+    this.props.getOperators()
   }
 render() {
     return (
       <EuiTabbedContent
         tabs={this.tabs}
-        initialSelectedTab={this.tabs[2]}
+        initialSelectedTab={this.tabs[1]}
       />
     );
   }
@@ -51,6 +51,6 @@ const mapStateToProps = ({
     }
   }
   const actions = {
-    getIndices,getSettings
+    getIndices,getSettings,getOperators
   }
   export default connect(mapStateToProps, actions)(RuleEngineHome)

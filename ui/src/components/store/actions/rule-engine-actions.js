@@ -3,7 +3,9 @@ import {
   SETTINGS_GET_FAILURE,
   UPDATE_SEGMENTATION_TEXT_BOX,
   UPDATE_SEGMENTATION_CHECK_BOX,
-  UPDATE_SEGMENTATION_NUMBER_BOX
+  UPDATE_SEGMENTATION_NUMBER_BOX,
+  OPERATORS_GET_SUCCESS,
+  OPERATORS_GET_FAILURE
 } from "../actions/types";
 
 const getSettings = () => {
@@ -61,10 +63,29 @@ const updateNumberBox = textBoxValue => {
     })
   }
 }
+
+const getOperators = () => {
+  return (dispatch, getState, http) => {
+    http.get('/ruleengine/operators/')
+      .then(res => {
+        dispatch({
+          type: OPERATORS_GET_SUCCESS,
+          payload: res.data
+        })
+      })
+      .catch(err => {
+        dispatch({
+          type: OPERATORS_GET_FAILURE,
+          payload: err
+        })
+      })
+  }
+}
 export {
   getSettings,
   updateTextBox,
   toogleCheckBox,
   updateSettings,
-  updateNumberBox
+  updateNumberBox,
+  getOperators
 }
