@@ -3,7 +3,7 @@ import {
     INDICES_GET_ALL_FAILURE,
     POPULATE_CUSTOM_MAPPING_SUCCESS,
     TOGGLE_CHECK_BOX,
-    UPDATE_TEXT_BOX,
+    UPDATE_TEXT_BOX,CUSTOM_MAPPING_CREATE_SUCCESS
     
 } from "../actions/types";
 import update from 'react-addons-update';
@@ -97,6 +97,13 @@ export default (state = INIT_STATE, action) => {
                     $set: columnDefinition
                 }
             })
+        }
+        case CUSTOM_MAPPING_CREATE_SUCCESS:{
+            return update(state, {
+                indexData: {
+                    $set: { name: action.payload.indexName,id:action.payload.indexId }
+                }
+            }) 
         }
         case TOGGLE_CHECK_BOX: {
             let checkBoxValidation, updatedObject = {};

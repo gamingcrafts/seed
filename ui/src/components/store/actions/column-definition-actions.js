@@ -3,7 +3,8 @@ import {
   INDICES_GET_ALL_FAILURE,
   POPULATE_CUSTOM_MAPPING_SUCCESS,
   TOGGLE_CHECK_BOX,
-  UPDATE_TEXT_BOX
+  UPDATE_TEXT_BOX,
+  CUSTOM_MAPPING_CREATE_SUCCESS
 } from './types';
 
 
@@ -54,7 +55,16 @@ const saveCustomMapping = customMap => {
   return (dispatch, getState, http) => {
 
     if (customMap.mappingId === undefined) {
-      http.post('/custommappings/', customMap).then(resp => {}).catch(err => {
+      http.post('/custommappings/', customMap).then(resp => {
+        
+        dispatch({
+          type: CUSTOM_MAPPING_CREATE_SUCCESS,
+          payload: {
+            indexName: resp.data.indexName,
+            indexId: resp.data.id
+          }
+        })
+      }).catch(err => {
 
       })
     } else {

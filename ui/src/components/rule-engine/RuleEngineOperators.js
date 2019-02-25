@@ -5,9 +5,15 @@ import {
     EuiPageBody,
     EuiPageContent,
     EuiPageContentBody,
-    EuiTextArea,EuiFieldText,EuiSpacer,EuiButton,EuiBadge
+    EuiCodeEditor,EuiFieldText,EuiSpacer,EuiButton,EuiBadge,EuiSuperSelect,EuiTextArea,
+    EuiHealth,EuiLink
   
   } from '@elastic/eui';
+
+  import 'brace/theme/github';
+import 'brace/mode/javascript';
+import 'brace/snippets/javascript';
+import 'brace/ext/language_tools';
 
 class RuleEngineOperators extends Component {
     constructor(props) {
@@ -20,6 +26,9 @@ class RuleEngineOperators extends Component {
           functionResult:''
         };
       }
+      onChange = e =>{
+        console.log(e.target);
+      }
       onChangeOne = e => {
         this.setState({
             argumentOne: e.target.value,
@@ -30,9 +39,9 @@ class RuleEngineOperators extends Component {
             argumentTwo: e.target.value,
         });
       };
-      onChangeThree = e => {
+      onChangeThree = (value) => {
         this.setState({
-            functionBody: e.target.value,
+            functionBody: value,
         });
       };
       executeFuntion=()=>{
@@ -45,12 +54,46 @@ class RuleEngineOperators extends Component {
         this.setState({functionResult:functionResult});
       }
     render(){
+
+      this.options = [
+        {
+          value: 'warning',
+          inputDisplay: (
+            <EuiLink
+            
+          >
+           Click to add a new Operator
+          </EuiLink>
+          ),
+          'data-test-subj': 'option-warning',
+          disabled: true,
+        },
+        {
+          value: 'minor',
+          inputDisplay: (
+            <EuiHealth color="warning" style={{ lineHeight: 'inherit' }}>
+              Minor
+            </EuiHealth>
+          ),
+          'data-test-subj': 'option-minor',
+        },
+        {
+          value: 'critical',
+          inputDisplay: 'Operator'
+        
+        },
+      ];
         
         const result = this.state.functionResult;
         return (<EuiPage>
             <EuiPageBody>
               <EuiPageContent>
               <EuiPageContentBody>
+              <EuiSuperSelect
+        options={this.options}
+        valueOfSelected={this.state.value}
+        onChange={this.onChange}
+      />
               <EuiFieldText
               placeholder="This value is passed as a"
           value={this.state.argumentOne}
@@ -63,12 +106,25 @@ class RuleEngineOperators extends Component {
           onChange={this.onChangeTwo}
         />
         <EuiSpacer size="m" />
-              <EuiTextArea
+        <EuiTextArea
+        placeholder="write code for function(a,b){}"
+              onChange={this.onChangeThree}
+              value={this.state.functionBody}
+        />
+          {/* <EuiCodeEditor
+              mode="javascript"
+              theme="github"
               placeholder="write code for function(a,b){}"
               onChange={this.onChangeThree}
-          value={this.state.functionBody}
-         
-        />
+              value={this.state.functionBody}
+              height="150px"
+              setOptions={{
+              fontSize: '14px',
+              enableBasicAutocompletion: true,
+              enableSnippets: true,
+              enableLiveAutocompletion: true,
+            }}
+         /> */}
         <EuiSpacer size="m" />
         <EuiButton
           fill
@@ -77,14 +133,14 @@ class RuleEngineOperators extends Component {
         >
         Execute
         </EuiButton>
-        <EuiSpacer size="m" />
-        <EuiBadge color="warning">
-            Result: {result}
-          </EuiBadge>
+                <EuiSpacer size="m" />
+                <EuiBadge color="warning">
+                  Result: {result}
+                </EuiBadge>
               </EuiPageContentBody>
-          </EuiPageContent>
-        </EuiPageBody>
-      </EuiPage>)
+            </EuiPageContent>
+          </EuiPageBody>
+        </EuiPage>)
     }
 }
 const mapStateToProps = ({RuleEngineReducer}) => {
