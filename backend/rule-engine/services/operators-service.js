@@ -5,8 +5,6 @@ const TYPE = 'ruleEngine';
 const client = new ESClient(INDEX, TYPE);
 
 const index = async (settings) => {
-    console.log("---Operator Index====")
-    console.log(settings)
     const resp = await client.index({
         body: {
             operators: JSON.stringify(settings)
@@ -28,7 +26,6 @@ const list = async () => {
     if (resp['hits']['hits'][0]._source.operators !== undefined) {
         ruleEngineOperators = resp['hits']['hits'][0]._source.operators;
     }
-    console.log(ruleEngineOperators);
     return ruleEngineOperators;
 };
 

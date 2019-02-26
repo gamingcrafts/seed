@@ -5,7 +5,9 @@ import {
   UPDATE_SEGMENTATION_CHECK_BOX,
   UPDATE_SEGMENTATION_NUMBER_BOX,
   OPERATORS_GET_SUCCESS,
-  OPERATORS_GET_FAILURE
+  OPERATORS_GET_FAILURE,
+  TOGGLE_RULE_ENGINE_OPERATOR_FORM,
+  TOGGLE_RULE_ENGINE_OPERATOR_LIST
 } from "../actions/types";
 
 const getSettings = () => {
@@ -81,11 +83,36 @@ const getOperators = () => {
       })
   }
 }
+
+const toogleRuleEngineOperatorForm = (operatorName) => {
+  console.log("toogleRuleEngineOperatorForm--->"+operatorName)
+  var operator ={name: undefined};
+  if (operatorName !== undefined) {
+    operator['name'] = operatorName
+  }
+  return (dispatch, getState, http) => {
+    dispatch({
+      type: TOGGLE_RULE_ENGINE_OPERATOR_FORM,
+      payload: operator
+    })
+  }
+}
+
+const toogleRuleEngineOperatorList = () => {
+
+  return (dispatch, getState, http) => {
+    dispatch({
+      type: TOGGLE_RULE_ENGINE_OPERATOR_LIST
+    })
+  }
+}
 export {
   getSettings,
   updateTextBox,
   toogleCheckBox,
   updateSettings,
   updateNumberBox,
-  getOperators
+  getOperators,
+  toogleRuleEngineOperatorForm,
+  toogleRuleEngineOperatorList
 }

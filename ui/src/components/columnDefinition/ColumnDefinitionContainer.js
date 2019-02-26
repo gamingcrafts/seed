@@ -11,7 +11,7 @@ import {
   EuiPageContentBody,
   EuiPageContentHeader,
   EuiPageContentHeaderSection,
-  EuiTitle, EuiSpacer, EuiBasicTable,EuiInMemoryTable,
+  EuiTitle, EuiSpacer,EuiInMemoryTable,
   EuiButton, EuiCheckbox, EuiFieldText,
   EuiComboBox,
   EuiFlexGroup,
@@ -20,10 +20,7 @@ import {
 
 class ColumnDefinitionContainer extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {}
-  }
+ 
 
   onCheckBoxChange = (e, item, type) => {
     this.props.toogleCheckBox({
@@ -216,7 +213,7 @@ class ColumnDefinitionContainer extends Component {
                   <EuiButton
                     fill
                     onClick={this.saveCustomMapping}
-                    color="secondary">Save</EuiButton>
+                    color="primary">Save</EuiButton>
                 </EuiFlexItem>
               </EuiFlexGroup>
               <EuiSpacer />

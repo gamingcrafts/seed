@@ -63,7 +63,7 @@ render(){
           <EuiButton
           fill
           onClick={this.updateSettings}
-          color="secondary">Save</EuiButton>
+          color="primary">Save</EuiButton>
       <EuiPanel style={{ maxWidth: 600 }}>
       <EuiFlexGroup>
       <EuiForm>

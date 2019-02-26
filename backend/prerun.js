@@ -322,7 +322,6 @@ const run = async () => {
     labelForFormat: 'BETWEEN',
     cardinality: 2,
     formatOp: (field, op, values, valueSrcs, valueTypes, opDef, operatorOptions, isForDisplay) => {
-      //console.log(JSON.stringify(field), JSON.stringify(op), JSON.stringify(values), JSON.stringify(valueSrcs), JSON.stringify(valueTypes), JSON.stringify(opDef), JSON.stringify(operatorOptions), JSON.stringify(isForDisplay))
       let valFrom = values.first();
       let valTo = values.get(1);
       const optionValue = operatorOptions.get('timeframe');
@@ -377,7 +376,6 @@ const run = async () => {
     operatorsObject[dos.name] = dos;
 
   })
-  console.log(operatorsObject);
   let respForOperators = await ruleEngineOperatorsService.index(operatorsObject);
 }
 module.exports = {
