@@ -102,7 +102,7 @@ export default (state = INIT_STATE, action) => {
                         name:'',
                         label:'',
                         labelForFormat:'',
-                        cardinality:0,
+                        cardinality:undefined,
                         reversedOp:'',
                         formatOp:''
                     }
@@ -141,6 +141,19 @@ export default (state = INIT_STATE, action) => {
                         selectedOperator: {
                             
                             $merge:{[type]:value}
+                          }
+                    }
+            })
+            }
+
+            case UPDATE_OPERATORS_NUMBER_BOX:{
+                let type = action.payload.type;
+              let value = action.payload.value;
+                return update(state, {
+                    operatorsState: {
+                        selectedOperator: {
+                            
+                            $merge:{[type]:parseInt(value, 10)}
                           }
                     }
             })

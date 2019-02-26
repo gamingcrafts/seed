@@ -124,6 +124,20 @@ const updateOperatorsNumberBox=(numberBoxValue)=>{
   }
 }
 
+const updateOperators = operators => {
+  return (dispatch, getState, http) => {
+
+    http.put('/ruleengine/operators/', operators).then(resp => {
+      dispatch({
+        type: TOGGLE_RULE_ENGINE_OPERATOR_LIST
+      })
+    }).catch(err => {
+
+    })
+  }
+
+}
+
 export {
   getSettings,
   updateTextBox,
@@ -133,5 +147,7 @@ export {
   getOperators,
   toogleRuleEngineOperatorForm,
   toogleRuleEngineOperatorList,
-  updateOperatorsTextBox
+  updateOperatorsTextBox,
+  updateOperatorsNumberBox,
+  updateOperators
 }

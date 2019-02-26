@@ -13,13 +13,30 @@ import {
     EuiTextArea
   
   } from '@elastic/eui';
-
-  import {toogleRuleEngineOperatorList,updateOperatorsTextBox} from '../store/actions/rule-engine-actions'
+ import {
+    toogleRuleEngineOperatorList,
+    updateOperatorsTextBox,updateOperatorsNumberBox,
+    updateOperators
+  } from '../store/actions/rule-engine-actions'
 class RuleEngineOperatorsForm extends Component {
 
   onTextChange =(e,type)=>{
     let textBoxData = {type:type,value:e.target.value};
     this.props.updateOperatorsTextBox(textBoxData);
+  }
+  onNumberChange=(e,type)=>{
+    let numberBoxData = {type:type,value:e.target.value};
+    this.props.updateOperatorsNumberBox(numberBoxData);
+  }
+  updateOperators=()=>{
+    let {operators,operatorsState}=this.props.RuleEngineReducer;
+    
+    let currentOperator = operatorsState.selectedOperator;
+    console.log(currentOperator);
+    if(currentOperator.name!=='')
+    operators[currentOperator.name] = currentOperator;
+    console.log(operators);
+    this.props.updateOperators(operators);
   }
    
 render(){
@@ -51,7 +68,7 @@ render(){
         <EuiFieldNumber
           placeholder="Cardinality"
           value={selectedOperator.cardinality}
-       
+            onChange={(e)=>this.onNumberChange(e,'cardinality')}
         />
         <EuiFieldText
           placeholder="Reversed Operator"
@@ -67,7 +84,7 @@ render(){
         </EuiFlexItem>
         <EuiFlexItem >
         <EuiButton
-          onClick={() => window.alert('Button clicked')}
+          onClick={() => this.updateOperators()}
         >
           Save
         </EuiButton>
@@ -96,5 +113,5 @@ const mapStateToProps = ({RuleEngineReducer}) => {
         RuleEngineReducer
     }
   }
-const actions = {toogleRuleEngineOperatorList,updateOperatorsTextBox}
+const actions = {toogleRuleEngineOperatorList,updateOperatorsTextBox,updateOperators,updateOperatorsNumberBox}
 export default connect(mapStateToProps, actions)(RuleEngineOperatorsForm)
