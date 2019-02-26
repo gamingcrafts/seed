@@ -11,8 +11,8 @@ import {
   EuiFlexGroup,
   EuiFlexItem,
   EuiFieldText,
-  EuiPanel,
-  EuiForm,
+  // EuiPanel,
+  // EuiForm,
   EuiFormRow,EuiSwitch,EuiButton,EuiFieldNumber,EuiSelect
 
 } from '@elastic/eui';
@@ -60,13 +60,17 @@ render(){
         <EuiPageBody>
           <EuiPageContent>
           <EuiPageContentBody>
+          <EuiFlexGroup justifyContent="spaceBetween">
+          <EuiFlexItem grow={false}></EuiFlexItem>
+          <EuiFlexItem grow={false}>
           <EuiButton
           fill
           onClick={this.updateSettings}
           color="primary">Save</EuiButton>
-      <EuiPanel style={{ maxWidth: 600 }}>
+          </EuiFlexItem >
+          </EuiFlexGroup>
       <EuiFlexGroup>
-      <EuiForm>
+      
         <EuiFlexItem >
         <EuiFormRow
             label="Dropdown Placement"
@@ -102,6 +106,7 @@ render(){
             value={settings['fieldSeparatorDisplay'] ? settings['fieldSeparatorDisplay']: ''}
             onChange={(e) => this.onTextBoxChange(e,'fieldSeparatorDisplay')}/>
           </EuiFormRow>
+          
           <EuiFormRow
             label="Value Label"
             helpText="Help text about render size"
@@ -110,6 +115,7 @@ render(){
             value={settings['valueLabel'] ? settings['valueLabel']: ''}
             onChange={(e) => this.onTextBoxChange(e,'valueLabel')}/>
           </EuiFormRow>
+          
           <EuiFormRow
             label="Value Place Holder"
             helpText="Help text about render size"
@@ -118,6 +124,8 @@ render(){
             value={settings['valuePlaceholder'] ? settings['valuePlaceholder']: ''}
             onChange={(e) => this.onTextBoxChange(e,'valuePlaceholder')}/>
           </EuiFormRow>
+          </EuiFlexItem >
+          <EuiFlexItem >
           <EuiFormRow
             label="Field Label"
             helpText="Help text about render size"
@@ -126,6 +134,7 @@ render(){
             value={settings['fieldLabel'] ? settings['fieldLabel']: ''}
             onChange={(e) => this.onTextBoxChange(e,'fieldLabel')}/>
           </EuiFormRow>
+          
           <EuiFormRow
             label="Operator Label"
             helpText="Help text about render size"
@@ -170,6 +179,8 @@ render(){
             value={settings['addGroupLabel'] ? settings['addGroupLabel']: ''}
             onChange={(e) => this.onTextBoxChange(e,'addGroupLabel')}/>
           </EuiFormRow>
+          </EuiFlexItem>
+         <EuiFlexItem >
           <EuiFormRow
             label="Add Rule Label"
             helpText="Help text about render size"
@@ -212,15 +223,16 @@ render(){
           onChange={(e) => this.onCheckBoxChange(e,'clearValueOnChangeField')}
           />
           </EuiFormRow>
-          </EuiFlexItem >
-          
-          <EuiFlexItem >
           <EuiFormRow label="Clear Value On Change Operator">
           <EuiSwitch
           checked={settings['clearValueOnChangeOp']}
           onChange={(e) => this.onCheckBoxChange(e,'clearValueOnChangeOp')}
           />
           </EuiFormRow>
+          </EuiFlexItem >
+          
+          <EuiFlexItem >
+          
           <EuiFormRow label="Set Default Field And Op">
           <EuiSwitch
           checked={settings['setDefaultFieldAndOp']}
@@ -232,7 +244,9 @@ render(){
           checked={settings['showLabels']}
           onChange={(e) => this.onCheckBoxChange(e,'showLabels')}
           />
+          
           </EuiFormRow>
+          
           <EuiFormRow label="Read-only Mode">
           <EuiSwitch
           checked={settings['readonlyMode']}
@@ -277,9 +291,9 @@ render(){
         </EuiFormRow>
         
         </EuiFlexItem >
-        </EuiForm>
+       
         </EuiFlexGroup>
-      </EuiPanel>
+     
       </EuiPageContentBody>
           </EuiPageContent>
         </EuiPageBody>
