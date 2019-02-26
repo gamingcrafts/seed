@@ -17,8 +17,6 @@ class RuleEngineOperatorsList extends Component {
    
 
     toogleOperatorsForm=(e,name)=>{
-      console.log(e)
-      console.log(name)
         this.props.toogleRuleEngineOperatorForm(name);
     }
    
@@ -34,9 +32,9 @@ render(){
               name: 'Operator Name',
               sortable: true,
               truncateText: true,
-              render: (value) =>
+              render: (value,item) =>
                   (< EuiLink 
-                  onClick={(e)=>this.toogleOperatorsForm(value)}
+                  onClick={(e)=>this.toogleOperatorsForm(e,value)}
                   color = "primary" > {value} </EuiLink>)
 
                 },

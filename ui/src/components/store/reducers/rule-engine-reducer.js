@@ -108,8 +108,6 @@ export default (state = INIT_STATE, action) => {
                 else{
                     selectedOperator=state.operators[action.payload.name]
                 }
-                console.log("Inside Rule Engine Reducer-->")
-                console.log(selectedOperator)
                 return update(state, {
                     operatorsState: {
                         $set:{

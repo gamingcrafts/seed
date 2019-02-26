@@ -16,11 +16,12 @@ import {
   
   } from '@elastic/eui';
 
-
+  import {toogleRuleEngineOperatorList} from '../store/actions/rule-engine-actions'
 class RuleEngineOperatorsForm extends Component {
    
 render(){
-  let {selectedOperator}  = this.props.RuleEngineReducer;
+  let {operatorsState}  = this.props.RuleEngineReducer;
+  let selectedOperator = operatorsState.selectedOperator;
   if(selectedOperator!==undefined){
   return (
     <EuiPage>
@@ -68,7 +69,7 @@ render(){
           Save
         </EuiButton>
         <EuiButton color="warning"
-          onClick={() => window.alert('Button clicked')}
+          onClick={() => this.props.toogleRuleEngineOperatorList()}
         >
           Cancel
         </EuiButton>
@@ -92,5 +93,5 @@ const mapStateToProps = ({RuleEngineReducer}) => {
         RuleEngineReducer
     }
   }
-const actions = {}
+const actions = {toogleRuleEngineOperatorList}
 export default connect(mapStateToProps, actions)(RuleEngineOperatorsForm)

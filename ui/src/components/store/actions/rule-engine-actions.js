@@ -33,7 +33,6 @@ const updateSettings = settings => {
   return (dispatch, getState, http) => {
 
     http.put('/ruleengine/settings/', settings).then(resp => {
-      console.log(resp);
     }).catch(err => {
 
     })
@@ -85,7 +84,6 @@ const getOperators = () => {
 }
 
 const toogleRuleEngineOperatorForm = (operatorName) => {
-  console.log("toogleRuleEngineOperatorForm--->"+operatorName)
   var operator ={name: undefined};
   if (operatorName !== undefined) {
     operator['name'] = operatorName
