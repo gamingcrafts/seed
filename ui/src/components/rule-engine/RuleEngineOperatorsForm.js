@@ -9,7 +9,10 @@ import {
     EuiFlexItem,
     EuiInMemoryTable,
     EuiButton,
-    EuiLink
+    EuiLink,
+    EuiFieldText,
+    EuiFieldNumber,
+    EuiTextArea
   
   } from '@elastic/eui';
 
@@ -17,14 +20,58 @@ import {
 class RuleEngineOperatorsForm extends Component {
    
 render(){
+  let {selectedOperator}  = this.props.RuleEngineReducer;
+  if(selectedOperator!==undefined){
   return (
     <EuiPage>
     <EuiPageBody>
       <EuiPageContent>
       <EuiPageContentBody>
       <EuiFlexGroup>
-        <EuiFlexItem grow={10}>
-        Hello
+        <EuiFlexItem >
+        <EuiFieldText
+          placeholder="Name"
+          value={selectedOperator.name}
+         
+        />
+        <EuiFieldText
+          placeholder="Label"
+          value={selectedOperator.label}
+         
+        />
+        <EuiFieldText
+          placeholder="Label For Format"
+          value={selectedOperator.labelForFormat}
+         
+        />
+        <EuiFieldNumber
+          placeholder="Cardinality"
+          value={selectedOperator.cardinality}
+       
+        />
+        <EuiFieldText
+          placeholder="Reversed Operator"
+          value={selectedOperator.reversedOp}
+         
+        />
+        <EuiTextArea
+          placeholder="FormatOp"
+          
+          value={selectedOperator.formatOp}
+        
+        />
+        </EuiFlexItem>
+        <EuiFlexItem >
+        <EuiButton
+          onClick={() => window.alert('Button clicked')}
+        >
+          Save
+        </EuiButton>
+        <EuiButton color="warning"
+          onClick={() => window.alert('Button clicked')}
+        >
+          Cancel
+        </EuiButton>
         </EuiFlexItem>
         
       </EuiFlexGroup>
@@ -34,6 +81,10 @@ render(){
   </EuiPageBody>
 </EuiPage>
   )
+  }
+  else{
+    return 'Hello'
+  }
 }
 }
 const mapStateToProps = ({RuleEngineReducer}) => {

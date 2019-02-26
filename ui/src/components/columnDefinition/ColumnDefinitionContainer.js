@@ -20,7 +20,10 @@ import {
 
 class ColumnDefinitionContainer extends Component {
 
- 
+ constructor(props){
+   super(props);
+   this.state={}
+ }
 
   onCheckBoxChange = (e, item, type) => {
     this.props.toogleCheckBox({

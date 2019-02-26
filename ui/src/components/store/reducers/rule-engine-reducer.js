@@ -94,14 +94,29 @@ export default (state = INIT_STATE, action) => {
             }
         case TOGGLE_RULE_ENGINE_OPERATOR_FORM:
             {
+                let selectedOperator;
+                if(action.payload.name===undefined){
+                    selectedOperator={
+                        name:'',
+                        label:'',
+                        labelForFormat:'',
+                        cardinality:0,
+                        reversedOp:'',
+                        formatOp:''
+                    }
+                }
+                else{
+                    selectedOperator=state.operators[action.payload.name]
+                }
+                console.log("Inside Rule Engine Reducer-->")
+                console.log(selectedOperator)
                 return update(state, {
                     operatorsState: {
-                        selectedOperator: {
-                            $set: action.payload.name
-                        },
-                        showListView: {
-                            $set: false
-                        }
+                        $set:{
+                        selectedOperator:  selectedOperator,
+                        showListView:false
+                    }
+                        
                     }
                 })
             }

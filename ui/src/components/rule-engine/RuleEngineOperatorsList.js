@@ -16,8 +16,10 @@ import {toogleRuleEngineOperatorForm,toogleRuleEngineOperatorList} from '../stor
 class RuleEngineOperatorsList extends Component {
    
 
-    toogleOperatorsForm=()=>{
-        this.props.toogleRuleEngineOperatorForm();
+    toogleOperatorsForm=(e,name)=>{
+      console.log(e)
+      console.log(name)
+        this.props.toogleRuleEngineOperatorForm(name);
     }
    
 render(){
@@ -33,7 +35,9 @@ render(){
               sortable: true,
               truncateText: true,
               render: (value) =>
-                  (< EuiLink color = "primary" > {value} </EuiLink>)
+                  (< EuiLink 
+                  onClick={(e)=>this.toogleOperatorsForm(value)}
+                  color = "primary" > {value} </EuiLink>)
 
                 },
               {
