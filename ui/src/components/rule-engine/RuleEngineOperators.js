@@ -18,8 +18,8 @@ render(){
     return operators[key];
 })
   const columns = [{
-    field: 'label',
-    name: 'Operator Label',
+    field: 'name',
+    name: 'Operator Name',
     sortable: true,
     truncateText: true,
     render:(value)=>
@@ -27,7 +27,13 @@ render(){
         {value}
       </EuiLink>)
     
-  }, {
+  }, 
+  {
+    field: 'label',
+    name: 'Label',
+    truncateText: true,
+  },
+  {
     field: 'labelForFormat',
     name: 'Label for Format',
     truncateText: true,
@@ -51,7 +57,7 @@ render(){
               <EuiInMemoryTable
           items={operatorsList}
           columns={columns}
-          
+          search={true}
           pagination={true}
           sorting={true}
         />

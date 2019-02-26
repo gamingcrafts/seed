@@ -11,7 +11,7 @@ import {
   EuiPageContentBody,
   EuiPageContentHeader,
   EuiPageContentHeaderSection,
-  EuiTitle, EuiSpacer, EuiBasicTable,
+  EuiTitle, EuiSpacer, EuiBasicTable,EuiInMemoryTable,
   EuiButton, EuiCheckbox, EuiFieldText,
   EuiComboBox,
   EuiFlexGroup,
@@ -222,9 +222,12 @@ class ColumnDefinitionContainer extends Component {
               <EuiSpacer />
               <EuiFlexGroup>
                 <EuiFlexItem>
-                  <EuiBasicTable
+                  <EuiInMemoryTable
                     items={mappings}
                     columns={columns}
+                    search={true}
+          pagination={true}
+          sorting={true}
                   />
                 </EuiFlexItem>
               </EuiFlexGroup>

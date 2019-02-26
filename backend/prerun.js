@@ -52,36 +52,43 @@ const run = async () => {
   let resp = await ruleEngineSettingsService.index(defaultSettings);
 
   let defaultOperators = [ {
+    name:'equal',
     label: 'equal',
     labelForFormat: '==',
     reversedOp: 'not_equal'
   },
    {
+     name:'not_equal',
     label: 'not equal',
     labelForFormat: '!=',
     reversedOp: 'equal',
   },
    {
+    name:'less',
     label: 'lesser',
     labelForFormat: '<',
     reversedOp: 'greater_or_equal'
   },
   {
+    name:'less_or_equal',
     label: 'less than or equal',
     labelForFormat: '<=',
     reversedOp: 'greater'
   },
   {
+    name:'greater',
     label: 'greater',
     labelForFormat: '>',
     reversedOp: 'less_or_equal'
   },
    {
+    name:'greater_or_equal',
     label: 'greater then or equal',
     labelForFormat: '>=',
     reversedOp: 'less',
   },
   {
+    name:'between',
     label: 'Between',
     labelForFormat: 'BETWEEN',
     cardinality: 2,
@@ -104,6 +111,7 @@ const run = async () => {
     reversedOp: 'not_between'
   },
 {
+  name:'not_between',
     label: 'Not between',
     labelForFormat: 'NOT BETWEEN',
     cardinality: 2,
@@ -118,6 +126,7 @@ const run = async () => {
     ]
   },
   {
+    name:'is_empty',
     isUnary: true,
     label: 'Empty',
     labelForFormat: 'IS EMPTY',
@@ -128,6 +137,7 @@ const run = async () => {
     }
   },
    {
+    name:'is_not_empty',
     isUnary: true,
     label: 'Not Empty',
     labelForFormat: 'IS NOT EMPTY',
@@ -138,6 +148,7 @@ const run = async () => {
     }
   },
    {
+    name:'select_equals',
     label: 'in',
     labelForFormat: '==',
     formatOp: (field, op, value, valueSrc, valueType, opDef, operatorOptions, isForDisplay) => {
@@ -146,6 +157,7 @@ const run = async () => {
     reversedOp: 'select_not_equals',
   },
   {
+    name:'select_not_equals',
     label: 'not in',
     labelForFormat: '!=',
     formatOp: (field, op, value, valueSrc, valueType, opDef, operatorOptions, isForDisplay) => {
@@ -156,6 +168,7 @@ const run = async () => {
 
 
    {
+    name:'text_select_equals',
     label: 'equal',
     labelForFormat: '==',
     formatOp: (field, op, value, valueSrc, valueType, opDef, operatorOptions, isForDisplay) => {
@@ -164,6 +177,7 @@ const run = async () => {
     reversedOp: 'text_select_not_equals',
   },
   {
+    name:'text_select_not_equals',
     label: 'not equal',
     labelForFormat: '!=',
     formatOp: (field, op, value, valueSrc, valueType, opDef, operatorOptions, isForDisplay) => {
@@ -175,19 +189,23 @@ const run = async () => {
 
 
    {
+    name:'date_between',
     label: 'in',
     labelForFormat: 'in'
   },
  {
+  name:'date_before',
     label: 'before',
     labelForFormat: '<'
   },
   {
+    name:'date_after',
     label: 'after',
     labelForFormat: '>'
   },
 
    {
+    name:'contains',
     label: 'in',
     labelForFormat: 'in'
   },
@@ -196,6 +214,7 @@ const run = async () => {
 
 
    {
+    name:'agg_equal',
     label: 'equal',
     labelForFormat: '==',
     reversedOp: 'agg_not_equal',
@@ -212,6 +231,7 @@ const run = async () => {
     }
   },
   {
+    name:'agg_not_equal',
     label: 'not equal',
     labelForFormat: '!=',
     reversedOp: 'agg_equal',
@@ -228,6 +248,7 @@ const run = async () => {
     }
   },
    {
+    name:'agg_less',
     label: 'lesser',
     labelForFormat: '<',
     reversedOp: 'agg_greater_or_equal',
@@ -244,6 +265,7 @@ const run = async () => {
     }
   },
    {
+    name:'agg_less_or_equal',
     label: 'less than or equal',
     labelForFormat: '<=',
     reversedOp: 'agg_greater',
@@ -260,6 +282,7 @@ const run = async () => {
     }
   },
   {
+    name:'agg_greater',
     label: 'greater',
     labelForFormat: '>',
     reversedOp: 'agg_less_or_equal',
@@ -276,6 +299,7 @@ const run = async () => {
     }
   },
   {
+    name:'agg_greater_or_equal',
     label: 'greater then or equal',
     labelForFormat: '>=',
     reversedOp: 'agg_less',
@@ -293,6 +317,7 @@ const run = async () => {
   },
 
    {
+    name:'agg_between',
     label: 'Between',
     labelForFormat: 'BETWEEN',
     cardinality: 2,
@@ -323,6 +348,7 @@ const run = async () => {
     }
   },
    {
+    name:'agg_not_between',
     label: 'Not between',
     labelForFormat: 'NOT BETWEEN',
     cardinality: 2,
@@ -348,9 +374,10 @@ const run = async () => {
   defaultOperators.forEach(async function (dos) {
     if (dos['formatOp'] !== undefined)
       dos['formatOp'] = dos['formatOp'].toString()
-    operatorsObject[dos.label] = dos;
+    operatorsObject[dos.name] = dos;
 
   })
+  console.log(operatorsObject);
   let respForOperators = await ruleEngineOperatorsService.index(operatorsObject);
 }
 module.exports = {
