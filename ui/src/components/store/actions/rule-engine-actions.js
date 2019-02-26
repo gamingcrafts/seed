@@ -7,7 +7,9 @@ import {
   OPERATORS_GET_SUCCESS,
   OPERATORS_GET_FAILURE,
   TOGGLE_RULE_ENGINE_OPERATOR_FORM,
-  TOGGLE_RULE_ENGINE_OPERATOR_LIST
+  TOGGLE_RULE_ENGINE_OPERATOR_LIST,
+  UPDATE_OPERATORS_TEXT_BOX,
+  UPDATE_OPERATORS_NUMBER_BOX
 } from "../actions/types";
 
 const getSettings = () => {
@@ -82,7 +84,6 @@ const getOperators = () => {
       })
   }
 }
-
 const toogleRuleEngineOperatorForm = (operatorName) => {
   var operator ={name: undefined};
   if (operatorName !== undefined) {
@@ -104,6 +105,25 @@ const toogleRuleEngineOperatorList = () => {
     })
   }
 }
+
+const updateOperatorsTextBox=(textBoxValue)=>{
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_OPERATORS_TEXT_BOX,
+      payload: textBoxValue
+    })
+  }
+}
+
+const updateOperatorsNumberBox=(numberBoxValue)=>{
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_OPERATORS_NUMBER_BOX,
+      payload: numberBoxValue
+    })
+  }
+}
+
 export {
   getSettings,
   updateTextBox,
@@ -112,5 +132,6 @@ export {
   updateNumberBox,
   getOperators,
   toogleRuleEngineOperatorForm,
-  toogleRuleEngineOperatorList
+  toogleRuleEngineOperatorList,
+  updateOperatorsTextBox
 }

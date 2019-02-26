@@ -5,9 +5,11 @@ import {
     UPDATE_SEGMENTATION_CHECK_BOX,
     UPDATE_SEGMENTATION_NUMBER_BOX,
     OPERATORS_GET_SUCCESS,
-    OPERATORS_GET_FAILURE,
+    // OPERATORS_GET_FAILURE,
     TOGGLE_RULE_ENGINE_OPERATOR_FORM,
-    TOGGLE_RULE_ENGINE_OPERATOR_LIST
+    TOGGLE_RULE_ENGINE_OPERATOR_LIST,
+    UPDATE_OPERATORS_TEXT_BOX,
+  UPDATE_OPERATORS_NUMBER_BOX
 } from "../actions/types";
 
 import update from 'react-addons-update';
@@ -130,6 +132,18 @@ export default (state = INIT_STATE, action) => {
                         }
                     }
                 })
+            }
+            case UPDATE_OPERATORS_TEXT_BOX:{
+                let type = action.payload.type;
+              let value = action.payload.value;
+                return update(state, {
+                    operatorsState: {
+                        selectedOperator: {
+                            
+                            $merge:{[type]:value}
+                          }
+                    }
+            })
             }
 
         default:

@@ -7,17 +7,20 @@ import {
     EuiPageContentBody,
     EuiFlexGroup,
     EuiFlexItem,
-    EuiInMemoryTable,
     EuiButton,
-    EuiLink,
     EuiFieldText,
     EuiFieldNumber,
     EuiTextArea
   
   } from '@elastic/eui';
 
-  import {toogleRuleEngineOperatorList} from '../store/actions/rule-engine-actions'
+  import {toogleRuleEngineOperatorList,updateOperatorsTextBox} from '../store/actions/rule-engine-actions'
 class RuleEngineOperatorsForm extends Component {
+
+  onTextChange =(e,type)=>{
+    let textBoxData = {type:type,value:e.target.value};
+    this.props.updateOperatorsTextBox(textBoxData);
+  }
    
 render(){
   let {operatorsState}  = this.props.RuleEngineReducer;
@@ -33,17 +36,17 @@ render(){
         <EuiFieldText
           placeholder="Name"
           value={selectedOperator.name}
-         
+          onChange={(e)=>{this.onTextChange(e,'name')}}
         />
         <EuiFieldText
           placeholder="Label"
           value={selectedOperator.label}
-         
+          onChange={(e)=>{this.onTextChange(e,'label')}}
         />
         <EuiFieldText
           placeholder="Label For Format"
           value={selectedOperator.labelForFormat}
-         
+          onChange={(e)=>{this.onTextChange(e,'labelForFormat')}}
         />
         <EuiFieldNumber
           placeholder="Cardinality"
@@ -53,11 +56,11 @@ render(){
         <EuiFieldText
           placeholder="Reversed Operator"
           value={selectedOperator.reversedOp}
-         
+          onChange={(e)=>{this.onTextChange(e,'reversedOp')}}
         />
         <EuiTextArea
           placeholder="FormatOp"
-          
+          onChange={(e)=>{this.onTextChange(e,'formatOp')}}
           value={selectedOperator.formatOp}
         
         />
@@ -93,5 +96,5 @@ const mapStateToProps = ({RuleEngineReducer}) => {
         RuleEngineReducer
     }
   }
-const actions = {toogleRuleEngineOperatorList}
+const actions = {toogleRuleEngineOperatorList,updateOperatorsTextBox}
 export default connect(mapStateToProps, actions)(RuleEngineOperatorsForm)
