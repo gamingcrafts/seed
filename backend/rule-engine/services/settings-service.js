@@ -22,11 +22,23 @@ const list = async () => {
         .search({
             size: 1000
         });
-    let ruleEngineSettings = {}
-    if (resp['hits']['hits'][0]._source.config !== undefined) {
-        ruleEngineSettings = JSON.parse(resp['hits']['hits'][0]._source.config);
-    }
-    return ruleEngineSettings;
+        let settingsDocument = undefined;
+        console.log('-------Rule Engine DOcs-------------')
+        resp['hits']['hits'].some((hit)=>{
+            
+            if(hit._id==='engine_settings'){
+                settingsDocument=hit;
+                return true;
+        }})
+        console.log(settingsDocument)
+        console.log('-------Rule Engine DOcs-------------')
+      
+        let ruleEngineSettings = {}
+        if (settingsDocument['_source']['config'] !== undefined) {
+            ruleEngineSettings = settingsDocument['_source']['config'];
+        }
+        
+        return ruleEngineSettings;
 
 };
 

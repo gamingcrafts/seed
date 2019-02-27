@@ -22,10 +22,17 @@ const list = async () => {
         .search({
             size: 1000
         });
+    let operatorsDocument = undefined;
+    resp['hits']['hits'].some((hit)=>{
+        if(hit._id==='engine_operators'){
+            operatorsDocument=hit;
+            return true;
+    }})
     let ruleEngineOperators = {}
-    if (resp['hits']['hits'][0]._source.operators !== undefined) {
-        ruleEngineOperators = resp['hits']['hits'][0]._source.operators;
+    if (operatorsDocument['_source']['operators'] !== undefined) {
+        ruleEngineOperators = operatorsDocument['_source']['operators'];
     }
+    
     return ruleEngineOperators;
 };
 

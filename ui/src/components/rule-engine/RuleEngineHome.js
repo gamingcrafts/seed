@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import RuleEngineSettings from '../rule-engine/RuleEngineSettings';
 import RuleEngineOperators from '../rule-engine/RuleEngineOperators';
+import RuleEngineFields from '../rule-engine/RuleEngineFields';
 import { connect } from 'react-redux';
 import {
   getIndices
@@ -28,6 +29,13 @@ class RuleEngineHome extends Component {
       name: 'Operators',
       content: (
         <RuleEngineOperators/>
+      ),
+    },
+    {
+      id: 'ruleEngineFields',
+      name: 'Fields',
+      content: (
+        <RuleEngineFields/>
       ),
     }];
   }
