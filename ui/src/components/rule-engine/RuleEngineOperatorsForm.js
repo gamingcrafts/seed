@@ -101,6 +101,13 @@ render(){
             onChange={(e)=>this.onNumberChange(e,'cardinality')}
         />
         </EuiFormRow>
+        
+       
+        <EuiButton color="ghost" fill={true}
+          onClick={() => this.props.toogleRuleEngineOperatorList()}
+        >
+          Cancel
+        </EuiButton>
         </EuiFlexItem>
         <EuiFlexItem >
         <EuiFormRow
@@ -125,7 +132,8 @@ render(){
         <EuiCodeEditor
         mode="javascript"
         theme="github"
-        width="100%"
+        width="600px"
+        height="208px"
         value={selectedOperator.formatOp}
         onChange={this.onCodeChange}
         setOptions={{
@@ -138,18 +146,13 @@ render(){
         aria-label="Code Editor"
       />
         </EuiFormRow>
-        </EuiFlexItem>
-        <EuiFlexItem >
+        
         <EuiButton
+        color="secondary"
+        fill={true}
           onClick={() => this.updateOperators()}
         >
           Save
-        </EuiButton>
-        <EuiSpacer size="xl" />
-        <EuiButton color="warning"
-          onClick={() => this.props.toogleRuleEngineOperatorList()}
-        >
-          Cancel
         </EuiButton>
         </EuiFlexItem>
         
