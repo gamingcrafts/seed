@@ -38,9 +38,11 @@ module.exports = function (server) {
       validate: {
         payload: {
           indexName: Joi.string().required(),
-          properties:Joi.object().required()
+          properties: Joi.object().required()
         },
-        failAction: async (request, h, err) => { throw err; }
+        failAction: async (request, h, err) => {
+          throw err;
+        }
       }
     }
   });
@@ -49,7 +51,10 @@ module.exports = function (server) {
     path: '/custommappings/{id}',
     method: 'PUT',
     handler(req, h) {
-      const { id, ...customMapping } = req.payload;
+      const {
+        id,
+        ...customMapping
+      } = req.payload;
       return customMappingService.index(customMapping, req.params.id);
     },
     options: {
@@ -60,10 +65,10 @@ module.exports = function (server) {
           id: Joi.string().required()
         },
         payload: {
-            indexName: Joi.string().required(),
-            mappingId: Joi.string().optional(),
-            properties:Joi.object().required()
-          }
+          indexName: Joi.string().required(),
+          mappingId: Joi.string().optional(),
+          properties: Joi.object().required()
+        }
       }
     }
   });

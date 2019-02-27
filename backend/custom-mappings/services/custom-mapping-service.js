@@ -17,20 +17,16 @@ const index = async (customMapping, id) => {
 
 const getOneCustomMapping = async (indexName) => {
     return client
-    .onResults(resp => 
-       
-        resp.hits.hits.filter((r)=>r._source.indexName==indexName).map(h => ({
-        ...h._source,
-        id: h._id
-    })))
-    .search({
-        size: 1000
-    });
+        .onResults(resp =>
 
-  
-     
- }
-
+            resp.hits.hits.filter((r) => r._source.indexName == indexName).map(h => ({
+                ...h._source,
+                id: h._id
+            })))
+        .search({
+            size: 1000
+        });
+}
 
 const list = () => {
     return client

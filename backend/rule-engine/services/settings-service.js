@@ -15,30 +15,27 @@ const index = async (settings) => {
         ...settings
     };
 };
-
 const list = async () => {
     let resp = await client
         .onResults()
         .search({
             size: 1000
         });
-        let settingsDocument = undefined;
-        console.log('-------Rule Engine DOcs-------------')
-        resp['hits']['hits'].some((hit)=>{
-            
-            if(hit._id==='engine_settings'){
-                settingsDocument=hit;
-                return true;
-        }})
-        console.log(settingsDocument)
-        console.log('-------Rule Engine DOcs-------------')
-      
-        let ruleEngineSettings = {}
-        if (settingsDocument['_source']['config'] !== undefined) {
-            ruleEngineSettings = settingsDocument['_source']['config'];
+    let settingsDocument = undefined;
+    resp['hits']['hits'].some((hit) => {
+
+        if (hit._id === 'engine_settings') {
+            settingsDocument = hit;
+            return true;
         }
-        
-        return ruleEngineSettings;
+    })
+
+    let ruleEngineSettings = {}
+    if (settingsDocument['_source']['config'] !== undefined) {
+        ruleEngineSettings = settingsDocument['_source']['config'];
+    }
+
+    return ruleEngineSettings;
 
 };
 

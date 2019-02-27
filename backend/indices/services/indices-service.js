@@ -7,7 +7,7 @@ const getAllindices = async () => {
 }
 
 const getMapping = async indexName => {
-  let resp = await new ESClient().client().indices.getMapping({ 
+  let resp = await new ESClient().client().indices.getMapping({
     index: indexName
   });
 

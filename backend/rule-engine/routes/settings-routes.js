@@ -18,16 +18,16 @@ module.exports = function (server) {
     path: '/ruleengine/settings/',
     method: 'PUT',
     handler(req, h) {
-      
+
       return settingsService.index(req.payload);
     },
     options: {
       description: 'Update the Rule-Engine Settings',
       tags: ['api'],
       validate: {
-        
+
         payload: Joi.object().required()
-          
+
       }
     }
   });

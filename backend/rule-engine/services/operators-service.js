@@ -23,16 +23,17 @@ const list = async () => {
             size: 1000
         });
     let operatorsDocument = undefined;
-    resp['hits']['hits'].some((hit)=>{
-        if(hit._id==='engine_operators'){
-            operatorsDocument=hit;
+    resp['hits']['hits'].some((hit) => {
+        if (hit._id === 'engine_operators') {
+            operatorsDocument = hit;
             return true;
-    }})
+        }
+    })
     let ruleEngineOperators = {}
     if (operatorsDocument['_source']['operators'] !== undefined) {
         ruleEngineOperators = operatorsDocument['_source']['operators'];
     }
-    
+
     return ruleEngineOperators;
 };
 

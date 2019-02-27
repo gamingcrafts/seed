@@ -2,8 +2,6 @@ const Joi = require('joi');
 const indicesService = require('../services/indices-service');
 
 module.exports = function (server) {
-  
-
   server.route({
     path: '/indices',
     method: 'GET',
@@ -32,8 +30,4 @@ module.exports = function (server) {
       }
     }
   });
-
-  
-
-  
 }

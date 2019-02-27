@@ -69,7 +69,7 @@ render(){
               <EuiPageContentBody>
               <EuiFlexGroup>
                 <EuiFlexItem grow={10}>
-                
+                <h3>Rule-Engine Operators</h3>
                 </EuiFlexItem>
                 {/* <EuiLoadingChart size="xl" mono/> */}
 

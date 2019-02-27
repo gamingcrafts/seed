@@ -61,7 +61,9 @@ render(){
           <EuiPageContent>
           <EuiPageContentBody>
           <EuiFlexGroup justifyContent="spaceBetween">
-          <EuiFlexItem grow={false}></EuiFlexItem>
+          <EuiFlexItem grow={false}>
+            <h3>Rule-Engine Settings</h3>
+          </EuiFlexItem>
           <EuiFlexItem grow={false}>
           <EuiButton
           fill

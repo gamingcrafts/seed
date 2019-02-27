@@ -1,6 +1,4 @@
-
-const kpis =
-{
+const kpis = {
   "properties": {
     "aboutMe": {
       "type": "text",
