@@ -54,24 +54,18 @@ const saveCustomMapping = customMap => {
 
   return (dispatch, getState, http) => {
 
-    if (customMap.mappingId === undefined) {
-      http.post('/coldef/', customMap).then(resp => {
-        
-        dispatch({
-          type: CUSTOM_MAPPING_CREATE_SUCCESS,
-          payload: {
-            indexName: resp.data.indexName,
-            indexId: resp.data.id
-          }
-        })
-      }).catch(err => {
+    http.post('/coldef/', customMap).then(resp => {
 
+      dispatch({
+        type: CUSTOM_MAPPING_CREATE_SUCCESS,
+        payload: {
+          indexName: resp.data.indexName,
+          indexId: resp.data.id
+        }
       })
-    } else {
-      http.put('/coldef/' + customMap.mappingId, customMap).then(resp => {}).catch(err => {
+    }).catch(err => {
 
-      })
-    }
+    })
   }
 }
 const toogleCheckBox = checkBoxOptions => {
