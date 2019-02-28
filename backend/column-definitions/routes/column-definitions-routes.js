@@ -1,9 +1,9 @@
 const Joi = require('joi');
-const customMappingService = require('../services/custom-mapping-service');
+const customMappingService = require('../services/column-definitions-service');
 
 module.exports = function (server) {
   server.route({
-    path: '/custommappings',
+    path: '/coldef',
     method: 'GET',
     handler(req, h) {
       return customMappingService.list();
@@ -15,7 +15,7 @@ module.exports = function (server) {
   });
 
   server.route({
-    path: '/custommappings/{indexName}',
+    path: '/coldef/{indexName}',
     method: 'GET',
     handler(req, h) {
       return customMappingService.getOneCustomMapping(req.params.indexName);
@@ -27,7 +27,7 @@ module.exports = function (server) {
   });
 
   server.route({
-    path: '/custommappings/',
+    path: '/coldef/',
     method: 'POST',
     handler(req, h) {
       return customMappingService.index(req.payload);
@@ -48,7 +48,7 @@ module.exports = function (server) {
   });
 
   server.route({
-    path: '/custommappings/{id}',
+    path: '/coldef/{id}',
     method: 'PUT',
     handler(req, h) {
       const {
