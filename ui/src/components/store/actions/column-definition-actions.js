@@ -10,7 +10,7 @@ import {
 
 const getIndices = () => {
   return (dispatch, getState, http) => {
-    http.get('/indices')
+    http.get('/alias')
       .then(res => {
         dispatch({
           type: INDICES_GET_ALL_SUCCESS,
