@@ -3,25 +3,25 @@ const indicesService = require('../services/indices-service');
 
 module.exports = function (server) {
   server.route({
-    path: '/indices',
+    path: '/alias',
     method: 'GET',
     handler(req, h) {
-      return indicesService.getAllindices();
+      return indicesService.getAliases();
     },
     options: {
-      description: 'Gets the list of Indices in the DB',
+      description: 'Gets the list of Alias in the DB',
       tags: ['api']
     }
   });
 
   server.route({
-    path: '/indices/{indexName}',
+    path: '/alias/{indexName}',
     method: 'GET',
     handler(req, h) {
       return indicesService.getMapping(req.params.indexName);
     },
     options: {
-      description: 'Gets the details of the index in the DB',
+      description: 'Gets the Mappings of the index in the DB',
       tags: ['api'],
       validate: {
         params: {

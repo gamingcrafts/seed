@@ -1,22 +1,32 @@
 const ESClient = require('../../server/esclient');
 
-const getAllindices = async () => {
-  return await new ESClient().client().indices.get({
-    index: "*"
+const getAliases = async () => {
+  let aliases = await new ESClient().client().cat.aliases({
+    format: 'json'
   });
+
+  return aliases.map(a => a.alias);
 }
 
 const getMapping = async indexName => {
+  let mappings = {};
   let resp = await new ESClient().client().indices.getMapping({
     index: indexName
   });
 
-  let type = Object.keys(resp[indexName].mappings)[0];
-  return resp[indexName].mappings[type].properties;
+  let values = Object.values(resp);
+  values.forEach(value => {
+    let types = Object.values(value.mappings || {});
+    types.forEach(type => {
+      mappings = type.properties || {};
+    })
+  });
+
+  return mappings;
 }
 
 
 module.exports = {
-  getAllindices,
-  getMapping
+  getMapping,
+  getAliases
 };
