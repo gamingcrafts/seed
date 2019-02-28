@@ -22,15 +22,9 @@ export default (state = INIT_STATE, action) => {
   switch (action.type) {
 
     case INDICES_GET_ALL_SUCCESS: {
-      let indices = [];
-      Object.keys(action.payload).forEach((index) => {
-        if (index !== 'custom_mapping') {
-          indices.push({ label: index });
-        }
-      });
       return update(state, {
         indices: {
-          $set: indices
+          $set: action.payload.map(a => ({ label: a }))
         },
         loading: {
           $set: false

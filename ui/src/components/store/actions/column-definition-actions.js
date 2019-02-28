@@ -29,11 +29,11 @@ const getIndices = () => {
 const getIndexCustomMapping = selectedIndex => {
   return (dispatch, getState, http) => {
     let mappings = {};
-    http.get('/indices/' + selectedIndex)
+    http.get('/alias/' + selectedIndex)
       .then(resp => {
         mappings.indexProperties = resp.data;
 
-        http.get('/custommappings/' + selectedIndex)
+        http.get('/coldef/' + selectedIndex)
           .then(customMapping => {
             mappings.customMapping = customMapping;
             dispatch({
@@ -55,7 +55,7 @@ const saveCustomMapping = customMap => {
   return (dispatch, getState, http) => {
 
     if (customMap.mappingId === undefined) {
-      http.post('/custommappings/', customMap).then(resp => {
+      http.post('/coldef/', customMap).then(resp => {
         
         dispatch({
           type: CUSTOM_MAPPING_CREATE_SUCCESS,
@@ -68,7 +68,7 @@ const saveCustomMapping = customMap => {
 
       })
     } else {
-      http.put('/custommappings/' + customMap.mappingId, customMap).then(resp => {}).catch(err => {
+      http.put('/coldef/' + customMap.mappingId, customMap).then(resp => {}).catch(err => {
 
       })
     }
