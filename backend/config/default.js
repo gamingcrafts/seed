@@ -15,7 +15,7 @@ module.exports = {
   },
   indexes: {
     sample: 'sample__sample',
-    customMapping:'custom_mapping',
+    setting: '.dev_optikpi_settings',
     ruleEngine:'.optikpi_rule_engine'
   }
 }

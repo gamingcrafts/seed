@@ -9,21 +9,18 @@ const prerun = require('./prerun');
 const _ = require('lodash');
 
 const sampleRoute = require('./samples/routes/sample-routes');
-const customMappingRoute = require('./custom-mappings/routes/custom-mapping-routes');
+const columnDefinitionRoute = require('./column-definitions/routes/column-definitions-routes');
 const indicesRoute = require('./indices/routes/indices-routes');
 const ruleEngineSettingsRoute = require('./rule-engine/routes/settings-routes');
 const ruleEngineOperatorsRoute = require('./rule-engine/routes/operators-routes');
 
-const routesArray = [sampleRoute,customMappingRoute,indicesRoute,ruleEngineSettingsRoute,ruleEngineOperatorsRoute];
+const routesArray = [sampleRoute, columnDefinitionRoute, indicesRoute, ruleEngineSettingsRoute, ruleEngineOperatorsRoute];
 
-// sampleRoute(server);
-// customMappingRoute(server);
-// indicesRoutes(server);
-_.invokeMap(routesArray,_.call,null,server);
+_.invokeMap(routesArray, _.call, null, server);
 
 const init = async () => {
 
-  prerun.run();
+  //prerun.run();
 
   const swaggerOptions = {
     info: {
