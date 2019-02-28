@@ -102,14 +102,6 @@ render(){
         />
         </EuiFormRow>
         
-       
-        <EuiButton color="ghost" fill={true}
-          onClick={() => this.props.toogleRuleEngineOperatorList()}
-        >
-          Cancel
-        </EuiButton>
-        </EuiFlexItem>
-        <EuiFlexItem >
         <EuiFormRow
           label="Reversed Operator"
         >
@@ -119,6 +111,14 @@ render(){
           onChange={(e)=>{this.onTextChange(e,'reversedOp')}}
         />
         </EuiFormRow>
+        <EuiButton color="ghost" fill={true}
+          onClick={() => this.props.toogleRuleEngineOperatorList()}
+        >
+          Cancel
+        </EuiButton>
+        </EuiFlexItem>
+        <EuiFlexItem >
+        
         <EuiFormRow
           label="FormatOp"
         >
