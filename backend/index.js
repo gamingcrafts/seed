@@ -20,7 +20,7 @@ _.invokeMap(routesArray, _.call, null, server);
 
 const init = async () => {
 
-  //prerun.run();
+prerun.run();
 
   const swaggerOptions = {
     info: {

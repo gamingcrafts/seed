@@ -23,7 +23,10 @@ const INIT_STATE = {
     operatorsState: {
         loading: false,
         selectedOperator: undefined,
-        showListView: true
+        showListView: true,
+        formatOpArgumentOne:undefined,
+        formatOpArgumentTwo:undefined,
+        formatOpFuntionResult:undefined
     }
 }
 
@@ -109,7 +112,10 @@ export default (state = INIT_STATE, action) => {
                 }
                 else{
                     selectedOperator=state.operators[action.payload.name]
+                    if(selectedOperator['formatOp']!==undefined){
+                    selectedOperator['formatOp'] =selectedOperator['formatOp'].match(/=>[^{]+\{([\s\S]*)\}$/)[1]
                 }
+            }
                 return update(state, {
                     operatorsState: {
                         $set:{

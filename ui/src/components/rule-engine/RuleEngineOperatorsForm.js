@@ -10,6 +10,7 @@ import {
     EuiButton,
     EuiFieldText,
     EuiFieldNumber,
+    EuiText,
     // EuiTextArea,
     EuiCodeEditor,
     EuiFormRow,
@@ -29,7 +30,10 @@ import {
 class RuleEngineOperatorsForm extends Component {
 
   onTextChange =(e,type)=>{
-    console.log(e);
+    let textBoxData = {type:type,value:e.target.value};
+    this.props.updateOperatorsTextBox(textBoxData);
+  }
+  onArgumentTextChange=(e,type)=>{
     let textBoxData = {type:type,value:e.target.value};
     this.props.updateOperatorsTextBox(textBoxData);
   }
@@ -45,10 +49,13 @@ class RuleEngineOperatorsForm extends Component {
     let {operators,operatorsState}=this.props.RuleEngineReducer;
     
     let currentOperator = operatorsState.selectedOperator;
-    console.log(currentOperator);
-    if(currentOperator.name!=='')
+    if(currentOperator.name!==''){
+      const functionStart = '(field, op, values, valueSrcs, valueTypes, opDef, operatorOptions, isForDisplay) => {';
+      const functionClose = '}'
+      currentOperator['formatOp'] = functionStart+currentOperator['formatOp']+functionClose;
     operators[currentOperator.name] = currentOperator;
-    console.log(operators);
+    
+    }
     this.props.updateOperators(operators);
   }
    
@@ -118,17 +125,12 @@ render(){
         </EuiButton>
         </EuiFlexItem>
         <EuiFlexItem >
-        
+        <h5>FormatOp:</h5>
+        <h6>{'(field, op, values, valueSrcs, valueTypes, opDef, operatorOptions, isForDisplay) => {'}</h6>
         <EuiFormRow
-          label="FormatOp"
+          label=""
         >
-        {/* <EuiTextArea
-          placeholder="FormatOp"
-          onChange={(e)=>{this.onTextChange(e,'formatOp')}}
-          value={selectedOperator.formatOp}
         
-        /> */}
-
         <EuiCodeEditor
         mode="javascript"
         theme="github"
@@ -142,11 +144,10 @@ render(){
           enableSnippets: true,
           enableLiveAutocompletion: true,
         }}
-        onBlur={() => { console.log('blur'); }} // eslint-disable-line no-console
         aria-label="Code Editor"
       />
         </EuiFormRow>
-        
+        <h6>{'}'}</h6>
         <EuiButton
         color="secondary"
         fill={true}

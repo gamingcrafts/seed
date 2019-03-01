@@ -4,7 +4,6 @@ const getAliases = async () => {
   let aliases = await new ESClient().client().cat.aliases({
     format: 'json'
   });
-
   return aliases.map(a => a.alias);
 }
 

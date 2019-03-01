@@ -22,7 +22,10 @@ class ColumnDefinitionContainer extends Component {
 
  constructor(props){
    super(props);
-   this.state={}
+   this.state={
+    selectedOption: [],
+    mappings: []
+   }
  }
 
   onCheckBoxChange = (e, item, type) => {
@@ -65,9 +68,37 @@ class ColumnDefinitionContainer extends Component {
     }
   };
   
+  
   render() {
     
     let { indices, mappings,columnDefinition } = this.props.columnDefinitionReducer;
+
+    const renderComboBox = ()=>{
+      return(<EuiFlexItem grow={10}><EuiComboBox
+        placeholder="Select an Index"
+        options={indices}
+        onChange={this.onChange}
+        onSearchChange={this.onSearchChange}
+        selectedOptions={this.state.selectedOption}
+        singleSelection={{ asPlainText: true }}
+      /></EuiFlexItem>
+    )
+    }
+    const renderAddButton=()=>{
+      return( <EuiButton
+        fill
+        onClick={this.saveCustomMapping}
+        color="primary">Save</EuiButton>)
+    }
+
+    let search={
+      toolsLeft: renderComboBox(),
+      toolsRight: renderAddButton(),
+      fullWidth:true,
+      box: {
+        incremental: true,
+      }
+    }
     const columns = [{
       field: 'fieldName',
       name: 'Column Name',
@@ -219,13 +250,12 @@ class ColumnDefinitionContainer extends Component {
                     color="primary">Save</EuiButton>
                 </EuiFlexItem>
               </EuiFlexGroup>
-              <EuiSpacer />
               <EuiFlexGroup>
                 <EuiFlexItem>
                   <EuiInMemoryTable
                     items={mappings}
                     columns={columns}
-                    search={true}
+                    search={search}
           pagination={true}
           sorting={true}
                   />
