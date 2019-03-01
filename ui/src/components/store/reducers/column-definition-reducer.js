@@ -3,13 +3,14 @@ import {
   INDICES_GET_ALL_FAILURE,
   POPULATE_CUSTOM_MAPPING_SUCCESS,
   TOGGLE_CHECK_BOX,
-  UPDATE_TEXT_BOX, CUSTOM_MAPPING_CREATE_SUCCESS
+  UPDATE_TEXT_BOX, CUSTOM_MAPPING_CREATE_SUCCESS, CUSTOM_MAPPING_FETCHING_FLAG
 } from "../actions/types";
 import update from 'react-addons-update';
 
 const INIT_STATE = {
   loading: true,
   loaded: false,
+  fetchingMapping: false,
   indices: [],
   mappings: [],
   columnDefinition: {},
@@ -23,33 +24,23 @@ export default (state = INIT_STATE, action) => {
 
     case INDICES_GET_ALL_SUCCESS: {
       let indices = [];
-     
-      action.payload.forEach((alias)=>{
-        indices.push({label:alias})
-      })
-      
-      
+      action.payload.forEach(alias => indices.push({ label: alias }))
+
       return update(state, {
-        indices: {
-          $set: action.payload.map(a => ({ label: a }))
-        },
-        loading: {
-          $set: false
-        },
-        loaded: {
-          $set: false
-        }
+        indices: { $set: action.payload.map(a => ({ label: a })) },
+        loading: { $set: false },
+        loaded: { $set: false }
       })
     }
     case INDICES_GET_ALL_FAILURE:
       return update(state, {
-        loading: {
-          $set: false
-        },
-        loaded: {
-          $set: false
-        }
+        loading: { $set: false },
+        loaded: { $set: false }
       })
+
+
+
+
     case POPULATE_CUSTOM_MAPPING_SUCCESS: {
       let mappings = [];
       let indexProperties = action.payload.indexProperties;
@@ -91,11 +82,16 @@ export default (state = INIT_STATE, action) => {
         },
         mappings: {
           $set: mappings
-        }
-        ,
+        },
+        fetchingMapping: { $set: false },
         columnDefinition: {
           $set: columnDefinition
         }
+      })
+    }
+    case CUSTOM_MAPPING_FETCHING_FLAG: {
+      return update(state, {
+        fetchingMapping: { $set: action.payload }
       })
     }
     case CUSTOM_MAPPING_CREATE_SUCCESS: {

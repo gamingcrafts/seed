@@ -4,7 +4,8 @@ import {
   POPULATE_CUSTOM_MAPPING_SUCCESS,
   TOGGLE_CHECK_BOX,
   UPDATE_TEXT_BOX,
-  CUSTOM_MAPPING_CREATE_SUCCESS
+  CUSTOM_MAPPING_CREATE_SUCCESS,
+  CUSTOM_MAPPING_FETCHING_FLAG
 } from './types';
 
 
@@ -12,7 +13,6 @@ const getIndices = () => {
   return (dispatch, getState, http) => {
     http.get('/alias')
       .then(res => {
-        
         dispatch({
           type: INDICES_GET_ALL_SUCCESS,
           payload: res.data
@@ -27,8 +27,16 @@ const getIndices = () => {
   }
 }
 
+
 const getIndexCustomMapping = selectedIndex => {
   return (dispatch, getState, http) => {
+
+    dispatch({
+      type: CUSTOM_MAPPING_FETCHING_FLAG,
+      payload: true
+    })
+
+
     let mappings = {};
     http.get('/alias/' + selectedIndex)
       .then(resp => {
@@ -46,18 +54,16 @@ const getIndexCustomMapping = selectedIndex => {
             })
           })
       }).catch(err => {
-
+        // TODO: Handle error block with toast
       })
   }
 }
 
+
 const saveCustomMapping = customMap => {
-
   return (dispatch, getState, http) => {
-
     if (customMap.mappingId === undefined) {
       http.post('/coldef/', customMap).then(resp => {
-        
         dispatch({
           type: CUSTOM_MAPPING_CREATE_SUCCESS,
           payload: {
@@ -65,11 +71,14 @@ const saveCustomMapping = customMap => {
             indexId: resp.data.id
           }
         })
-      }).catch(err => {})
-    
+      }).catch(err => {
+        // TODO: Handle error block with toast
+      })
+    }
   }
 }
-}
+
+
 const toogleCheckBox = checkBoxOptions => {
   return (dispatch) => {
     dispatch({
@@ -79,6 +88,7 @@ const toogleCheckBox = checkBoxOptions => {
   }
 }
 
+
 const updateTextBox = textBoxValue => {
   return (dispatch) => {
     dispatch({
@@ -87,9 +97,6 @@ const updateTextBox = textBoxValue => {
     })
   }
 }
-
-
-
 
 
 export {
