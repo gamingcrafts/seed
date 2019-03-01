@@ -31,7 +31,7 @@ export default (state = INIT_STATE, action) => {
       
       return update(state, {
         indices: {
-          $set: indices
+          $set: action.payload.map(a => ({ label: a }))
         },
         loading: {
           $set: false
@@ -64,22 +64,22 @@ export default (state = INIT_STATE, action) => {
         mappings.forEach((key) => {
           let propertyKey = key.fieldName;
 
-          if (customMapping['properties'][propertyKey] !== undefined) {
-            key.selected = customMapping['properties'][propertyKey].selected
-            key.sortable = customMapping['properties'][propertyKey].sorted
-            key.dateColumn = customMapping['properties'][propertyKey].dateColumn
-            key.currencyColumn = customMapping['properties'][propertyKey].currencyColumn
-            key.format = customMapping['properties'][propertyKey].format
-            key.label = customMapping['properties'][propertyKey].label
+          if (customMapping['columns'][propertyKey] !== undefined) {
+            key.selected = customMapping['columns'][propertyKey].selected
+            key.sortable = customMapping['columns'][propertyKey].sorted
+            key.dateColumn = customMapping['columns'][propertyKey].dateColumn
+            key.currencyColumn = customMapping['columns'][propertyKey].currencyColumn
+            key.format = customMapping['columns'][propertyKey].format
+            key.label = customMapping['columns'][propertyKey].label
             columnDefinition = {
               ...columnDefinition,
               [propertyKey]: {
-                selected: customMapping['properties'][propertyKey].selected,
-                sortable: customMapping['properties'][propertyKey].sortable,
-                dateColumn: customMapping['properties'][propertyKey].dateColumn,
-                currencyColumn: customMapping['properties'][propertyKey].currencyColumn,
-                format: customMapping['properties'][propertyKey].format,
-                label: customMapping['properties'][propertyKey].label
+                selected: customMapping['columns'][propertyKey].selected,
+                sortable: customMapping['columns'][propertyKey].sortable,
+                dateColumn: customMapping['columns'][propertyKey].dateColumn,
+                currencyColumn: customMapping['columns'][propertyKey].currencyColumn,
+                format: customMapping['columns'][propertyKey].format,
+                label: customMapping['columns'][propertyKey].label
               }
             }
           }
@@ -157,7 +157,6 @@ export default (state = INIT_STATE, action) => {
       return update(state, {
         columnDefinition: {
           [item]: {
-
             $merge: { [type]: e.target.value }
           }
         }

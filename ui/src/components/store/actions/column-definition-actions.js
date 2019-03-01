@@ -65,15 +65,10 @@ const saveCustomMapping = customMap => {
             indexId: resp.data.id
           }
         })
-      }).catch(err => {
-
-      })
-    } else {
-      http.put('/coldef/' + customMap.mappingId, customMap).then(resp => {}).catch(err => {
-
-      })
-    }
+      }).catch(err => {})
+    
   }
+}
 }
 const toogleCheckBox = checkBoxOptions => {
   return (dispatch) => {

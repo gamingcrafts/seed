@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactJson from 'react-json-view';
 import {
-  getIndices, getIndexCustomMapping,saveCustomMapping,toogleCheckBox,updateTextBox
+  getIndices, getIndexCustomMapping, saveCustomMapping, toogleCheckBox, updateTextBox
 } from '../store/actions/column-definition-actions';
 import {
   EuiPage,
@@ -11,7 +11,7 @@ import {
   EuiPageContentBody,
   EuiPageContentHeader,
   EuiPageContentHeaderSection,
-  EuiTitle, EuiSpacer,EuiInMemoryTable,
+  EuiTitle, EuiSpacer, EuiInMemoryTable,
   EuiButton, EuiCheckbox, EuiFieldText,
   EuiComboBox,
   EuiFlexGroup,
@@ -20,13 +20,10 @@ import {
 
 class ColumnDefinitionContainer extends Component {
 
- constructor(props){
-   super(props);
-   this.state={
-    selectedOption: [],
-    mappings: []
-   }
- }
+  constructor(props) {
+    super(props);
+    this.state = {}
+  }
 
   onCheckBoxChange = (e, item, type) => {
     this.props.toogleCheckBox({
@@ -37,11 +34,10 @@ class ColumnDefinitionContainer extends Component {
   };
 
   saveCustomMapping = () => {
-    let{indexData,columnDefinition} = this.props.columnDefinitionReducer;
+    let { indexData, columnDefinition } = this.props.columnDefinitionReducer;
     this.props.saveCustomMapping({
-      indexName: indexData.name,
-      mappingId:indexData.id,
-      properties: columnDefinition
+      index: indexData.name,
+      columns: columnDefinition
     })
   }
 
@@ -141,7 +137,7 @@ class ColumnDefinitionContainer extends Component {
       render: (value, item) => (
         <EuiFieldText
           placeholder="Label to represent in table"
-         disabled= {columnDefinition[item.fieldName] ? !columnDefinition[item.fieldName].selected : true}
+          disabled={columnDefinition[item.fieldName] ? !columnDefinition[item.fieldName].selected : true}
           value={columnDefinition[item.fieldName] ? columnDefinition[item.fieldName].label : ''}
           onChange={(e) => this.onTextBoxChange(e, item.fieldName, 'label')}
           aria-label="Use aria labels when no actual label is in use"
@@ -149,7 +145,7 @@ class ColumnDefinitionContainer extends Component {
       ),
       'data-test-subj': 'labelCell',
     },
-    
+
     {
       field: 'sortable',
       name: 'Sortable',
@@ -160,8 +156,8 @@ class ColumnDefinitionContainer extends Component {
         <EuiCheckbox
           id={item.fieldName}
           checked={columnDefinition[item.fieldName] ? columnDefinition[item.fieldName].sortable : false}
-          disabled = {columnDefinition[item.fieldName] ? !columnDefinition[item.fieldName].selected : true}
-          onChange={(e) => this.onCheckBoxChange(e, item.fieldName, 'sortable')} 
+          disabled={columnDefinition[item.fieldName] ? !columnDefinition[item.fieldName].selected : true}
+          onChange={(e) => this.onCheckBoxChange(e, item.fieldName, 'sortable')}
         />
       ),
       'data-test-subj': 'sortableCell',
@@ -177,8 +173,8 @@ class ColumnDefinitionContainer extends Component {
           id={item.fieldName}
 
           checked={columnDefinition[item.fieldName] ? columnDefinition[item.fieldName].dateColumn : false}
-          disabled = {columnDefinition[item.fieldName] ? !columnDefinition[item.fieldName].selected : true}
-          onChange={(e) => this.onCheckBoxChange(e, item.fieldName, 'dateColumn')} 
+          disabled={columnDefinition[item.fieldName] ? !columnDefinition[item.fieldName].selected : true}
+          onChange={(e) => this.onCheckBoxChange(e, item.fieldName, 'dateColumn')}
         />)
       },
       'data-test-subj': 'dataColumnCell',
@@ -193,7 +189,7 @@ class ColumnDefinitionContainer extends Component {
         return (<EuiCheckbox
           id={item.fieldName}
           checked={columnDefinition[item.fieldName] ? columnDefinition[item.fieldName].currencyColumn : false}
-          disabled = {columnDefinition[item.fieldName] ? !columnDefinition[item.fieldName].selected : true}
+          disabled={columnDefinition[item.fieldName] ? !columnDefinition[item.fieldName].selected : true}
           onChange={(e) => this.onCheckBoxChange(e, item.fieldName, 'currencyColumn')}
         />)
       },
@@ -205,9 +201,9 @@ class ColumnDefinitionContainer extends Component {
       sortable: false,
       width: '20%',
       hideForMobile: true,
-      render: (f,item) => (<EuiFieldText
+      render: (f, item) => (<EuiFieldText
         placeholder="Display Format"
-        disabled= {columnDefinition[item.fieldName] ? !columnDefinition[item.fieldName].selected : true}
+        disabled={columnDefinition[item.fieldName] ? !columnDefinition[item.fieldName].selected : true}
         value={columnDefinition[item.fieldName] ? columnDefinition[item.fieldName].format : ''}
         aria-label="Use aria labels when no actual label is in use"
         onChange={(e) => this.onTextBoxChange(e, item.fieldName, 'format')}
@@ -241,7 +237,7 @@ class ColumnDefinitionContainer extends Component {
                 {/* <EuiLoadingChart size="xl" mono/> */}
 
                 <EuiFlexItem>
-                {/* <EuiLoadingSpinner size="xl"/> */}
+                  {/* <EuiLoadingSpinner size="xl"/> */}
                 </EuiFlexItem>
                 <EuiFlexItem>
                   <EuiButton

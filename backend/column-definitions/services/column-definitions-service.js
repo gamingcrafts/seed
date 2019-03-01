@@ -1,12 +1,15 @@
 const config = require('../../config');
 const ESClient = require('../../server/esclient');
 const INDEX = config.indexes.setting;
-const TYPE = 'optikpi_setting';
+const TYPE = 'index-mapping';
 const client = new ESClient(INDEX, TYPE);
 
 const index = async (customMapping, id) => {
   const resp = await client.index({
-    body: customMapping,
+    body: {
+      ...customMapping,
+      type: 'column-definition'
+    },
     id
   });
   return {
@@ -16,26 +19,31 @@ const index = async (customMapping, id) => {
 };
 
 const getOneCustomMapping = async (indexName) => {
-  console.log("---------------Get One Mapping------------")
   return client
-    .onResults((resp) =>{
-      console.log(resp);
-      resp.hits.hits.filter((r) => r._source.indexName == indexName).map(h => ({
+    .onResults(resp =>
+      resp.hits.hits
+      .filter(r => {
+        const { index, type } = r._source;
+        return index === indexName && type === 'column-definition'
+      })
+      .map(h => ({
         ...h._source,
         id: h._id
-      }))})
+      })))
     .search({
       size: 1000
     });
-  }
+}
 
 
 const list = () => {
   return client
-    .onResults(resp => resp.hits.hits.map(h => ({
-      ...h._source,
-      id: h._id
-    })))
+    .onResults(resp => resp.hits.hits
+      .filter(h => h._source.type === 'column-definition')
+      .map(h => ({
+        ...h._source,
+        id: h._id
+      })))
     .search({
       size: 1000
     });
