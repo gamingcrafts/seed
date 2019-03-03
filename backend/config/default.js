@@ -16,6 +16,7 @@ module.exports = {
   indexes: {
     sample: 'sample__sample',
     setting: '.dev_optikpi_settings',
-    ruleEngine:'.optikpi_rule_engine'
+    ruleEngine:'.optikpi_rule_engine',
+    ruleEngineFields:'.optikpi_rule_engine_fields'
   }
 }

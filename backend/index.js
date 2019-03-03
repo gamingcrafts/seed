@@ -13,8 +13,9 @@ const columnDefinitionRoute = require('./column-definitions/routes/column-defini
 const indicesRoute = require('./indices/routes/indices-routes');
 const ruleEngineSettingsRoute = require('./rule-engine/routes/settings-routes');
 const ruleEngineOperatorsRoute = require('./rule-engine/routes/operators-routes');
+const ruleEngineFieldsRoute = require('./rule-engine/routes/fields-routes');
 
-const routesArray = [sampleRoute, columnDefinitionRoute, indicesRoute, ruleEngineSettingsRoute, ruleEngineOperatorsRoute];
+const routesArray = [sampleRoute, columnDefinitionRoute, indicesRoute, ruleEngineSettingsRoute, ruleEngineOperatorsRoute,ruleEngineFieldsRoute];
 
 _.invokeMap(routesArray, _.call, null, server);
 

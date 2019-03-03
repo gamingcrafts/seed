@@ -3,6 +3,7 @@ const kpis = require('./mappings/player_daily_kpis');
 const config = require('./config');
 const ruleEngineSettingsService = require('./rule-engine/services/settings-service');
 const ruleEngineOperatorsService = require('./rule-engine/services/operators-service');
+const ruleEngineFieldsService = require('./rule-engine/services/fields-service');
 let  {ruleEngineDefaultSettings,ruleEngineDefaultOperators,ruleEngineDefaultFields} = require('./prerun-data');
 
 const run = async () => {
@@ -65,6 +66,13 @@ const run = async () => {
 
   })
   let respForOperators = await ruleEngineOperatorsService.index(operatorsObject);
+
+  let fieldsObject = {};
+  ruleEngineDefaultFields.forEach((field)=>{
+    let indexName = Object.keys(field)[0]
+    fieldsObject[indexName] = field[indexName];
+  })
+  let resForFields = await ruleEngineFieldsService.index(fieldsObject);
 }
 module.exports = {
   run

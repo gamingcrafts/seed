@@ -9,7 +9,7 @@ module.exports = function (server) {
             return ruleEngineOperatorsService.list();
         },
         options: {
-            description: 'Gets the Rule-Engine Settings',
+            description: 'Gets the Rule-Engine Operators',
             tags: ['api']
         }
     });
@@ -21,7 +21,7 @@ module.exports = function (server) {
             return ruleEngineOperatorsService.index(req.payload);
         },
         options: {
-            description: 'Update the Rule-Engine Settings',
+            description: 'Update the Rule-Engine Operators',
             tags: ['api'],
             validate: {
                 payload: Joi.object().required()

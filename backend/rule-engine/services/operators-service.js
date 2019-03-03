@@ -4,15 +4,15 @@ const INDEX = config.indexes.ruleEngine;
 const TYPE = 'ruleEngine';
 const client = new ESClient(INDEX, TYPE);
 
-const index = async (settings) => {
+const index = async (operators) => {
     const resp = await client.index({
         body: {
-            operators: JSON.stringify(settings)
+            operators: JSON.stringify(operators)
         },
         id: "engine_operators"
     });
     return {
-        ...settings
+        ...operators
     };
 };
 
