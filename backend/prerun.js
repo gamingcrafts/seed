@@ -18,6 +18,7 @@ const run = async () => {
   let isRuleEngineIndexExists = await c.client().indices.exists({
     index: config.indexes.ruleEngine
   })
+
   
   if (!res) {
     new ESClient().client().indices.create({

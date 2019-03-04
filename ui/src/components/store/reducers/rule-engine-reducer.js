@@ -9,7 +9,11 @@ import {
     TOGGLE_RULE_ENGINE_OPERATOR_FORM,
     TOGGLE_RULE_ENGINE_OPERATOR_LIST,
     UPDATE_OPERATORS_TEXT_BOX,
-  UPDATE_OPERATORS_NUMBER_BOX
+    UPDATE_OPERATORS_NUMBER_BOX,
+    FIELDS_GET_SUCCESS,
+    // FIELDS_GET_FAILURE,
+    TOGGLE_SUB_FIELDS_LIST,
+    TOGGLE_FIELDS_LIST
 } from "../actions/types";
 
 import update from 'react-addons-update';
@@ -20,6 +24,7 @@ const INIT_STATE = {
     settingsId: '',
     settings: {},
     operators: {},
+    fields:{},
     operatorsState: {
         loading: false,
         selectedOperator: undefined,
@@ -27,6 +32,10 @@ const INIT_STATE = {
         formatOpArgumentOne:undefined,
         formatOpArgumentTwo:undefined,
         formatOpFuntionResult:undefined
+    },
+    fieldsState:{
+        showFieldsList:true,
+        seletedField:null
     }
 }
 
@@ -59,7 +68,6 @@ export default (state = INIT_STATE, action) => {
                     }
                 })
             }
-
         case UPDATE_SEGMENTATION_CHECK_BOX:
             {
                 let type = action.payload.type;
@@ -69,11 +77,9 @@ export default (state = INIT_STATE, action) => {
                         $merge: {
                             [type]: e.target.checked
                         }
-
                     }
                 })
             }
-
         case UPDATE_SEGMENTATION_NUMBER_BOX:
             {
                 let type = action.payload.type;
@@ -83,18 +89,15 @@ export default (state = INIT_STATE, action) => {
                         $merge: {
                             [type]: parseInt(e.target.value, 10)
                         }
-
                     }
                 })
             }
-
         case OPERATORS_GET_SUCCESS:
             {
                 return update(state, {
                     operators: {
                         $set: action.payload
                     },
-
                 })
             }
         case TOGGLE_RULE_ENGINE_OPERATOR_FORM:
@@ -121,8 +124,7 @@ export default (state = INIT_STATE, action) => {
                         $set:{
                         selectedOperator:  selectedOperator,
                         showListView:false
-                    }
-                        
+                        }
                     }
                 })
             }
@@ -145,24 +147,55 @@ export default (state = INIT_STATE, action) => {
                 return update(state, {
                     operatorsState: {
                         selectedOperator: {
-                            
                             $merge:{[type]:value}
                           }
                     }
-            })
+                })
             }
-
-            case UPDATE_OPERATORS_NUMBER_BOX:{
+            case UPDATE_OPERATORS_NUMBER_BOX:
+            {
                 let type = action.payload.type;
               let value = action.payload.value;
                 return update(state, {
                     operatorsState: {
                         selectedOperator: {
-                            
                             $merge:{[type]:parseInt(value, 10)}
                           }
                     }
-            })
+                })
+            }
+            case FIELDS_GET_SUCCESS:
+            {
+                return update(state, {
+                    fields: {
+                        $set: action.payload
+                    },
+                })
+            }
+            case TOGGLE_SUB_FIELDS_LIST: {
+                
+                return update(state, {
+                    fieldsState: {
+                        showFieldsList:{
+                            $set:false
+                        },
+                        seletedField: {
+                            $set: action.payload
+                        }
+                    },
+                })
+            }
+            case TOGGLE_FIELDS_LIST: {
+                return update(state, {
+                    fieldsState: {
+                        showFieldsList:{
+                            $set:true
+                        },
+                        seletedField: {
+                            $set: null
+                        }
+                    },
+                })
             }
 
         default:

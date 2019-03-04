@@ -10,12 +10,8 @@ import {
     EuiButton,
     EuiFieldText,
     EuiFieldNumber,
-    EuiText,
-    // EuiTextArea,
     EuiCodeEditor,
-    EuiFormRow,
-    EuiSpacer
-  
+    EuiFormRow
   } from '@elastic/eui';
  import {
     toogleRuleEngineOperatorList,

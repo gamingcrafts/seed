@@ -158,9 +158,6 @@ export default (state = INIT_STATE, action) => {
         }
       })
     }
-
-
-
     default:
       return update(state, {})
   }

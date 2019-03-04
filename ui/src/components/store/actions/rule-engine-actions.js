@@ -9,9 +9,11 @@ import {
   TOGGLE_RULE_ENGINE_OPERATOR_FORM,
   TOGGLE_RULE_ENGINE_OPERATOR_LIST,
   UPDATE_OPERATORS_TEXT_BOX,
-  UPDATE_OPERATORS_NUMBER_BOX
+  UPDATE_OPERATORS_NUMBER_BOX,
+  FIELDS_GET_SUCCESS,
+  TOGGLE_SUB_FIELDS_LIST,
+  TOGGLE_FIELDS_LIST
 } from "../actions/types";
-
 const getSettings = () => {
   return (dispatch, getState, http) => {
     http.get('/ruleengine/settings/')
@@ -29,19 +31,13 @@ const getSettings = () => {
       })
   }
 }
-
 const updateSettings = settings => {
-
   return (dispatch, getState, http) => {
-
     http.put('/ruleengine/settings/', settings).then(resp => {
     }).catch(err => {
-
     })
   }
-
 }
-
 const updateTextBox = textBoxValue => {
   return (dispatch) => {
     dispatch({
@@ -66,7 +62,6 @@ const updateNumberBox = textBoxValue => {
     })
   }
 }
-
 const getOperators = () => {
   return (dispatch, getState, http) => {
     http.get('/ruleengine/operators/')
@@ -96,16 +91,13 @@ const toogleRuleEngineOperatorForm = (operatorName) => {
     })
   }
 }
-
 const toogleRuleEngineOperatorList = () => {
-
   return (dispatch, getState, http) => {
     dispatch({
       type: TOGGLE_RULE_ENGINE_OPERATOR_LIST
     })
   }
 }
-
 const updateOperatorsTextBox=(textBoxValue)=>{
   return (dispatch) => {
     dispatch({
@@ -114,7 +106,6 @@ const updateOperatorsTextBox=(textBoxValue)=>{
     })
   }
 }
-
 const updateOperatorsNumberBox=(numberBoxValue)=>{
   return (dispatch) => {
     dispatch({
@@ -123,19 +114,42 @@ const updateOperatorsNumberBox=(numberBoxValue)=>{
     })
   }
 }
-
 const updateOperators = operators => {
   return (dispatch, getState, http) => {
-
     http.put('/ruleengine/operators/', operators).then(resp => {
       dispatch({
         type: TOGGLE_RULE_ENGINE_OPERATOR_LIST
       })
     }).catch(err => {
-
     })
   }
-
+}
+const getFields = () => {
+  return (dispatch, getState, http) => {
+    http.get('/ruleengine/fields/')
+      .then(res => {
+        dispatch({
+          type: FIELDS_GET_SUCCESS,
+          payload: res.data
+        })
+      }).catch(err => {
+      })
+  }
+}
+const toogleSubFieldsList = (fieldName)=>{
+  return (dispatch, getState, http) => {
+    dispatch({
+      type: TOGGLE_SUB_FIELDS_LIST,
+      payload: fieldName
+    })
+  }
+}
+const toogleFieldsList = ()=>{
+  return (dispatch, getState, http) => {
+    dispatch({
+      type: TOGGLE_FIELDS_LIST
+    })
+  }
 }
 
 export {
@@ -149,5 +163,8 @@ export {
   toogleRuleEngineOperatorList,
   updateOperatorsTextBox,
   updateOperatorsNumberBox,
-  updateOperators
+  updateOperators,
+  getFields,
+  toogleSubFieldsList,
+  toogleFieldsList
 }
