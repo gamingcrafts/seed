@@ -20,7 +20,8 @@ import {
     HIDE_ADD_SUB_FIELD_MODAL,
     UPDATE_FIELDS_TEXT_BOX,
     UPDATE_FIELDS_SUCCESS,
-    UPDATE_SUB_FIELDS_TEXT_BOX
+    UPDATE_SUB_FIELDS_TEXT_BOX,
+    UPDATE_SUB_FIELDS_SUCCESS
 } from "../actions/types";
 
 import update from 'react-addons-update';
@@ -230,7 +231,7 @@ export default (state = INIT_STATE, action) => {
                 return update(state, {
                     fieldsState: {
                         showAddSubFieldModal: {
-                            $set: false
+                            $set: true
                         }
                     },
                 })
@@ -279,6 +280,24 @@ export default (state = INIT_STATE, action) => {
                            $set:addFieldObject
                         },
                         showAddFieldModal: {
+                            $set: false
+                        }
+                    },
+                })
+            }
+            
+            case UPDATE_SUB_FIELDS_SUCCESS:{
+                let fields = action.payload.fields
+                let addSubFieldKey = '';
+                return update(state, {
+                    fields:{
+                        $set:fields
+                    },
+                    fieldsState: {
+                        addSubFieldKey: {
+                           $set:addSubFieldKey
+                        },
+                        showAddSubFieldModal: {
                             $set: false
                         }
                     },

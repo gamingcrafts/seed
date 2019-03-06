@@ -20,12 +20,9 @@ import {
     EuiFormRow,
     EuiFieldText,
     EuiButton
-
-    
-  
   } from '@elastic/eui';
   import {
-    toogleFieldsList,updateRuleEngineFields,showAddSubFieldModal,updateSubAddFieldsTextBox
+    updateRuleEngineSubFields,showAddSubFieldModal,updateSubAddFieldsTextBox,toogleFieldsList,hideAddSubFieldModal
   } from '../store/actions/rule-engine-actions';
 
 class RuleEngineSubFieldsList extends Component {
@@ -47,9 +44,45 @@ class RuleEngineSubFieldsList extends Component {
     this.props.updateSubAddFieldsTextBox({value:e.target.value,type:'addSubFieldKey'})
   }
   addKeyToASubField=()=>{
+    let {fields,fieldsState} = this.props.RuleEngineReducer;
+    let selectedField = fieldsState.selectedField;
+    let selectedFieldSubProperties = {
+      ...fields[selectedField]['subfields'],
+      [fieldsState.addSubFieldKey]:{}
+      
+    }
+    fields[selectedField]['subfields'] = selectedFieldSubProperties;
+    this.props.updateRuleEngineSubFields(fields)
 
   }
+  toogleFieldsList = ()=>{
+    this.props.toogleFieldsList();
+  }
+  renderAddButton = () => {
+    return (
+      <EuiButton
+        fill
+        onClick={this.showAddSubFieldModal}
+        color="primary">Add</EuiButton>
+    )
+  }
+  renderBackButton = () => {
+    return (
+      <EuiButton
+        fill
+        onClick={this.toogleFieldsList}
+        color="ghost">Back</EuiButton>
+    )
+  }
 render(){
+
+  let search = {
+    toolsLeft: this.renderBackButton(),
+    toolsRight: this.renderAddButton(),
+    box: {
+      incremental: true,
+    }
+  }
   let {fields,fieldsState} = this.props.RuleEngineReducer;
   let subFields = fields[fieldsState.selectedField]['subfields'];
   let subfieldsList = Object.keys(subFields).map((key)=>{
@@ -136,10 +169,11 @@ render(){
           <EuiInMemoryTable
               items={subfieldsList}
               columns={columns}
-              search={true}
+              search={search}
               pagination={true}
               sorting={true}
           />
+          {modal}
         </EuiPageContentBody>
       </EuiPageContent>
     </EuiPageBody>
@@ -152,5 +186,5 @@ const mapStateToProps = ({RuleEngineReducer}) => {
         RuleEngineReducer
     }
   }
-const actions = {toogleFieldsList,updateRuleEngineFields,showAddSubFieldModal,updateSubAddFieldsTextBox}
+const actions = {updateRuleEngineSubFields,showAddSubFieldModal,hideAddSubFieldModal,updateSubAddFieldsTextBox,toogleFieldsList}
 export default connect(mapStateToProps, actions)(RuleEngineSubFieldsList)

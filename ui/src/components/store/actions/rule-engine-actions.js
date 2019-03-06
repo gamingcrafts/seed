@@ -19,7 +19,8 @@ import {
     HIDE_ADD_SUB_FIELD_MODAL,
     UPDATE_FIELDS_TEXT_BOX,
     UPDATE_FIELDS_SUCCESS,
-    UPDATE_SUB_FIELDS_TEXT_BOX
+    UPDATE_SUB_FIELDS_TEXT_BOX,
+    UPDATE_SUB_FIELDS_SUCCESS
 } from "../actions/types";
 const getSettings = () => {
   return (dispatch, getState, http) => {
@@ -183,6 +184,14 @@ const showAddSubFieldModal = ()=>{
   }
 }
 
+const hideAddSubFieldModal = ()=>{
+  return (dispatch, getState, http) => {
+    dispatch({
+      type: HIDE_ADD_SUB_FIELD_MODAL
+    })
+  }
+}
+
 const updateAddFieldsTextBox=(textBoxValue)=>{
   return (dispatch) => {
     dispatch({
@@ -211,6 +220,18 @@ const updateRuleEngineFields = (fields)=>{
     }).catch(err => {
     })
   }
+}
+
+const updateRuleEngineSubFields = (fields)=>{
+  return (dispatch, getState, http) => {
+    http.put('/ruleengine/fields/', fields).then(resp => {
+      dispatch({
+        type: UPDATE_SUB_FIELDS_SUCCESS,
+        payload: {fields:fields}
+      })
+    }).catch(err => {
+    })
+  }
 
 }
 
@@ -232,7 +253,9 @@ export {
   showAddFieldModal,
   hideAddFieldModal,
   showAddSubFieldModal,
+  hideAddSubFieldModal,
   updateAddFieldsTextBox,
   updateRuleEngineFields,
-  updateSubAddFieldsTextBox
+  updateSubAddFieldsTextBox,
+  updateRuleEngineSubFields
 }
