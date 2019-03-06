@@ -22,7 +22,8 @@ import {
     UPDATE_FIELDS_SUCCESS,
     UPDATE_SUB_FIELDS_TEXT_BOX,
     UPDATE_SUB_FIELDS_SUCCESS,
-    UPDATE_LOCAL_UPDATED_SUB_FIELD_LIST
+    UPDATE_LOCAL_UPDATED_SUB_FIELD_LIST,
+    UPDATE_SELECTED_SUB_FIELD_LIST
 } from "../actions/types";
 
 import update from 'react-addons-update';
@@ -48,6 +49,7 @@ const INIT_STATE = {
         showAddFieldModal:false,
         showAddSubFieldModal:false,
         updatedFields:undefined,
+        selectedSubFieldsToDelete:[],
         addSubFieldKey:'',
         addFieldObject:{name:'',label:'',type:'',subfields:{}}
     }
@@ -180,6 +182,7 @@ export default (state = INIT_STATE, action) => {
             }
             case FIELDS_GET_SUCCESS:
             {
+                
                 return update(state, {
                     fields: {
                         $set: action.payload
@@ -202,12 +205,18 @@ export default (state = INIT_STATE, action) => {
             case TOGGLE_FIELDS_LIST: {
                 return update(state, {
                     fieldsState: {
-                        showFieldsList:{
-                            $set:true
+                        showFieldsList: {
+                            $set: true
                         },
                         selectedField: {
                             $set: null
-                        }
+                        },
+                        updatedFields: {
+                            $set: undefined
+                        },
+                        selectedSubFieldsToDelete: {
+                            $set: []
+                        },
                     },
                 })
             }
@@ -318,6 +327,20 @@ export default (state = INIT_STATE, action) => {
                            $set:fields
                         }
                     },
+                })
+            }
+            case UPDATE_SELECTED_SUB_FIELD_LIST:{
+                let selectedSubFields = [];
+                let {field,subFields} =action.payload;
+                subFields.forEach((subField)=>{
+                    selectedSubFields.push(subField.key);
+                })
+                return update(state, {
+                    fieldsState:{
+                    selectedSubFieldsToDelete:{
+                       $set:selectedSubFields
+                    }
+                   },
                 })
             }
 

@@ -23,7 +23,8 @@ import {
   } from '@elastic/eui';
   import {
     updateRuleEngineSubFields,showAddSubFieldModal,updateSubAddFieldsTextBox,
-    toogleFieldsList,hideAddSubFieldModal,updateRuleEngineSubfieldsLocalList
+    toogleFieldsList,hideAddSubFieldModal,
+    updateRuleEngineSubfieldsLocalList,updateSelectedSubFields
   } from '../store/actions/rule-engine-actions';
 
 class RuleEngineSubFieldsList extends Component {
@@ -40,6 +41,11 @@ class RuleEngineSubFieldsList extends Component {
     let updatedFields = fields;
     updatedFields[selectedField]['subfields'][type]=jsonData.updated_src;
     this.props.updateRuleEngineSubfieldsLocalList(updatedFields);
+   }
+
+   onSelectionChange = (s)=>{
+    let {fieldsState} = this.props.RuleEngineReducer;
+    this.props.updateSelectedSubFields(fieldsState.selectedField,s);
    }
 
   showAddSubFieldModal = ()=>{
@@ -68,11 +74,12 @@ class RuleEngineSubFieldsList extends Component {
   }
   renderRightButtons = () => {
     let {fieldsState} = this.props.RuleEngineReducer;
-    let isSubFieldsUpdated = (fieldsState.updatedFields!==undefined)?true:false;
+    let isSubFieldsUpdated = (fieldsState.updatedFields!==undefined)?false:true;
     return (
       <EuiForm>
       <EuiButton
         fill
+        style={{ marginRight: '20px' }}
         onClick={this.showAddSubFieldModal}
         color="primary">Add</EuiButton>
           <EuiButton
@@ -100,6 +107,10 @@ render(){
       incremental: true,
     }
   }
+  let selection = {
+    selectable:()=>true,
+    onSelectionChange: this.onSelectionChange
+  };
   let {fields,fieldsState} = this.props.RuleEngineReducer;
   let subFields = fields[fieldsState.selectedField]['subfields'];
   let subfieldsList = Object.keys(subFields).map((key)=>{
@@ -183,8 +194,11 @@ render(){
           
           <EuiInMemoryTable
               items={subfieldsList}
+              itemId="id"
               columns={columns}
               search={search}
+              selection={selection}
+              isSelectable={true}
               pagination={true}
               sorting={true}
           />
@@ -202,5 +216,5 @@ const mapStateToProps = ({RuleEngineReducer}) => {
     }
   }
 const actions = {updateRuleEngineSubFields,showAddSubFieldModal,updateRuleEngineSubfieldsLocalList,
-  hideAddSubFieldModal,updateSubAddFieldsTextBox,toogleFieldsList}
+  hideAddSubFieldModal,updateSubAddFieldsTextBox,toogleFieldsList,updateSelectedSubFields}
 export default connect(mapStateToProps, actions)(RuleEngineSubFieldsList)

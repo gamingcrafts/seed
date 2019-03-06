@@ -21,7 +21,8 @@ import {
   UPDATE_FIELDS_SUCCESS,
   UPDATE_SUB_FIELDS_TEXT_BOX,
   UPDATE_SUB_FIELDS_SUCCESS,
-  UPDATE_LOCAL_UPDATED_SUB_FIELD_LIST
+  UPDATE_LOCAL_UPDATED_SUB_FIELD_LIST,
+  UPDATE_SELECTED_SUB_FIELD_LIST
 } from "../actions/types";
 const getSettings = () => {
   return (dispatch, getState, http) => {
@@ -244,6 +245,15 @@ const updateRuleEngineSubfieldsLocalList=(fields)=>{
     })
  }
 }
+const updateSelectedSubFields = (selectedField,selectedSubFields)=>{
+
+  return (dispatch, getState, http) => {
+    dispatch({
+      type: UPDATE_SELECTED_SUB_FIELD_LIST,
+      payload: {field:selectedField,subFields:selectedSubFields}
+    })
+ }
+}
 
 export {
   getSettings,
@@ -268,5 +278,6 @@ export {
   updateRuleEngineFields,
   updateSubAddFieldsTextBox,
   updateRuleEngineSubFields,
-  updateRuleEngineSubfieldsLocalList
+  updateRuleEngineSubfieldsLocalList,
+  updateSelectedSubFields
 }
