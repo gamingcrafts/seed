@@ -9,22 +9,58 @@ import {
     EuiFlexItem,
     EuiInMemoryTable,
     EuiButton,
-    EuiLink
+    EuiLink,
+    EuiOverlayMask,
+    EuiModal,
+    EuiModalHeader,
+    EuiModalHeaderTitle,
+    EuiModalBody,
+    EuiModalFooter,
+    EuiButtonEmpty,
+    EuiForm,
+    EuiFormRow,
+    EuiFieldText
   
   } from '@elastic/eui';
   import {
-    toogleSubFieldsList
+    toogleSubFieldsList,showAddFieldModal,hideAddFieldModal,updateAddFieldsTextBox,updateRuleEngineFields
   } from '../store/actions/rule-engine-actions';
 
 class RuleEngineFieldsList extends Component{
     toogleSubFieldsList = (e,fieldName)=>{
         this.props.toogleSubFieldsList(fieldName);
     }
+    showAddFieldModal = ()=>{
+      this.props.showAddFieldModal();
+    }
+    hideAddFieldModal = ()=>{
+      this.props.hideAddFieldModal();
+    }
+    onTextBoxChange=(e,type)=>{
+      this.props.updateAddFieldsTextBox({value:e.target.value,type:type})
+    }
+    addNewField=()=>{
+      let {fields,fieldsState} = this.props.RuleEngineReducer;
+      let newFieldTobeAdded = fieldsState['addFieldObject'];
+      let fieldName = newFieldTobeAdded['name'];
+      let newFields ={
+        ...fields,
+        
+          [fieldName]:{
+              label:newFieldTobeAdded.label,
+              type:newFieldTobeAdded.type,
+              subfields:{}
+          }
+        
+      }
+      this.props.updateRuleEngineFields(newFields);
+    }
 render(){
-    let {fields} = this.props.RuleEngineReducer;
+    let {fields,fieldsState} = this.props.RuleEngineReducer;
     var fieldsList = Object.keys(fields).map(key => {
         return {name:key,...fields[key]}
     })
+    
     const columns = [{
         field: 'name',
         name: 'Field Name',
@@ -46,6 +82,71 @@ render(){
             name: 'Type',
             truncateText: true,
         }]
+        const addFieldForm=(
+          <EuiForm>
+          <EuiFormRow
+            label="Name"
+            compressed>
+            <EuiFieldText
+            name="name"
+            placeholder="Name"
+            value={fieldsState['addFieldObject']['name'] ? fieldsState['addFieldObject']['name']: ''}
+            onChange={(e) => this.onTextBoxChange(e,'name')}/>
+          </EuiFormRow>
+          <EuiFormRow
+            label="Label"
+            compressed>
+            <EuiFieldText
+            placeholder="Label"
+            value={fieldsState['addFieldObject']['label'] ? fieldsState['addFieldObject']['label']: ''}
+            onChange={(e) => this.onTextBoxChange(e,'label')}/>
+          </EuiFormRow>
+          <EuiFormRow
+            label="Type"
+            compressed>
+            <EuiFieldText
+            placeholder="Type"
+            value={fieldsState['addFieldObject']['type'] ? fieldsState['addFieldObject']['type']: ''}
+            onChange={(e) => this.onTextBoxChange(e,'type')}/>
+          </EuiFormRow>
+          </EuiForm>
+        );
+        let modal;
+        if(fieldsState.showAddFieldModal){
+        modal = (
+          <EuiOverlayMask>
+            <EuiModal
+              onClose={this.hideAddFieldModal}
+              initialFocus="[name=name]"
+            >
+              <EuiModalHeader>
+                <EuiModalHeaderTitle >
+                 Add Field
+                </EuiModalHeaderTitle>
+              </EuiModalHeader>
+  
+              <EuiModalBody>
+              {addFieldForm}
+              </EuiModalBody>
+  
+              <EuiModalFooter>
+                <EuiButtonEmpty
+                  onClick={this.hideAddFieldModal}
+                >
+                  Cancel
+                </EuiButtonEmpty>
+  
+                <EuiButton
+                  onClick={this.addNewField}
+                  fill
+                >
+                  Add
+                </EuiButton>
+              </EuiModalFooter>
+            </EuiModal>
+          </EuiOverlayMask>
+        );
+        }
     return (
     <EuiPage>
         <EuiPageBody>
@@ -60,7 +161,7 @@ render(){
             <EuiFlexItem>
               <EuiButton
                 fill
-                onClick={this.toogleFieldsForm}
+                onClick={this.showAddFieldModal}
                 color="primary">Add</EuiButton>
             </EuiFlexItem>
             </EuiFlexGroup>
@@ -71,6 +172,7 @@ render(){
                 pagination={true}
                 sorting={true}
             />
+            {modal}
           </EuiPageContentBody>
         </EuiPageContent>
       </EuiPageBody>
@@ -82,5 +184,5 @@ const mapStateToProps = ({RuleEngineReducer}) => {
         RuleEngineReducer
     }
   }
-const actions = {toogleSubFieldsList}
+const actions = {toogleSubFieldsList,showAddFieldModal,hideAddFieldModal,updateAddFieldsTextBox,updateRuleEngineFields}
 export default connect(mapStateToProps, actions)(RuleEngineFieldsList)

@@ -12,7 +12,14 @@ import {
   UPDATE_OPERATORS_NUMBER_BOX,
   FIELDS_GET_SUCCESS,
   TOGGLE_SUB_FIELDS_LIST,
-  TOGGLE_FIELDS_LIST
+  TOGGLE_FIELDS_LIST,
+  SHOW_ADD_FIELD_MODAL,
+    SHOW_ADD_SUB_FIELD_MODAL,
+    HIDE_ADD_FIELD_MODAL,
+    HIDE_ADD_SUB_FIELD_MODAL,
+    UPDATE_FIELDS_TEXT_BOX,
+    UPDATE_FIELDS_SUCCESS,
+    UPDATE_SUB_FIELDS_TEXT_BOX
 } from "../actions/types";
 const getSettings = () => {
   return (dispatch, getState, http) => {
@@ -152,6 +159,61 @@ const toogleFieldsList = ()=>{
   }
 }
 
+const showAddFieldModal = ()=>{
+  return (dispatch, getState, http) => {
+    dispatch({
+      type: SHOW_ADD_FIELD_MODAL
+    })
+  }
+}
+
+const hideAddFieldModal = ()=>{
+  return (dispatch, getState, http) => {
+    dispatch({
+      type: HIDE_ADD_FIELD_MODAL
+    })
+  }
+}
+
+const showAddSubFieldModal = ()=>{
+  return (dispatch, getState, http) => {
+    dispatch({
+      type: SHOW_ADD_SUB_FIELD_MODAL
+    })
+  }
+}
+
+const updateAddFieldsTextBox=(textBoxValue)=>{
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_FIELDS_TEXT_BOX,
+      payload: textBoxValue
+    })
+  }
+}
+
+const updateSubAddFieldsTextBox=(textBoxValue)=>{
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_SUB_FIELDS_TEXT_BOX,
+      payload: textBoxValue
+    })
+  }
+}
+
+const updateRuleEngineFields = (fields)=>{
+  return (dispatch, getState, http) => {
+    http.put('/ruleengine/fields/', fields).then(resp => {
+      dispatch({
+        type: UPDATE_FIELDS_SUCCESS,
+        payload: {fields:fields}
+      })
+    }).catch(err => {
+    })
+  }
+
+}
+
 export {
   getSettings,
   updateTextBox,
@@ -166,5 +228,11 @@ export {
   updateOperators,
   getFields,
   toogleSubFieldsList,
-  toogleFieldsList
+  toogleFieldsList,
+  showAddFieldModal,
+  hideAddFieldModal,
+  showAddSubFieldModal,
+  updateAddFieldsTextBox,
+  updateRuleEngineFields,
+  updateSubAddFieldsTextBox
 }

@@ -13,7 +13,14 @@ import {
     FIELDS_GET_SUCCESS,
     // FIELDS_GET_FAILURE,
     TOGGLE_SUB_FIELDS_LIST,
-    TOGGLE_FIELDS_LIST
+    TOGGLE_FIELDS_LIST,
+    SHOW_ADD_FIELD_MODAL,
+    SHOW_ADD_SUB_FIELD_MODAL,
+    HIDE_ADD_FIELD_MODAL,
+    HIDE_ADD_SUB_FIELD_MODAL,
+    UPDATE_FIELDS_TEXT_BOX,
+    UPDATE_FIELDS_SUCCESS,
+    UPDATE_SUB_FIELDS_TEXT_BOX
 } from "../actions/types";
 
 import update from 'react-addons-update';
@@ -35,7 +42,11 @@ const INIT_STATE = {
     },
     fieldsState:{
         showFieldsList:true,
-        seletedField:null
+        selectedField:null,
+        showAddFieldModal:false,
+        showAddSubFieldModal:false,
+        addSubFieldKey:'',
+        addFieldObject:{name:'',label:'',type:'',subfields:{}}
     }
 }
 
@@ -179,7 +190,7 @@ export default (state = INIT_STATE, action) => {
                         showFieldsList:{
                             $set:false
                         },
-                        seletedField: {
+                        selectedField: {
                             $set: action.payload
                         }
                     },
@@ -191,8 +202,84 @@ export default (state = INIT_STATE, action) => {
                         showFieldsList:{
                             $set:true
                         },
-                        seletedField: {
+                        selectedField: {
                             $set: null
+                        }
+                    },
+                })
+            }
+            case SHOW_ADD_FIELD_MODAL:{
+                return update(state, {
+                    fieldsState: {
+                        showAddFieldModal: {
+                            $set: true
+                        }
+                    },
+                })
+            }
+            case HIDE_ADD_FIELD_MODAL:{
+                return update(state, {
+                    fieldsState: {
+                        showAddFieldModal: {
+                            $set: false
+                        }
+                    },
+                })
+            }
+            case SHOW_ADD_SUB_FIELD_MODAL:{
+                return update(state, {
+                    fieldsState: {
+                        showAddSubFieldModal: {
+                            $set: false
+                        }
+                    },
+                })
+            }
+            case HIDE_ADD_SUB_FIELD_MODAL:{
+                return update(state, {
+                    fieldsState: {
+                        showAddSubFieldModal: {
+                            $set: false
+                        }
+                    },
+                })
+            }
+            case UPDATE_FIELDS_TEXT_BOX:{
+                let type = action.payload.type;
+                let value = action.payload.value;
+                return update(state, {
+                    fieldsState: {
+                        addFieldObject: {
+                            $merge:{[type]:value}
+                        }
+                    },
+                })
+            }
+            case UPDATE_SUB_FIELDS_TEXT_BOX:{
+                let type = action.payload.type;
+                let value = action.payload.value;
+                return update(state, {
+                    fieldsState: {
+                       
+                            $merge:{[type]:value}
+                        
+                    },
+                })
+
+            }
+            case UPDATE_FIELDS_SUCCESS:{
+                let fields = action.payload.fields
+                let addFieldObject = {name:'',label:'',type:'',subfields:{}};
+                return update(state, {
+                    fields:{
+                        $set:fields
+                    },
+                    fieldsState: {
+                        addFieldObject: {
+                           $set:addFieldObject
+                        },
+                        showAddFieldModal: {
+                            $set: false
                         }
                     },
                 })
