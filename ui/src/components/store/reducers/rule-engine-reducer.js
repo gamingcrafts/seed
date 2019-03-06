@@ -21,7 +21,8 @@ import {
     UPDATE_FIELDS_TEXT_BOX,
     UPDATE_FIELDS_SUCCESS,
     UPDATE_SUB_FIELDS_TEXT_BOX,
-    UPDATE_SUB_FIELDS_SUCCESS
+    UPDATE_SUB_FIELDS_SUCCESS,
+    UPDATE_LOCAL_UPDATED_SUB_FIELD_LIST
 } from "../actions/types";
 
 import update from 'react-addons-update';
@@ -46,6 +47,7 @@ const INIT_STATE = {
         selectedField:null,
         showAddFieldModal:false,
         showAddSubFieldModal:false,
+        updatedFields:undefined,
         addSubFieldKey:'',
         addFieldObject:{name:'',label:'',type:'',subfields:{}}
     }
@@ -299,6 +301,21 @@ export default (state = INIT_STATE, action) => {
                         },
                         showAddSubFieldModal: {
                             $set: false
+                        },
+                        updatedFields:{
+                            $set:undefined
+                        }
+                    },
+                })
+            }
+            case UPDATE_LOCAL_UPDATED_SUB_FIELD_LIST:{
+                let fields = action.payload.fields
+              
+                return update(state, {
+                    
+                    fieldsState: {
+                        updatedFields: {
+                           $set:fields
                         }
                     },
                 })

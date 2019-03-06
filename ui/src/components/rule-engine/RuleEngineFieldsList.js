@@ -45,8 +45,7 @@ class RuleEngineFieldsList extends Component{
       let fieldName = newFieldTobeAdded['name'];
       let newFields ={
         ...fields,
-        
-          [fieldName]:{
+        [fieldName]:{
               label:newFieldTobeAdded.label,
               type:newFieldTobeAdded.type,
               subfields:{}
@@ -70,7 +69,6 @@ render(){
             (< EuiLink 
             onClick={(e)=>this.toogleSubFieldsList(e,value)}
             color = "primary" > {value} </EuiLink>)
-
           },
         {
             field: 'label',

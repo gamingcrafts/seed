@@ -22,17 +22,25 @@ import {
     EuiButton
   } from '@elastic/eui';
   import {
-    updateRuleEngineSubFields,showAddSubFieldModal,updateSubAddFieldsTextBox,toogleFieldsList,hideAddSubFieldModal
+    updateRuleEngineSubFields,showAddSubFieldModal,updateSubAddFieldsTextBox,
+    toogleFieldsList,hideAddSubFieldModal,updateRuleEngineSubfieldsLocalList
   } from '../store/actions/rule-engine-actions';
 
 class RuleEngineSubFieldsList extends Component {
   updateSubFields = (jsonData,type)=>{
-   let {fields,fieldsState} = this.props.RuleEngineReducer;
-   let selectedField = fieldsState.selectedField;
-   let updatedFields = fields;
-   updatedFields[selectedField]['subfields'][type]=jsonData.updated_src;
-   this.props.updateRuleEngineFields(updatedFields);
+   let {fieldsState} = this.props.RuleEngineReducer;
+ 
+   let updatedFields = fieldsState.updatedFields;
+   this.props.updateRuleEngineSubFields(updatedFields);
   }
+
+  updateRuleEngineSubfieldsLocalList = (jsonData,type)=>{
+    let {fields,fieldsState} = this.props.RuleEngineReducer;
+    let selectedField = fieldsState.selectedField;
+    let updatedFields = fields;
+    updatedFields[selectedField]['subfields'][type]=jsonData.updated_src;
+    this.props.updateRuleEngineSubfieldsLocalList(updatedFields);
+   }
 
   showAddSubFieldModal = ()=>{
     this.props.showAddSubFieldModal();
@@ -58,12 +66,21 @@ class RuleEngineSubFieldsList extends Component {
   toogleFieldsList = ()=>{
     this.props.toogleFieldsList();
   }
-  renderAddButton = () => {
+  renderRightButtons = () => {
+    let {fieldsState} = this.props.RuleEngineReducer;
+    let isSubFieldsUpdated = (fieldsState.updatedFields!==undefined)?true:false;
     return (
+      <EuiForm>
       <EuiButton
         fill
         onClick={this.showAddSubFieldModal}
         color="primary">Add</EuiButton>
+          <EuiButton
+          fill
+          disabled={!isSubFieldsUpdated}
+          onClick={this.updateSubFields}
+          color="secondary">Update</EuiButton>
+          </EuiForm>
     )
   }
   renderBackButton = () => {
@@ -78,7 +95,7 @@ render(){
 
   let search = {
     toolsLeft: this.renderBackButton(),
-    toolsRight: this.renderAddButton(),
+    toolsRight: this.renderRightButtons(),
     box: {
       incremental: true,
     }
@@ -103,9 +120,9 @@ render(){
     render: (c,item) => (<ReactJson 
                   src={c} 
                   name={null} 
-                  onAdd={(e)=>this.updateSubFields(e,item.key)} 
-                  onEdit={(e)=>this.updateSubFields(e,item.key)} 
-                  onDelete={(e)=>this.updateSubFields(e,item.key)} 
+                  onAdd={(e)=>this.updateRuleEngineSubfieldsLocalList(e,item.key)} 
+                  onEdit={(e)=>this.updateRuleEngineSubfieldsLocalList(e,item.key)} 
+                  onDelete={(e)=>this.updateRuleEngineSubfieldsLocalList(e,item.key)} 
                   collapsed={true}/>)
 
       }
@@ -138,11 +155,9 @@ render(){
                Add Sub-Field
               </EuiModalHeaderTitle>
             </EuiModalHeader>
-
             <EuiModalBody>
             {addFieldForm}
             </EuiModalBody>
-
             <EuiModalFooter>
               <EuiButtonEmpty
                 onClick={this.hideAddSubFieldModal}
@@ -186,5 +201,6 @@ const mapStateToProps = ({RuleEngineReducer}) => {
         RuleEngineReducer
     }
   }
-const actions = {updateRuleEngineSubFields,showAddSubFieldModal,hideAddSubFieldModal,updateSubAddFieldsTextBox,toogleFieldsList}
+const actions = {updateRuleEngineSubFields,showAddSubFieldModal,updateRuleEngineSubfieldsLocalList,
+  hideAddSubFieldModal,updateSubAddFieldsTextBox,toogleFieldsList}
 export default connect(mapStateToProps, actions)(RuleEngineSubFieldsList)

@@ -14,13 +14,14 @@ import {
   TOGGLE_SUB_FIELDS_LIST,
   TOGGLE_FIELDS_LIST,
   SHOW_ADD_FIELD_MODAL,
-    SHOW_ADD_SUB_FIELD_MODAL,
-    HIDE_ADD_FIELD_MODAL,
-    HIDE_ADD_SUB_FIELD_MODAL,
-    UPDATE_FIELDS_TEXT_BOX,
-    UPDATE_FIELDS_SUCCESS,
-    UPDATE_SUB_FIELDS_TEXT_BOX,
-    UPDATE_SUB_FIELDS_SUCCESS
+  SHOW_ADD_SUB_FIELD_MODAL,
+  HIDE_ADD_FIELD_MODAL,
+  HIDE_ADD_SUB_FIELD_MODAL,
+  UPDATE_FIELDS_TEXT_BOX,
+  UPDATE_FIELDS_SUCCESS,
+  UPDATE_SUB_FIELDS_TEXT_BOX,
+  UPDATE_SUB_FIELDS_SUCCESS,
+  UPDATE_LOCAL_UPDATED_SUB_FIELD_LIST
 } from "../actions/types";
 const getSettings = () => {
   return (dispatch, getState, http) => {
@@ -235,6 +236,15 @@ const updateRuleEngineSubFields = (fields)=>{
 
 }
 
+const updateRuleEngineSubfieldsLocalList=(fields)=>{
+  return (dispatch, getState, http) => {
+    dispatch({
+      type: UPDATE_LOCAL_UPDATED_SUB_FIELD_LIST,
+      payload: {fields:fields}
+    })
+ }
+}
+
 export {
   getSettings,
   updateTextBox,
@@ -257,5 +267,6 @@ export {
   updateAddFieldsTextBox,
   updateRuleEngineFields,
   updateSubAddFieldsTextBox,
-  updateRuleEngineSubFields
+  updateRuleEngineSubFields,
+  updateRuleEngineSubfieldsLocalList
 }

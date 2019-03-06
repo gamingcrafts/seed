@@ -47,7 +47,7 @@ render() {
     return (
       <EuiTabbedContent
         tabs={this.tabs}
-        initialSelectedTab={this.tabs[1]}
+        initialSelectedTab={this.tabs[2]}
       />
     );
   }
