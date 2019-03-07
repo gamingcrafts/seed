@@ -23,7 +23,9 @@ import {
   UPDATE_SUB_FIELDS_SUCCESS,
   UPDATE_LOCAL_UPDATED_SUB_FIELD_LIST,
   UPDATE_SELECTED_SUB_FIELD_LIST,
-  UPDATE_SELECTED_FIELD_LIST
+  UPDATE_SELECTED_FIELD_LIST,
+  UPDATE_ARGUMENTS_AREA,
+  UPDATE_OPERATOR_FUNCTION_RESULT
 } from "../actions/types";
 const getSettings = () => {
   return (dispatch, getState, http) => {
@@ -123,6 +125,31 @@ const updateOperatorsNumberBox=(numberBoxValue)=>{
       type: UPDATE_OPERATORS_NUMBER_BOX,
       payload: numberBoxValue
     })
+  }
+}
+const updateArgumentsBox = (value)=>{
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_ARGUMENTS_AREA,
+      payload: value
+    })
+  }
+}
+
+const executeOperatorFunction=(operatorValue,args)=>{
+  return (dispatch, getState, http) => {
+  
+  var argsObj = JSON.parse(args);
+  console.log(operatorValue);
+  console.log(argsObj)
+  let {field, op, values, valueSrcs, valueTypes, opDef, operatorOptions, isForDisplay} = argsObj;
+  let functionBody = operatorValue.formatOp;
+  let excutableFunction = new Function('field', 'op', 'values', 'valueSrcs', 'valueTypes', 'opDef', 'operatorOptions', 'isForDisplay',functionBody);
+  let functionResult = excutableFunction(field, op, values, valueSrcs, valueTypes, opDef, operatorOptions, isForDisplay);
+  dispatch({
+    type: UPDATE_OPERATOR_FUNCTION_RESULT,
+    payload: functionResult
+  })
   }
 }
 const updateOperators = operators => {
@@ -275,6 +302,8 @@ export {
   toogleRuleEngineOperatorList,
   updateOperatorsTextBox,
   updateOperatorsNumberBox,
+  updateArgumentsBox,
+  executeOperatorFunction,
   updateOperators,
   getFields,
   toogleSubFieldsList,

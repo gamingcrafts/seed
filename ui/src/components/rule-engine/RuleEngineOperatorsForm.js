@@ -10,12 +10,14 @@ import {
     EuiButton,
     EuiFieldText,
     EuiFieldNumber,
+    EuiTextArea,
     EuiCodeEditor,
-    EuiFormRow
+    EuiFormRow,
+    EuiBadge
   } from '@elastic/eui';
  import {
     toogleRuleEngineOperatorList,
-    updateOperatorsTextBox,updateOperatorsNumberBox,
+    updateOperatorsTextBox,updateOperatorsNumberBox,updateArgumentsBox,executeOperatorFunction,
     updateOperators
   } from '../store/actions/rule-engine-actions'
 
@@ -41,6 +43,15 @@ class RuleEngineOperatorsForm extends Component {
     let textBoxData = {type:'formatOp',value:value};
     this.props.updateOperatorsTextBox(textBoxData);
   }
+  onArgumentChange=(e)=>{
+    this.props.updateArgumentsBox(e.target.value);
+  }
+  executeFunction=()=>{
+    let {operatorsState}  = this.props.RuleEngineReducer;
+    let selectedOperator = operatorsState.selectedOperator;
+    let argumentsBody = operatorsState.argumentsBody;
+    this.props.executeOperatorFunction(selectedOperator,argumentsBody);
+  }
   updateOperators=()=>{
     let {operators,operatorsState}=this.props.RuleEngineReducer;
     
@@ -58,6 +69,18 @@ class RuleEngineOperatorsForm extends Component {
 render(){
   let {operatorsState}  = this.props.RuleEngineReducer;
   let selectedOperator = operatorsState.selectedOperator;
+  let argumentsBody = operatorsState.argumentsBody;
+
+  let functionResult = operatorsState.functionResult;
+
+  let functionResultLabel;
+  if(functionResult!==undefined){
+    functionResultLabel= (<EuiBadge color="warning">
+      {functionResult}
+    </EuiBadge>)
+  }
+ 
+  
   if(selectedOperator!==undefined){
   return (
     <EuiPage>
@@ -121,12 +144,27 @@ render(){
         </EuiButton>
         </EuiFlexItem>
         <EuiFlexItem >
+          <EuiFormRow
+          label="Arguments"
+        >
+        <EuiTextArea
+          placeholder="Arguments"
+          value={argumentsBody}
+          onChange={this.onArgumentChange}
+        />
+        </EuiFormRow>
+        <EuiButton color="ghost" fill={true} iconType="compute"
+          onClick={() => this.executeFunction()}
+        >
+          Execute
+        </EuiButton>
+        {functionResultLabel}
         <h5>FormatOp:</h5>
         <h6>{'(field, op, values, valueSrcs, valueTypes, opDef, operatorOptions, isForDisplay) => {'}</h6>
+        
         <EuiFormRow
           label=""
         >
-        
         <EuiCodeEditor
         mode="javascript"
         theme="github"
@@ -152,14 +190,11 @@ render(){
           Save
         </EuiButton>
         </EuiFlexItem>
-        
-      </EuiFlexGroup>
-
+        </EuiFlexGroup>
       </EuiPageContentBody>
     </EuiPageContent>
   </EuiPageBody>
-</EuiPage>
-  )
+</EuiPage>)
   }
   else{
     return 'Hello'
@@ -171,5 +206,6 @@ const mapStateToProps = ({RuleEngineReducer}) => {
         RuleEngineReducer
     }
   }
-const actions = {toogleRuleEngineOperatorList,updateOperatorsTextBox,updateOperators,updateOperatorsNumberBox}
+const actions = {toogleRuleEngineOperatorList,
+  updateOperatorsTextBox,updateOperators,updateOperatorsNumberBox,updateArgumentsBox,executeOperatorFunction}
 export default connect(mapStateToProps, actions)(RuleEngineOperatorsForm)

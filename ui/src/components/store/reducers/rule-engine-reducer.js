@@ -10,6 +10,7 @@ import {
     TOGGLE_RULE_ENGINE_OPERATOR_LIST,
     UPDATE_OPERATORS_TEXT_BOX,
     UPDATE_OPERATORS_NUMBER_BOX,
+    UPDATE_ARGUMENTS_AREA,
     FIELDS_GET_SUCCESS,
     // FIELDS_GET_FAILURE,
     TOGGLE_SUB_FIELDS_LIST,
@@ -24,7 +25,8 @@ import {
     UPDATE_SUB_FIELDS_SUCCESS,
     UPDATE_LOCAL_UPDATED_SUB_FIELD_LIST,
     UPDATE_SELECTED_SUB_FIELD_LIST,
-    UPDATE_SELECTED_FIELD_LIST
+    UPDATE_SELECTED_FIELD_LIST,
+    UPDATE_OPERATOR_FUNCTION_RESULT
 } from "../actions/types";
 
 import update from 'react-addons-update';
@@ -42,7 +44,9 @@ const INIT_STATE = {
         showListView: true,
         formatOpArgumentOne:undefined,
         formatOpArgumentTwo:undefined,
-        formatOpFuntionResult:undefined
+        formatOpFuntionResult:undefined,
+        functionResult:undefined,
+        argumentsBody:'{\nfield:{}, \nop:[],\n values;[],\n valueSrcs;{}, \nvalueTypes:[], \nopDef:[],\n operatorOptions:[],\n isForDisplay:true\n}'
     },
     fieldsState:{
         showFieldsList:true,
@@ -120,6 +124,7 @@ export default (state = INIT_STATE, action) => {
             }
         case TOGGLE_RULE_ENGINE_OPERATOR_FORM:
             {
+                let argumentsBody = '{\n"field":{}, \n"op":[],\n "values":[],\n "valueSrcs":{}, \n"valueTypes":[], \n"opDef":[],\n "operatorOptions":[],\n "isForDisplay":true\n}';
                 let selectedOperator;
                 if(action.payload.name===undefined){
                     selectedOperator={
@@ -141,7 +146,8 @@ export default (state = INIT_STATE, action) => {
                     operatorsState: {
                         $set:{
                         selectedOperator:  selectedOperator,
-                        showListView:false
+                        showListView:false,
+                        argumentsBody:argumentsBody
                         }
                     }
                 })
@@ -179,6 +185,24 @@ export default (state = INIT_STATE, action) => {
                         selectedOperator: {
                             $merge:{[type]:parseInt(value, 10)}
                           }
+                    }
+                })
+            }
+            case UPDATE_ARGUMENTS_AREA:{
+                return update(state, {
+                    operatorsState: {
+                        $merge:{'argumentsBody':action.payload}
+                       }
+                    }
+                )
+            }
+            
+            case UPDATE_OPERATOR_FUNCTION_RESULT:{
+                return update(state, {
+                    operatorsState: {
+                        functionResult: {
+                            $set: action.payload
+                        }
                     }
                 })
             }
