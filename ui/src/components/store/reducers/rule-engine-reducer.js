@@ -23,7 +23,8 @@ import {
     UPDATE_SUB_FIELDS_TEXT_BOX,
     UPDATE_SUB_FIELDS_SUCCESS,
     UPDATE_LOCAL_UPDATED_SUB_FIELD_LIST,
-    UPDATE_SELECTED_SUB_FIELD_LIST
+    UPDATE_SELECTED_SUB_FIELD_LIST,
+    UPDATE_SELECTED_FIELD_LIST
 } from "../actions/types";
 
 import update from 'react-addons-update';
@@ -50,8 +51,9 @@ const INIT_STATE = {
         showAddSubFieldModal:false,
         updatedFields:undefined,
         selectedSubFieldsToDelete:[],
+        selectedFieldsToDelete:[],
         addSubFieldKey:'',
-        addFieldObject:{name:'',label:'',type:'',subfields:{}}
+        addFieldObject:{name:'',label:'',type:'!struct',subfields:{}}
     }
 }
 
@@ -198,6 +200,15 @@ export default (state = INIT_STATE, action) => {
                         },
                         selectedField: {
                             $set: action.payload
+                        },
+                        updatedFields: {
+                            $set: undefined
+                        },
+                        selectedSubFieldsToDelete: {
+                            $set: []
+                        },
+                        selectedFieldsToDelete: {
+                            $set: []
                         }
                     },
                 })
@@ -217,6 +228,9 @@ export default (state = INIT_STATE, action) => {
                         selectedSubFieldsToDelete: {
                             $set: []
                         },
+                        selectedFieldsToDelete: {
+                            $set: []
+                        }
                     },
                 })
             }
@@ -313,6 +327,9 @@ export default (state = INIT_STATE, action) => {
                         },
                         updatedFields:{
                             $set:undefined
+                        },
+                        selectedSubFieldsToDelete:{
+                            $set:[]
                         }
                     },
                 })
@@ -340,6 +357,21 @@ export default (state = INIT_STATE, action) => {
                     fieldsState:{
                     selectedSubFieldsToDelete:{
                        $set:selectedSubFields
+                    }
+                   },
+                })
+            }
+            case UPDATE_SELECTED_FIELD_LIST:{
+                let selectedFields = [];
+                let {fields} =action.payload;
+                fields.forEach((field)=>{
+                    
+                    selectedFields.push(field.name);
+                })
+                return update(state, {
+                    fieldsState:{
+                    selectedFieldsToDelete:{
+                       $set:selectedFields
                     }
                    },
                 })

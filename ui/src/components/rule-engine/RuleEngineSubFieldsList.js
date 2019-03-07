@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import * as _ from 'lodash';
 
 import ReactJson from 'react-json-view';
 
@@ -38,7 +39,7 @@ class RuleEngineSubFieldsList extends Component {
   updateRuleEngineSubfieldsLocalList = (jsonData,type)=>{
     let {fields,fieldsState} = this.props.RuleEngineReducer;
     let selectedField = fieldsState.selectedField;
-    let updatedFields = fields;
+    let updatedFields = _.cloneDeep(fields);
     updatedFields[selectedField]['subfields'][type]=jsonData.updated_src;
     this.props.updateRuleEngineSubfieldsLocalList(updatedFields);
    }
@@ -103,6 +104,7 @@ class RuleEngineSubFieldsList extends Component {
         color="primary">Add</EuiButton>
           <EuiButton
           fill
+          style={{ marginRight: '20px' }}
           disabled={isSubFieldsUpdated}
           onClick={this.updateSubFields}
           color="secondary">Update</EuiButton>

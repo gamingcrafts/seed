@@ -23,7 +23,8 @@ import {
   
   } from '@elastic/eui';
   import {
-    toogleSubFieldsList,showAddFieldModal,hideAddFieldModal,updateAddFieldsTextBox,updateRuleEngineFields
+    toogleSubFieldsList,showAddFieldModal,hideAddFieldModal,
+    updateAddFieldsTextBox,updateRuleEngineFields,updateSelectedFields
   } from '../store/actions/rule-engine-actions';
 
 class RuleEngineFieldsList extends Component{
@@ -39,6 +40,22 @@ class RuleEngineFieldsList extends Component{
     onTextBoxChange=(e,type)=>{
       this.props.updateAddFieldsTextBox({value:e.target.value,type:type})
     }
+
+    deleteFields = ()=>{
+      let {fields,fieldsState} = this.props.RuleEngineReducer;
+  
+      let updatedFields = fields;
+      let fieldsToBeDeleted = fieldsState.selectedFieldsToDelete;
+      fieldsToBeDeleted.forEach(field => {
+        delete updatedFields[field];
+      });
+       this.props.updateRuleEngineFields(updatedFields);
+     }
+
+    onSelectionChange = (seletedFields)=>{
+     
+      this.props.updateSelectedFields(seletedFields);
+     }
     addNewField=()=>{
       let {fields,fieldsState} = this.props.RuleEngineReducer;
       let newFieldTobeAdded = fieldsState['addFieldObject'];
@@ -59,6 +76,20 @@ render(){
     var fieldsList = Object.keys(fields).map(key => {
         return {name:key,...fields[key]}
     })
+    let deleteButton;
+    if(fieldsState.selectedFieldsToDelete.length>0){
+      deleteButton=(<EuiFlexItem>
+        <EuiButton
+          fill
+          onClick={this.deleteFields}
+          color="danger">Delete</EuiButton>
+      </EuiFlexItem>)
+    }
+
+    let selection = {
+      selectable:()=>true,
+      onSelectionChange: this.onSelectionChange
+    };
     
     const columns = [{
         field: 'name',
@@ -159,16 +190,20 @@ render(){
             <EuiFlexItem>
               <EuiButton
                 fill
+                style={{ marginRight: '20px' }}
                 onClick={this.showAddFieldModal}
                 color="primary">Add</EuiButton>
             </EuiFlexItem>
+            {deleteButton}
             </EuiFlexGroup>
             <EuiInMemoryTable
                 items={fieldsList}
+                itemId="name"
                 columns={columns}
                 search={true}
                 pagination={true}
                 sorting={true}
+                selection={selection}
             />
             {modal}
           </EuiPageContentBody>
@@ -182,5 +217,5 @@ const mapStateToProps = ({RuleEngineReducer}) => {
         RuleEngineReducer
     }
   }
-const actions = {toogleSubFieldsList,showAddFieldModal,hideAddFieldModal,updateAddFieldsTextBox,updateRuleEngineFields}
+const actions = {toogleSubFieldsList,showAddFieldModal,hideAddFieldModal,updateAddFieldsTextBox,updateRuleEngineFields,updateSelectedFields}
 export default connect(mapStateToProps, actions)(RuleEngineFieldsList)
