@@ -333,6 +333,7 @@ export default (state = INIT_STATE, action) => {
                 let selectedSubFields = [];
                 let {field,subFields} =action.payload;
                 subFields.forEach((subField)=>{
+                    
                     selectedSubFields.push(subField.key);
                 })
                 return update(state, {

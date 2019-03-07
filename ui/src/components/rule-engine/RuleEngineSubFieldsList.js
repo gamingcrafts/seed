@@ -43,6 +43,17 @@ class RuleEngineSubFieldsList extends Component {
     this.props.updateRuleEngineSubfieldsLocalList(updatedFields);
    }
 
+   deleteSubFields = ()=>{
+    let {fields,fieldsState} = this.props.RuleEngineReducer;
+    let selectedField = fieldsState.selectedField;
+    let updatedFields = fields;
+    let subFieldsToBeDeleted = fieldsState.selectedSubFieldsToDelete;
+    subFieldsToBeDeleted.forEach(subField => {
+      delete updatedFields[selectedField]['subfields'][subField];
+    });
+     this.props.updateRuleEngineSubFields(updatedFields);
+   }
+
    onSelectionChange = (s)=>{
     let {fieldsState} = this.props.RuleEngineReducer;
     this.props.updateSelectedSubFields(fieldsState.selectedField,s);
@@ -75,6 +86,14 @@ class RuleEngineSubFieldsList extends Component {
   renderRightButtons = () => {
     let {fieldsState} = this.props.RuleEngineReducer;
     let isSubFieldsUpdated = (fieldsState.updatedFields!==undefined)?false:true;
+    let deleteButton;
+    if(fieldsState.selectedSubFieldsToDelete.length>0){
+      deleteButton=(<EuiButton
+        fill
+        onClick={this.deleteSubFields}
+        color="danger">Delete</EuiButton>
+        );
+    }
     return (
       <EuiForm>
       <EuiButton
@@ -84,9 +103,10 @@ class RuleEngineSubFieldsList extends Component {
         color="primary">Add</EuiButton>
           <EuiButton
           fill
-          disabled={!isSubFieldsUpdated}
+          disabled={isSubFieldsUpdated}
           onClick={this.updateSubFields}
           color="secondary">Update</EuiButton>
+          {deleteButton}
           </EuiForm>
     )
   }
@@ -194,7 +214,7 @@ render(){
           
           <EuiInMemoryTable
               items={subfieldsList}
-              itemId="id"
+              itemId="key"
               columns={columns}
               search={search}
               selection={selection}
