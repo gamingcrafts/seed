@@ -58,6 +58,10 @@ const INIT_STATE = {
         selectedFieldsToDelete:[],
         addSubFieldKey:'',
         addFieldObject:{name:'',label:'',type:'!struct',subfields:{}}
+    },
+    reportsState:{
+        showReportsList:true,
+        selectedReport:null
     }
 }
 
