@@ -27,7 +27,9 @@ import {
     UPDATE_SELECTED_SUB_FIELD_LIST,
     UPDATE_SELECTED_FIELD_LIST,
     UPDATE_OPERATOR_FUNCTION_RESULT,
-    REPORTS_GET_SUCCESS
+    REPORTS_GET_SUCCESS,
+    SHOW_ADD_REPORT_MODAL,
+   HIDE_ADD_REPORT_MODAL
 } from "../actions/types";
 
 import update from 'react-addons-update';
@@ -63,7 +65,9 @@ const INIT_STATE = {
     },
     reportsState:{
         showReportsList:true,
-        selectedReport:null
+        selectedReport:undefined,
+        showAddReportModal:false,
+        addReportObject:{}
     }
 }
 
@@ -413,6 +417,25 @@ export default (state = INIT_STATE, action) => {
                 return update(state, {
                     reports: {
                         $set: action.payload
+                    },
+                })
+            }
+            case SHOW_ADD_REPORT_MODAL:{
+                return update(state, {
+                    reportsState: {
+                        showAddReportModal: {
+                            $set: true
+                        }
+                    },
+                })
+            }
+
+            case HIDE_ADD_REPORT_MODAL:{
+                return update(state, {
+                    reportsState: {
+                        showAddReportModal: {
+                            $set: false
+                        }
                     },
                 })
             }

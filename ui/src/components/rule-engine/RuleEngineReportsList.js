@@ -11,19 +11,95 @@ import {
   EuiFlexItem,
   EuiInMemoryTable,
   EuiButton,
-  EuiLink
+  EuiLink,
+  EuiOverlayMask,
+  EuiModal,
+  EuiModalHeader,
+  EuiModalHeaderTitle,
+  EuiModalBody,
+  EuiModalFooter,
+  EuiButtonEmpty,
+  EuiForm,
+  EuiFormRow,
+  EuiFieldText
 
 } from '@elastic/eui';
 
-
+import {showAddReportModal,
+  hideAddReportModal} from '../store/actions/rule-engine-actions'
 
 const toogleReportsForm=(props,e,name)=>{
   props.toogleRuleEngineReportsForm(name);
 }
 const ruleEngineReportsList = (props) => {
 
-  let {reports} = props.RuleEngineReducer;
- 
+  let {reports,reportsState} = props.RuleEngineReducer;
+
+  const addReportForm=(
+    <EuiForm>
+    <EuiFormRow
+      label="Name"
+      compressed>
+      <EuiFieldText
+      name="name"
+      placeholder="Name"
+      value={reportsState['addReportObject']['name'] ? reportsState['addReportObject']['name']: ''}
+      onChange={(e) => this.onTextBoxChange(e,'name')}/>
+    </EuiFormRow>
+    <EuiFormRow
+      label="Description"
+      compressed>
+      <EuiFieldText
+      placeholder="Description"
+      value={reportsState['addReportObject']['description'] ? reportsState['addReportObject']['label']: ''}
+      onChange={(e) => this.onTextBoxChange(e,'description')}/>
+    </EuiFormRow>
+    <EuiFormRow
+      label="Status"
+      compressed>
+      <EuiFieldText
+      placeholder="Status"
+      value={reportsState['addReportObject']['status'] ? reportsState['addReportObject']['status']: ''}
+      onChange={(e) => this.onTextBoxChange(e,'status')}/>
+    </EuiFormRow>
+    </EuiForm>
+  );
+  let modal;
+  if(reportsState.showAddReportModal){
+  modal = (
+    <EuiOverlayMask>
+      <EuiModal
+        onClose={props.hideAddReportModal}
+        initialFocus="[name=name]"
+      >
+        <EuiModalHeader>
+          <EuiModalHeaderTitle >
+           New Report
+          </EuiModalHeaderTitle>
+        </EuiModalHeader>
+
+        <EuiModalBody>
+        {addReportForm}
+        </EuiModalBody>
+
+        <EuiModalFooter>
+          <EuiButtonEmpty
+            onClick={props.hideAddReportModal}
+          >
+            Cancel
+          </EuiButtonEmpty>
+
+          <EuiButton
+           
+            fill
+          >
+            Add
+          </EuiButton>
+        </EuiModalFooter>
+      </EuiModal>
+    </EuiOverlayMask>
+  );
+  }
   
   const columns = [{
     field: 'name',
@@ -65,7 +141,7 @@ const ruleEngineReportsList = (props) => {
                   <EuiFlexItem>
                     <EuiButton
                       fill
-                      onClick={toogleReportsForm}
+                      onClick={props.showAddReportModal}
                       color="primary">Add</EuiButton>
                   </EuiFlexItem>
                 </EuiFlexGroup>
@@ -76,6 +152,7 @@ const ruleEngineReportsList = (props) => {
                   pagination={true}
                   sorting={true}
                 />
+                {modal}
                 </EuiPageContentBody>
               </EuiPageContent>
             </EuiPageBody>
@@ -89,7 +166,10 @@ const mapStateToProps = ({
     RuleEngineReducer
   }
 }
-const actions = {}
+const actions = {
+  showAddReportModal,
+  hideAddReportModal
+}
 
 
 const RuleEngineReportsList = connect(mapStateToProps, actions)(ruleEngineReportsList);

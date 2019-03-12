@@ -26,7 +26,9 @@ import {
   UPDATE_SELECTED_FIELD_LIST,
   UPDATE_ARGUMENTS_AREA,
   UPDATE_OPERATOR_FUNCTION_RESULT,
-  REPORTS_GET_SUCCESS
+  REPORTS_GET_SUCCESS,
+  SHOW_ADD_REPORT_MODAL,
+  HIDE_ADD_REPORT_MODAL
 } from "../actions/types";
 const getSettings = () => {
   return (dispatch, getState, http) => {
@@ -305,6 +307,22 @@ const getReports = () => {
       })
   }
 }
+
+const showAddReportModal = ()=>{
+  return (dispatch, getState, http) => {
+    dispatch({
+      type: SHOW_ADD_REPORT_MODAL
+    })
+  }
+}
+
+const hideAddReportModal = ()=>{
+  return (dispatch, getState, http) => {
+    dispatch({
+      type: HIDE_ADD_REPORT_MODAL
+    })
+  }
+}
 export {
   getSettings,
   updateTextBox,
@@ -333,5 +351,7 @@ export {
   updateRuleEngineSubfieldsLocalList,
   updateSelectedSubFields,
   updateSelectedFields,
-  getReports
+  getReports,
+  showAddReportModal,
+  hideAddReportModal
 }
