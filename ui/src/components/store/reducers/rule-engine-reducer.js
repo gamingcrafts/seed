@@ -26,7 +26,8 @@ import {
     UPDATE_LOCAL_UPDATED_SUB_FIELD_LIST,
     UPDATE_SELECTED_SUB_FIELD_LIST,
     UPDATE_SELECTED_FIELD_LIST,
-    UPDATE_OPERATOR_FUNCTION_RESULT
+    UPDATE_OPERATOR_FUNCTION_RESULT,
+    REPORTS_GET_SUCCESS
 } from "../actions/types";
 
 import update from 'react-addons-update';
@@ -38,6 +39,7 @@ const INIT_STATE = {
     settings: {},
     operators: {},
     fields:{},
+    reports:[],
     operatorsState: {
         loading: false,
         selectedOperator: undefined,
@@ -219,7 +221,7 @@ export default (state = INIT_STATE, action) => {
                     },
                 })
             }
-            case TOGGLE_SUB_FIELDS_LIST: {
+             case TOGGLE_SUB_FIELDS_LIST: {
                 
                 return update(state, {
                     fieldsState: {
@@ -402,6 +404,16 @@ export default (state = INIT_STATE, action) => {
                        $set:selectedFields
                     }
                    },
+                })
+            }
+
+            case REPORTS_GET_SUCCESS:
+            {
+                
+                return update(state, {
+                    reports: {
+                        $set: action.payload
+                    },
                 })
             }
 

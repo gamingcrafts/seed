@@ -25,7 +25,8 @@ import {
   UPDATE_SELECTED_SUB_FIELD_LIST,
   UPDATE_SELECTED_FIELD_LIST,
   UPDATE_ARGUMENTS_AREA,
-  UPDATE_OPERATOR_FUNCTION_RESULT
+  UPDATE_OPERATOR_FUNCTION_RESULT,
+  REPORTS_GET_SUCCESS
 } from "../actions/types";
 const getSettings = () => {
   return (dispatch, getState, http) => {
@@ -291,6 +292,19 @@ const updateSelectedFields = (selectedFields)=>{
     })
  }
 }
+
+const getReports = () => {
+  return (dispatch, getState, http) => {
+    http.get('/ruleengine/reports/')
+      .then(res => {
+        dispatch({
+          type: REPORTS_GET_SUCCESS,
+          payload: res.data
+        })
+      }).catch(err => {
+      })
+  }
+}
 export {
   getSettings,
   updateTextBox,
@@ -318,5 +332,6 @@ export {
   updateRuleEngineSubFields,
   updateRuleEngineSubfieldsLocalList,
   updateSelectedSubFields,
-  updateSelectedFields
+  updateSelectedFields,
+  getReports
 }
