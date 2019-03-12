@@ -14,9 +14,10 @@ const indicesRoute = require('./indices/routes/indices-routes');
 const ruleEngineSettingsRoute = require('./rule-engine/routes/settings-routes');
 const ruleEngineOperatorsRoute = require('./rule-engine/routes/operators-routes');
 const ruleEngineFieldsRoute = require('./rule-engine/routes/fields-routes');
+const ruleEngineReportsRoute = require('./rule-engine/routes/reports-routes');
 
 const routesArray = [sampleRoute, columnDefinitionRoute, indicesRoute, ruleEngineSettingsRoute, ruleEngineOperatorsRoute,ruleEngineFieldsRoute];
-
+routesArray.push(ruleEngineReportsRoute);
 _.invokeMap(routesArray, _.call, null, server);
 
 const init = async () => {
