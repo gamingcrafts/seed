@@ -29,7 +29,9 @@ import {
     UPDATE_OPERATOR_FUNCTION_RESULT,
     REPORTS_GET_SUCCESS,
     SHOW_ADD_REPORT_MODAL,
-   HIDE_ADD_REPORT_MODAL
+   HIDE_ADD_REPORT_MODAL,
+   UPDATE_REPORT_LIST_TEXT_BOX,
+   CREATE_NEW_REPORT_SUCCESS
 } from "../actions/types";
 
 import update from 'react-addons-update';
@@ -433,6 +435,31 @@ export default (state = INIT_STATE, action) => {
             case HIDE_ADD_REPORT_MODAL:{
                 return update(state, {
                     reportsState: {
+                        showAddReportModal: {
+                            $set: false
+                        }
+                    },
+                })
+            }
+            case UPDATE_REPORT_LIST_TEXT_BOX:{
+                let type = action.payload.type;
+                let value = action.payload.value;
+                return update(state, {
+                    reportsState: {
+                        addReportObject: {
+                            $merge:{[type]:value}
+                        }
+                    },
+                })
+            }
+            case CREATE_NEW_REPORT_SUCCESS:{
+                state.reports.push(action.payload);
+                return update(state, {
+                    
+                    reportsState: {
+                        addReportObject:{
+                            $set:{}
+                        },
                         showAddReportModal: {
                             $set: false
                         }

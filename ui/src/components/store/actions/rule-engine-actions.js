@@ -28,7 +28,9 @@ import {
   UPDATE_OPERATOR_FUNCTION_RESULT,
   REPORTS_GET_SUCCESS,
   SHOW_ADD_REPORT_MODAL,
-  HIDE_ADD_REPORT_MODAL
+  HIDE_ADD_REPORT_MODAL,
+  UPDATE_REPORT_LIST_TEXT_BOX,
+  CREATE_NEW_REPORT_SUCCESS
 } from "../actions/types";
 const getSettings = () => {
   return (dispatch, getState, http) => {
@@ -323,6 +325,28 @@ const hideAddReportModal = ()=>{
     })
   }
 }
+
+const updateAddReportObjectTextBox=(textBoxValue)=>{
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_REPORT_LIST_TEXT_BOX,
+      payload: textBoxValue
+    })
+  }
+}
+
+const addReport = (newReport)=>{
+  return (dispatch, getState, http) => {
+    http.post('/ruleengine/reports/', newReport).then(resp => {
+      dispatch({
+        type: CREATE_NEW_REPORT_SUCCESS,
+        payload: resp.data
+      })
+    
+    }).catch(err => {
+    })
+  }
+}
 export {
   getSettings,
   updateTextBox,
@@ -353,5 +377,7 @@ export {
   updateSelectedFields,
   getReports,
   showAddReportModal,
-  hideAddReportModal
+  hideAddReportModal,
+  updateAddReportObjectTextBox,
+  addReport
 }

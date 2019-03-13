@@ -26,10 +26,19 @@ import {
 } from '@elastic/eui';
 
 import {showAddReportModal,
-  hideAddReportModal} from '../store/actions/rule-engine-actions'
+  hideAddReportModal,updateAddReportObjectTextBox,addReport} from '../store/actions/rule-engine-actions'
 
 const toogleReportsForm=(props,e,name)=>{
   props.toogleRuleEngineReportsForm(name);
+}
+const addNewReport=(props)=>{
+  let {reportsState} = props.RuleEngineReducer;
+  props.addReport(reportsState.addReportObject);
+
+}
+
+const onTextBoxChange=(props,e,type)=>{
+  props.updateAddReportObjectTextBox({value:e.target.value,type:type})
 }
 const ruleEngineReportsList = (props) => {
 
@@ -44,7 +53,7 @@ const ruleEngineReportsList = (props) => {
       name="name"
       placeholder="Name"
       value={reportsState['addReportObject']['name'] ? reportsState['addReportObject']['name']: ''}
-      onChange={(e) => this.onTextBoxChange(e,'name')}/>
+      onChange={(e) => onTextBoxChange(props,e,'name')}/>
     </EuiFormRow>
     <EuiFormRow
       label="Description"
@@ -52,7 +61,7 @@ const ruleEngineReportsList = (props) => {
       <EuiFieldText
       placeholder="Description"
       value={reportsState['addReportObject']['description'] ? reportsState['addReportObject']['label']: ''}
-      onChange={(e) => this.onTextBoxChange(e,'description')}/>
+      onChange={(e) => onTextBoxChange(props,e,'description')}/>
     </EuiFormRow>
     <EuiFormRow
       label="Status"
@@ -60,7 +69,7 @@ const ruleEngineReportsList = (props) => {
       <EuiFieldText
       placeholder="Status"
       value={reportsState['addReportObject']['status'] ? reportsState['addReportObject']['status']: ''}
-      onChange={(e) => this.onTextBoxChange(e,'status')}/>
+      onChange={(e) => onTextBoxChange(props,e,'status')}/>
     </EuiFormRow>
     </EuiForm>
   );
@@ -90,7 +99,7 @@ const ruleEngineReportsList = (props) => {
           </EuiButtonEmpty>
 
           <EuiButton
-           
+           onClick={()=>addNewReport(props)}
             fill
           >
             Add
@@ -168,7 +177,9 @@ const mapStateToProps = ({
 }
 const actions = {
   showAddReportModal,
-  hideAddReportModal
+  hideAddReportModal,
+  updateAddReportObjectTextBox,
+  addReport
 }
 
 
