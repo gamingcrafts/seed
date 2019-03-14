@@ -424,6 +424,12 @@ export default (state = INIT_STATE, action) => {
                     reports: {
                         $set: action.payload
                     },
+                    reportsState: {
+                      
+                        showReportsList: {
+                            $set: true
+                        }
+                    }
                 })
             }
             case SHOW_ADD_REPORT_MODAL:{
@@ -500,7 +506,6 @@ export default (state = INIT_STATE, action) => {
                 })
             }
             case UPDATE_REPORT_FORM_TEXT_BOX:{
-                console.log(state.reportsState.selectedReport)
                 let type = action.payload.type;
                 let value = action.payload.value;
                 return update(state, {

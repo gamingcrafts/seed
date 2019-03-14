@@ -44,4 +44,21 @@ module.exports = function (server) {
             }
         }
     });
+
+    server.route({
+        path: '/ruleengine/reports/{id}',
+        method: 'DELETE',
+        handler(req, h) {
+          return ruleEngineReportsService.del(req.params.id);
+        },
+        options: {
+          description: 'Delete a Report',
+          tags: ['api'],
+          validate: {
+            params: {
+              id: Joi.string().required()
+            }
+          }
+        }
+      });
 }

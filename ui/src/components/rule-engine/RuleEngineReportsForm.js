@@ -1,6 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {hideRuleEngineReportsForm,updateReportText,updateReport} from '../store/actions/rule-engine-actions';
+import {
+  hideRuleEngineReportsForm,
+  updateReportText,
+  updateReport,
+  deleteReport
+} from '../store/actions/rule-engine-actions';
 import {
   EuiPage,
   EuiPageBody,
@@ -35,6 +40,12 @@ const hideReportForm=(props)=>{
 
  }
 
+ const deleteSelectedReport=(props)=>{
+  let {reportsState} = props.RuleEngineReducer;
+  let selectedReport = reportsState.selectedReport;
+  props.deleteReport(selectedReport);
+ }
+
  const updateReportTextBox=(props,e,type)=>{
     props.updateReportText({value:e.target.value,type:type})
  }
@@ -63,6 +74,12 @@ const ruleEngineReportsFrom = props => {
             fill
             onClick={()=>updateSeletedReport(props)}
             color="primary">Update</EuiButton>
+        </EuiFlexItem>
+        <EuiFlexItem>
+          <EuiButton
+            fill
+            onClick={()=>deleteSelectedReport(props)}
+            color="danger">Delete</EuiButton>
         </EuiFlexItem>
       </EuiFlexGroup>
       <EuiForm>
@@ -98,7 +115,7 @@ const ruleEngineReportsFrom = props => {
 const mapStateToProps = ({RuleEngineReducer}) => {
   return {RuleEngineReducer}
 }
-const actions = {hideRuleEngineReportsForm,updateReportText,updateReport}
+const actions = {hideRuleEngineReportsForm,updateReportText,updateReport,deleteReport}
 const RuleEngineReportsForm = connect(mapStateToProps, actions)(ruleEngineReportsFrom);
 
 export default  RuleEngineReportsForm;

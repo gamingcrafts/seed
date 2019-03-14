@@ -383,13 +383,30 @@ const updateReportText=(textBoxValue)=>{
 const updateReport=(updatedReport)=>{
   return (dispatch, getState, http) => {
     http.put('/ruleengine/reports/'+updatedReport.id, updatedReport).then(resp => {
-      dispatch({
-        type: HIDE_REPORT_FORM,
-        payload: resp.data
+      http.get('/ruleengine/reports/')
+      .then(res => {
+        dispatch({
+          type: REPORTS_GET_SUCCESS,
+          payload: res.data
+        })
+      }).catch(err => {
       })
-      
-    
-    }).catch(err => {
+      }).catch(err => {
+    })
+  }
+}
+const deleteReport = (selectedReport)=>{
+  return (dispatch, getState, http) => {
+    http.delete('/ruleengine/reports/'+selectedReport.id).then(resp => {
+      http.get('/ruleengine/reports/')
+      .then(res => {
+        dispatch({
+          type: REPORTS_GET_SUCCESS,
+          payload: res.data
+        })
+      }).catch(err => {
+      })
+      }).catch(err => {
     })
   }
 }
@@ -429,5 +446,6 @@ export {
   showRuleEngineReportsForm,
   hideRuleEngineReportsForm,
   updateReportText,
-  updateReport
+  updateReport,
+  deleteReport
 }
