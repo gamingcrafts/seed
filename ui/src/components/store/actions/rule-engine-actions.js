@@ -355,7 +355,33 @@ const showRuleEngineReportsForm = (selectedReport)=>{
       indexName:'',
       query:'',
       sortField:'',
-      sortDirection:''
+      sortDirection:'',
+      columns:{
+        aboutMe:{
+          seleted:true,
+          label:'',
+          sortable:true,
+          dataColumn:false,
+          currencyColumn:true,
+          format:''
+        },
+        coolBoy:{
+          seleted:true,
+          label:'',
+          sortable:true,
+          dataColumn:false,
+          currencyColumn:true,
+          format:''
+        },
+        yesMan:{
+          seleted:true,
+          label:'',
+          sortable:true,
+          dataColumn:false,
+          currencyColumn:true,
+          format:''
+        }
+      }
     }
   }
   return (dispatch, getState, http) => {

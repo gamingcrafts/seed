@@ -74,7 +74,8 @@ const INIT_STATE = {
         showReportsList:true,
         selectedReport:undefined,
         showAddReportModal:false,
-        addReportObject:{}
+        addReportObject:{},
+        newColumnObject:{}
     }
 }
 
