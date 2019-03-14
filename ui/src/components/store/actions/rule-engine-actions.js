@@ -352,16 +352,22 @@ const addReport = (newReport)=>{
 const showRuleEngineReportsForm = (selectedReport)=>{
   if(selectedReport['config']===undefined){
     selectedReport['config']={
+      indexName:'',
       query:'',
       sortField:'',
       sortDirection:''
     }
   }
   return (dispatch, getState, http) => {
-    dispatch({
-      type: SHOW_REPORT_FORM,
-      payload:selectedReport
-    })
+    http.get('/alias')
+      .then(res => {
+        dispatch({
+          type: SHOW_REPORT_FORM,
+          payload:{selectedReport:selectedReport,aliases:res.data}
+        })
+      })
+      .catch(err => {
+        })
   }
 }
 

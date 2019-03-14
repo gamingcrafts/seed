@@ -44,6 +44,7 @@ const INIT_STATE = {
     loading: true,
     loaded: false,
     settingsId: '',
+    aliases:undefined,
     settings: {},
     operators: {},
     fields:{},
@@ -478,10 +479,12 @@ export default (state = INIT_STATE, action) => {
             }
             case SHOW_REPORT_FORM:{
                 return update(state, {
-                    
+                    aliases:{
+                        $set:action.payload.aliases
+                    },
                     reportsState: {
                         selectedReport:{
-                            $set:action.payload
+                            $set:action.payload.selectedReport
                         },
                         showReportsList: {
                             $set: false

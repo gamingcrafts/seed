@@ -26,7 +26,8 @@ import {
   EuiForm,
   EuiFormRow,
   EuiFieldText,
-  EuiTextArea
+  EuiTextArea,
+  EuiSelect
 } from '@elastic/eui';
 
 const hideReportForm=(props)=>{
@@ -51,8 +52,14 @@ const hideReportForm=(props)=>{
  }
 
 const ruleEngineReportsFrom = props => {
-  let {reportsState} = props.RuleEngineReducer;
+  let {reportsState,aliases} = props.RuleEngineReducer;
   let selectedReport = reportsState.selectedReport;
+  let selectOptions = []
+  selectOptions.push({value:'',text:'Select and Index'});
+  aliases.forEach((alias)=>{
+    selectOptions.push({value:alias,text:alias});
+  })
+  
   return (<EuiPage>
     <EuiPageBody>
       <EuiPageContent>
@@ -83,6 +90,12 @@ const ruleEngineReportsFrom = props => {
         </EuiFlexItem>
       </EuiFlexGroup>
       <EuiForm>
+      <EuiFormRow label="Index" compressed>
+            <EuiSelect
+            options={selectOptions}
+            value={ selectedReport['config']['indexName'] ?  selectedReport['config']['indexName']: null}
+            onChange={(e) => updateReportTextBox(props,e,'indexName')}/>
+          </EuiFormRow>
       <EuiFormRow label="Query" compressed>
           <EuiTextArea
           name="query"
