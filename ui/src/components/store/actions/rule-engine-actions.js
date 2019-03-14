@@ -30,7 +30,10 @@ import {
   SHOW_ADD_REPORT_MODAL,
   HIDE_ADD_REPORT_MODAL,
   UPDATE_REPORT_LIST_TEXT_BOX,
-  CREATE_NEW_REPORT_SUCCESS
+  CREATE_NEW_REPORT_SUCCESS,
+  SHOW_REPORT_FORM,HIDE_REPORT_FORM,
+  UPDATE_REPORT_FORM_TEXT_BOX,
+  UPDATE_REPORT_SUCCESS
 } from "../actions/types";
 const getSettings = () => {
   return (dispatch, getState, http) => {
@@ -145,8 +148,6 @@ const executeOperatorFunction=(operatorValue,args)=>{
   return (dispatch, getState, http) => {
   
   var argsObj = JSON.parse(args);
-  console.log(operatorValue);
-  console.log(argsObj)
   let {field, op, values, valueSrcs, valueTypes, opDef, operatorOptions, isForDisplay} = argsObj;
   let functionBody = operatorValue.formatOp;
   let excutableFunction = new Function('field', 'op', 'values', 'valueSrcs', 'valueTypes', 'opDef', 'operatorOptions', 'isForDisplay',functionBody);
@@ -347,6 +348,51 @@ const addReport = (newReport)=>{
     })
   }
 }
+
+const showRuleEngineReportsForm = (selectedReport)=>{
+  if(selectedReport['config']===undefined){
+    selectedReport['config']={
+      query:'',
+      sortField:'',
+      sortDirection:''
+    }
+  }
+  return (dispatch, getState, http) => {
+    dispatch({
+      type: SHOW_REPORT_FORM,
+      payload:selectedReport
+    })
+  }
+}
+
+const hideRuleEngineReportsForm=()=>{
+  return (dispatch, getState, http) => {
+    dispatch({
+      type: HIDE_REPORT_FORM
+    })
+  }
+}
+const updateReportText=(textBoxValue)=>{
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_REPORT_FORM_TEXT_BOX,
+      payload: textBoxValue
+    })
+  }
+}
+const updateReport=(updatedReport)=>{
+  return (dispatch, getState, http) => {
+    http.put('/ruleengine/reports/'+updatedReport.id, updatedReport).then(resp => {
+      dispatch({
+        type: HIDE_REPORT_FORM,
+        payload: resp.data
+      })
+      
+    
+    }).catch(err => {
+    })
+  }
+}
 export {
   getSettings,
   updateTextBox,
@@ -379,5 +425,9 @@ export {
   showAddReportModal,
   hideAddReportModal,
   updateAddReportObjectTextBox,
-  addReport
+  addReport,
+  showRuleEngineReportsForm,
+  hideRuleEngineReportsForm,
+  updateReportText,
+  updateReport
 }

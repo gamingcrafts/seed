@@ -31,7 +31,11 @@ import {
     SHOW_ADD_REPORT_MODAL,
    HIDE_ADD_REPORT_MODAL,
    UPDATE_REPORT_LIST_TEXT_BOX,
-   CREATE_NEW_REPORT_SUCCESS
+   CREATE_NEW_REPORT_SUCCESS,
+   SHOW_REPORT_FORM,
+   HIDE_REPORT_FORM,
+   UPDATE_REPORT_FORM_TEXT_BOX,
+   UPDATE_REPORT_SUCCESS
 } from "../actions/types";
 
 import update from 'react-addons-update';
@@ -465,6 +469,52 @@ export default (state = INIT_STATE, action) => {
                         }
                     },
                 })
+            }
+            case SHOW_REPORT_FORM:{
+                return update(state, {
+                    
+                    reportsState: {
+                        selectedReport:{
+                            $set:action.payload
+                        },
+                        showReportsList: {
+                            $set: false
+                        },
+                        addReportObject:{
+                            $set:{}
+                        }
+                    },
+                })
+            }
+            case HIDE_REPORT_FORM:{
+                return update(state, {
+                    
+                    reportsState: {
+                        selectedReport:{
+                            $set:undefined
+                        },
+                        showReportsList: {
+                            $set: true
+                        }
+                    },
+                })
+            }
+            case UPDATE_REPORT_FORM_TEXT_BOX:{
+                console.log(state.reportsState.selectedReport)
+                let type = action.payload.type;
+                let value = action.payload.value;
+                return update(state, {
+                    reportsState: {
+                        selectedReport: {
+                            config:{
+                           $merge:{[type]:value}
+                            }
+                        }
+                    },
+                })
+            }
+            case UPDATE_REPORT_SUCCESS:{
+                return null
             }
 
         default:
