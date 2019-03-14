@@ -56,7 +56,7 @@ const run = async () => {
     });
   }
   //Insert Default Settings
-  //let respForSettings = await ruleEngineSettingsService.index(ruleEngineDefaultSettings);
+  let respForSettings = await ruleEngineSettingsService.index(ruleEngineDefaultSettings);
 
  //Insert Default Operators
   let operatorsObject = {};
@@ -66,14 +66,14 @@ const run = async () => {
     operatorsObject[dos.name] = dos;
 
   })
-  //let respForOperators = await ruleEngineOperatorsService.index(operatorsObject);
+  let respForOperators = await ruleEngineOperatorsService.index(operatorsObject);
 
   let fieldsObject = {};
   ruleEngineDefaultFields.forEach((field)=>{
     let indexName = Object.keys(field)[0]
     fieldsObject[indexName] = field[indexName];
   })
- // let resForFields = await ruleEngineFieldsService.index(fieldsObject);
+ let resForFields = await ruleEngineFieldsService.index(fieldsObject);
 }
 module.exports = {
   run
