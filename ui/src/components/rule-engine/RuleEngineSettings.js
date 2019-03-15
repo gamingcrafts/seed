@@ -67,8 +67,9 @@ render(){
           <EuiFlexItem grow={false}>
           <EuiButton
           fill
+          iconType="save"
           onClick={this.updateSettings}
-          color="primary">Save</EuiButton>
+          color="secondary">Save</EuiButton>
           </EuiFlexItem >
           </EuiFlexGroup>
       <EuiFlexGroup>

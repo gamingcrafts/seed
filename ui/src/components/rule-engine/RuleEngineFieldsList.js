@@ -190,6 +190,7 @@ render(){
             <EuiFlexItem>
               <EuiButton
                 fill
+                iconType="plusInCircle"
                 style={{ marginRight: '20px' }}
                 onClick={this.showAddFieldModal}
                 color="primary">Add</EuiButton>

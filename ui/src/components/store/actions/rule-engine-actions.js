@@ -33,7 +33,14 @@ import {
   CREATE_NEW_REPORT_SUCCESS,
   SHOW_REPORT_FORM,HIDE_REPORT_FORM,
   UPDATE_REPORT_FORM_TEXT_BOX,
-  UPDATE_REPORT_SUCCESS
+  UPDATE_REPORT_SUCCESS,
+  UPDATE_REPORT_FORM_COLUMN_TEXT_BOX,
+  UPDATE_REPORT_FORM_COLUMN_CHECK_BOX,
+  UPDATE_REPORT_FORM_SELECTED_REPORT,
+  UPDATE_REPORT_FORM_CONFIG_COLUMN_ADD,
+  UPDATE_REPORT_FORM_CONFIG_COLUMN_EDIT,
+  UPDATE_REPORT_FORM_CONFIG_COLUMN_DELETE,
+  DELETE_REPORT_SUCCESS
 } from "../actions/types";
 const getSettings = () => {
   return (dispatch, getState, http) => {
@@ -356,40 +363,24 @@ const showRuleEngineReportsForm = (selectedReport)=>{
       query:'',
       sortField:'',
       sortDirection:'',
-      columns:{
-        aboutMe:{
-          seleted:true,
-          label:'',
-          sortable:true,
-          dataColumn:false,
-          currencyColumn:true,
-          format:''
-        },
-        coolBoy:{
-          seleted:true,
-          label:'',
-          sortable:true,
-          dataColumn:false,
-          currencyColumn:true,
-          format:''
-        },
-        yesMan:{
-          seleted:true,
-          label:'',
-          sortable:true,
-          dataColumn:false,
-          currencyColumn:true,
-          format:''
-        }
-      }
+      columns:{}
     }
+  }
+  let configColumnObject = {
+    columnName:'',
+    label:'',
+    selected:false,
+    sortable:false,
+    dateColumn:false,
+    currencyColumn:false
+
   }
   return (dispatch, getState, http) => {
     http.get('/alias')
       .then(res => {
         dispatch({
           type: SHOW_REPORT_FORM,
-          payload:{selectedReport:selectedReport,aliases:res.data}
+          payload:{selectedReport:selectedReport,aliases:res.data,configColumnObject:configColumnObject}
         })
       })
       .catch(err => {
@@ -415,14 +406,12 @@ const updateReportText=(textBoxValue)=>{
 const updateReport=(updatedReport)=>{
   return (dispatch, getState, http) => {
     http.put('/ruleengine/reports/'+updatedReport.id, updatedReport).then(resp => {
-      http.get('/ruleengine/reports/')
-      .then(res => {
+     
         dispatch({
-          type: REPORTS_GET_SUCCESS,
-          payload: res.data
+          type: UPDATE_REPORT_SUCCESS,
+          payload: updatedReport
         })
-      }).catch(err => {
-      })
+     
       }).catch(err => {
     })
   }
@@ -430,17 +419,112 @@ const updateReport=(updatedReport)=>{
 const deleteReport = (selectedReport)=>{
   return (dispatch, getState, http) => {
     http.delete('/ruleengine/reports/'+selectedReport.id).then(resp => {
-      http.get('/ruleengine/reports/')
-      .then(res => {
+      
+  
         dispatch({
-          type: REPORTS_GET_SUCCESS,
-          payload: res.data
+          type: DELETE_REPORT_SUCCESS,
+          payload: selectedReport
         })
-      }).catch(err => {
-      })
+     
       }).catch(err => {
     })
   }
+}
+const updateConfigColumnText=(textBoxValue)=>{
+
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_REPORT_FORM_COLUMN_TEXT_BOX,
+      payload: textBoxValue
+    })
+  }
+
+}
+
+const updateConfigColumnCheck=(checkBoxValue)=>{
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_REPORT_FORM_COLUMN_CHECK_BOX,
+      payload: checkBoxValue
+    })
+  }
+}
+
+const addOrUpdateConfigColumn=(column,selectedReport)=>{
+  let configColumnObject={
+    columnName:'',
+    label:'',
+    selected:false,
+    sortable:false,
+    dateColumn:false,
+    currencyColumn:false
+}
+  if(column.columnName!==''){
+    selectedReport['config']['columns'][column.columnName]=column;
+  }
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_REPORT_FORM_SELECTED_REPORT,
+      payload: {configColumnObject:configColumnObject,selectedReport:selectedReport}
+    })
+  }
+}
+const deleteConfigColumn=(column,selectedReport)=>{
+  let configColumnObject={
+    columnName:'',
+    label:'',
+    selected:false,
+    sortable:false,
+    dateColumn:false,
+    currencyColumn:false
+}
+  delete selectedReport['config']['columns'][column.columnName];
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_REPORT_FORM_SELECTED_REPORT,
+      payload: {configColumnObject:configColumnObject,selectedReport:selectedReport}
+    })
+  }
+}
+
+const showConfigColumnAdd = ()=>{
+  let configColumnObject={
+    columnName:'',
+    label:'',
+    selected:false,
+    sortable:false,
+    dateColumn:false,
+    currencyColumn:false
+}
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_REPORT_FORM_CONFIG_COLUMN_ADD,
+      payload: {configColumnObject:configColumnObject}
+    })
+  }
+}
+
+const showConfigColumnEdit=(column)=>{
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_REPORT_FORM_CONFIG_COLUMN_EDIT,
+      payload: column
+    })
+  }
+}
+const showConfigColumnDelete=(column)=>{
+  
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_REPORT_FORM_CONFIG_COLUMN_DELETE,
+      payload: column
+    })
+  }
+  
+}
+
+const populateColumnDefinitionForIndex = ()=>{
+
 }
 export {
   getSettings,
@@ -479,5 +563,12 @@ export {
   hideRuleEngineReportsForm,
   updateReportText,
   updateReport,
-  deleteReport
+  deleteReport,
+  updateConfigColumnText,
+  updateConfigColumnCheck,
+  populateColumnDefinitionForIndex,
+  addOrUpdateConfigColumn,
+  deleteConfigColumn,
+  showConfigColumnAdd,
+  showConfigColumnEdit,showConfigColumnDelete
 }

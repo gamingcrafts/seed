@@ -35,7 +35,14 @@ import {
    SHOW_REPORT_FORM,
    HIDE_REPORT_FORM,
    UPDATE_REPORT_FORM_TEXT_BOX,
-   UPDATE_REPORT_SUCCESS
+   UPDATE_REPORT_SUCCESS,
+   UPDATE_REPORT_FORM_COLUMN_TEXT_BOX,
+   UPDATE_REPORT_FORM_COLUMN_CHECK_BOX,
+   UPDATE_REPORT_FORM_SELECTED_REPORT,
+   UPDATE_REPORT_FORM_CONFIG_COLUMN_ADD,
+   UPDATE_REPORT_FORM_CONFIG_COLUMN_EDIT,
+   UPDATE_REPORT_FORM_CONFIG_COLUMN_DELETE,
+   DELETE_REPORT_SUCCESS
 } from "../actions/types";
 
 import update from 'react-addons-update';
@@ -72,10 +79,14 @@ const INIT_STATE = {
     },
     reportsState:{
         showReportsList:true,
+        columnAddButtonVisible:true,
+        columnCancelButtonVisible:false,
+        columnUpdateButtonVisible:false,
+        columnDeleteButtonVisible:false,
         selectedReport:undefined,
         showAddReportModal:false,
         addReportObject:{},
-        newColumnObject:{}
+        configColumnObject:{}
     }
 }
 
@@ -490,8 +501,8 @@ export default (state = INIT_STATE, action) => {
                         showReportsList: {
                             $set: false
                         },
-                        addReportObject:{
-                            $set:{}
+                        configColumnObject:{
+                            $set:action.payload.configColumnObject
                         }
                     },
                 })
@@ -522,8 +533,148 @@ export default (state = INIT_STATE, action) => {
                     },
                 })
             }
+            
+            case UPDATE_REPORT_FORM_COLUMN_TEXT_BOX:{
+                let type = action.payload.type;
+                let value = action.payload.value;
+                return update(state, {
+                    reportsState: {
+                        configColumnObject: {
+                            $merge:{[type]:value}
+                        }
+                    },
+                })
+            }
+            case UPDATE_REPORT_FORM_COLUMN_CHECK_BOX:{
+                let type = action.payload.type;
+                let value = action.payload.value;
+                return update(state, {
+                    reportsState: {
+                        configColumnObject: {
+                            $merge:{[type]:value}
+                        }
+                    },
+                })
+            }
+            
+            case UPDATE_REPORT_FORM_SELECTED_REPORT:{
+                
+                return update(state, {
+                    reportsState: {
+                        selectedReport: {
+                            $set:action.payload.selectedReport
+                        },
+                        columnAddButtonVisible:{
+                            $set:true
+                        },
+                        columnUpdateButtonVisible:{
+                            $set:false
+                        },
+                        columnDeleteButtonVisible:{
+                            $set:false
+                        },
+                        columnCancelButtonVisible:{
+                            $set:false
+                        },
+                        configColumnObject:{
+                            $set:action.payload.configColumnObject
+                        }
+                    },
+                })
+            }
+            case UPDATE_REPORT_FORM_CONFIG_COLUMN_ADD:{
+                return update(state, {
+                    reportsState: {
+                        columnAddButtonVisible:{
+                            $set:true
+                        },
+                        columnUpdateButtonVisible:{
+                            $set:false
+                        },
+                        columnDeleteButtonVisible:{
+                            $set:false
+                        },
+                        columnCancelButtonVisible:{
+                            $set:false
+                        },
+                        configColumnObject:{
+                            $set:action.payload.configColumnObject
+                        }
+                    },
+                })
+            }
+            case UPDATE_REPORT_FORM_CONFIG_COLUMN_EDIT:{
+                return update(state, {
+                    reportsState: {
+                        configColumnObject: {
+                            $set:action.payload
+                        },
+                        columnAddButtonVisible:{
+                            $set:false
+                        },
+                        columnUpdateButtonVisible:{
+                            $set:true
+                        },
+                        columnCancelButtonVisible:{
+                            $set:true
+                        },
+                        columnDeleteButtonVisible:{
+                            $set:false
+                        },
+                    },
+                })
+            }
+            case UPDATE_REPORT_FORM_CONFIG_COLUMN_DELETE:{
+                return update(state, {
+                    reportsState: {
+                        configColumnObject: {
+                            $set:action.payload
+                        },
+                        columnAddButtonVisible:{
+                            $set:false
+                        },
+                        columnUpdateButtonVisible:{
+                            $set:false
+                        },
+                        columnCancelButtonVisible:{
+                            $set:true
+                        },
+                        columnDeleteButtonVisible:{
+                            $set:true
+                        },
+                    },
+                })
+            }
             case UPDATE_REPORT_SUCCESS:{
-                return null
+                let currentReports = state.reports.map((report)=>{
+                    if(report.id===action.payload.id){
+                        report=action.payload;
+                    }
+                    return report
+                })
+                return update(state, {
+                    reports:{
+                        $set:currentReports
+                    },
+                    reportsState: {
+                        showReportsList: {
+                            $set: true
+                        }
+                    },
+                })
+            }
+            case DELETE_REPORT_SUCCESS:{
+                let currentReports = state.reports.filter((report)=>report.id!==action.payload.id );
+                return update(state, {
+                    reports:{
+                        $set:currentReports
+                    },
+                    reportsState: {
+                        showReportsList: {
+                            $set: true
+                        }
+                    },
+                })
             }
 
         default:

@@ -86,7 +86,7 @@ const ruleEngineReportsList = (props) => {
             <EuiButtonEmpty onClick={props.hideAddReportModal}>
               Cancel
             </EuiButtonEmpty>
-            <EuiButton onClick={()=>addNewReport(props)} fill>
+            <EuiButton iconType="plusInCircle" onClick={()=>addNewReport(props)} fill>
               Add
             </EuiButton>
           </EuiModalFooter>

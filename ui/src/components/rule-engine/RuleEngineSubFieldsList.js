@@ -99,6 +99,7 @@ class RuleEngineSubFieldsList extends Component {
       <EuiForm>
       <EuiButton
         fill
+        iconType="plusInCircle"
         style={{ marginRight: '20px' }}
         onClick={this.showAddSubFieldModal}
         color="primary">Add</EuiButton>
@@ -199,6 +200,7 @@ render(){
               </EuiButtonEmpty>
 
               <EuiButton
+              iconType="plusInCircle"
                 onClick={this.addKeyToASubField}
                 fill
               >
