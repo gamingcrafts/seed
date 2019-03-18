@@ -1,12 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import ColumnDefinitionContainer from '../columnDefinition/ColumnDefinitionContainer';
 import RuleEngineHome from '../rule-engine/RuleEngineHome';
+import ReportsHome from '../reports/ReportsHome'
 import { connect } from 'react-redux';
 import {
   getIndices
 } from '../store/actions/column-definition-actions';
 import {
-  getSettings
+  getSettings,getReports
 } from '../store/actions/rule-engine-actions';
 
 import {
@@ -39,11 +40,20 @@ class HomePage extends Component {
       content: (
         <RuleEngineHome/>
       ),
-    }];
+    },
+    {
+      id:'reportsHome',
+      name:'Reports',
+      content:(
+        <ReportsHome/>
+      )
+    }
+  ];
   }
   componentDidMount() {
     this.props.getIndices();
     this.props.getSettings();
+    this.props.getReports();
   }
 
 
@@ -65,6 +75,6 @@ const mapStateToProps = ({
     }
   }
   const actions = {
-    getIndices,getSettings
+    getIndices,getSettings,getReports
   }
   export default connect(mapStateToProps, actions)(HomePage)

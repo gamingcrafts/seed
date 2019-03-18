@@ -8,7 +8,7 @@ import {
   getIndices
 } from '../store/actions/column-definition-actions';
 import {
-  getSettings,getOperators,getFields,getReports
+  getSettings,getOperators,getFields
 } from '../store/actions/rule-engine-actions';
 
 import {
@@ -38,20 +38,13 @@ class RuleEngineHome extends Component {
       content: (
         <RuleEngineFields/>
       )
-    },
-    {
-      id:'ruleEngineReports',
-      name:'Reports',
-      content:(
-        <RuleEngineReports/>
-      )
     }
   ];
   }
   componentDidMount() {
     this.props.getOperators();
     this.props.getFields();
-    this.props.getReports();
+
   }
 render() {
     return (
@@ -70,6 +63,6 @@ const mapStateToProps = ({
     }
   }
   const actions = {
-    getIndices,getSettings,getOperators,getFields,getReports
+    getIndices,getSettings,getOperators,getFields
   }
   export default connect(mapStateToProps, actions)(RuleEngineHome)
