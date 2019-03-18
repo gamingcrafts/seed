@@ -40,7 +40,8 @@ import {
   UPDATE_REPORT_FORM_CONFIG_COLUMN_ADD,
   UPDATE_REPORT_FORM_CONFIG_COLUMN_EDIT,
   UPDATE_REPORT_FORM_CONFIG_COLUMN_DELETE,
-  DELETE_REPORT_SUCCESS
+  DELETE_REPORT_SUCCESS,
+  UPDATE_CONFIG_COLUMNS
 } from "../actions/types";
 const getSettings = () => {
   return (dispatch, getState, http) => {
@@ -367,8 +368,9 @@ const showRuleEngineReportsForm = (selectedReport)=>{
     }
   }
   let configColumnObject = {
-    columnName:'',
+    name:'',
     label:'',
+    format:'',
     selected:false,
     sortable:false,
     dateColumn:false,
@@ -452,15 +454,16 @@ const updateConfigColumnCheck=(checkBoxValue)=>{
 
 const addOrUpdateConfigColumn=(column,selectedReport)=>{
   let configColumnObject={
-    columnName:'',
+    name:'',
     label:'',
+    format:'',
     selected:false,
     sortable:false,
     dateColumn:false,
     currencyColumn:false
 }
-  if(column.columnName!==''){
-    selectedReport['config']['columns'][column.columnName]=column;
+  if(column.name!==''){
+    selectedReport['config']['columns'][column.name]=column;
   }
   return (dispatch) => {
     dispatch({
@@ -471,14 +474,15 @@ const addOrUpdateConfigColumn=(column,selectedReport)=>{
 }
 const deleteConfigColumn=(column,selectedReport)=>{
   let configColumnObject={
-    columnName:'',
+    name:'',
     label:'',
+    format:'',
     selected:false,
     sortable:false,
     dateColumn:false,
     currencyColumn:false
 }
-  delete selectedReport['config']['columns'][column.columnName];
+  delete selectedReport['config']['columns'][column.name];
   return (dispatch) => {
     dispatch({
       type: UPDATE_REPORT_FORM_SELECTED_REPORT,
@@ -489,8 +493,9 @@ const deleteConfigColumn=(column,selectedReport)=>{
 
 const showConfigColumnAdd = ()=>{
   let configColumnObject={
-    columnName:'',
+    name:'',
     label:'',
+    format:'',
     selected:false,
     sortable:false,
     dateColumn:false,
@@ -513,7 +518,6 @@ const showConfigColumnEdit=(column)=>{
   }
 }
 const showConfigColumnDelete=(column)=>{
-  
   return (dispatch) => {
     dispatch({
       type: UPDATE_REPORT_FORM_CONFIG_COLUMN_DELETE,
@@ -523,8 +527,18 @@ const showConfigColumnDelete=(column)=>{
   
 }
 
-const populateColumnDefinitionForIndex = ()=>{
-
+const fetchColumnDefinitionsForIndex = (selectedIndex)=>{
+return (dispatch,getState,http)=>{
+  http.get('/coldef/' + selectedIndex)
+  .then(customMapping => {
+   dispatch({
+     type:UPDATE_CONFIG_COLUMNS,
+     payload:{selectedIndex:selectedIndex,columns:customMapping.data[0].columns}
+   })
+}).catch(err => {
+// TODO: Handle error block with toast
+})
+}
 }
 export {
   getSettings,
@@ -566,7 +580,7 @@ export {
   deleteReport,
   updateConfigColumnText,
   updateConfigColumnCheck,
-  populateColumnDefinitionForIndex,
+  fetchColumnDefinitionsForIndex,
   addOrUpdateConfigColumn,
   deleteConfigColumn,
   showConfigColumnAdd,

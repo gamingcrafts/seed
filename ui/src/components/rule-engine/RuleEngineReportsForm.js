@@ -10,7 +10,7 @@ import {
   addOrUpdateConfigColumn,
   deleteConfigColumn,
   showConfigColumnAdd,
-  showConfigColumnEdit,showConfigColumnDelete
+  showConfigColumnEdit,showConfigColumnDelete,fetchColumnDefinitionsForIndex
 } from '../store/actions/rule-engine-actions';
 import {
   EuiPage,
@@ -86,6 +86,9 @@ const showDeleteConfigColumnForm =(props,item)=>{
    props.deleteConfigColumn(reportsState.configColumnObject,reportsState.selectedReport);
     
  }
+ const updateColumnDefinitionsForIndex=(props,e)=>{
+    props.fetchColumnDefinitionsForIndex(e.target.value);
+ }
 const ruleEngineReportsFrom = props => {
   let {reportsState,aliases} = props.RuleEngineReducer;
   let selectedReport = reportsState.selectedReport;
@@ -122,17 +125,25 @@ const ruleEngineReportsFrom = props => {
       field: 'name',
       name: 'Column Name',
       sortable: true,
-      width: '25%',
+      width: '15%',
       hideForMobile: false,
-      'data-test-subj': 'columnNameCell',
+      'data-test-subj': 'name',
     },
     {
       field: 'label',
       name: 'Label',
       sortable: true,
-      width: '25%',
+      width: '20%',
       hideForMobile: false,
-      'data-test-subj': 'columnNameCell',
+      'data-test-subj': 'label',
+    },
+    {
+      field: 'format',
+      name: 'Format',
+      sortable: true,
+      width: '15%',
+      hideForMobile: false,
+      'data-test-subj': 'format',
     },
     {
       field: 'selected',
@@ -147,7 +158,7 @@ const ruleEngineReportsFrom = props => {
           checked={item['selected'] ? item['selected']: false}
         />
       ),
-      'data-test-subj': 'selectedCell',
+      'data-test-subj': 'selected',
     },
     {
       field: 'sortable',
@@ -161,7 +172,7 @@ const ruleEngineReportsFrom = props => {
           checked={item['sortable'] ? item['sortable']: false}
         />
       ),
-      'data-test-subj': 'selectedCell',
+      'data-test-subj': 'sortable',
     },
     {
       field: 'dateColumn',
@@ -175,7 +186,7 @@ const ruleEngineReportsFrom = props => {
           checked={item['dateColumn'] ? item['dateColumn']: false}
         />
       ),
-      'data-test-subj': 'selectedCell',
+      'data-test-subj': 'dateC',
     },
     {
       field: 'currencyColumn',
@@ -189,7 +200,7 @@ const ruleEngineReportsFrom = props => {
           checked={item['currencyColumn'] ? item['currencyColumn']: false}
         />
       ),
-      'data-test-subj': 'selectedCell',
+      'data-test-subj': 'currency',
     },
    {
       name:'Actions',
@@ -242,7 +253,7 @@ if (reportsState.columnDeleteButtonVisible){
          <EuiPageContentBody>
             <EuiFlexGroup>
                <EuiFlexItem grow={10}>
-                  <h3>Report Edit</h3>
+                  <h3><u>{selectedReport.name} </u>- Report Edit</h3>
                </EuiFlexItem>
                <EuiFlexItem>
                </EuiFlexItem>
@@ -280,7 +291,7 @@ if (reportsState.columnDeleteButtonVisible){
                      <EuiSelect
                      options={selectOptions}
                      value={ selectedReport['config']['indexName'] ?  selectedReport['config']['indexName']: null}
-                     onChange={(e) => updateReportTextBox(props,e,'indexName')}/>
+                     onChange={(e) => updateColumnDefinitionsForIndex(props,e)}/>
                   </EuiFormRow>
                   <EuiFormRow label="Query" compressed>
                      <EuiTextArea
@@ -320,16 +331,24 @@ if (reportsState.columnDeleteButtonVisible){
                   <EuiFormRow label="Column Name" >
                      <EuiFieldText compressed
                      disabled={reportsState.columnDeleteButtonVisible || reportsState.columnUpdateButtonVisible}
-                     value={configColumnObject['columnName']} 
-                     onChange={(e) => updateColumnTextBox(props,e,'columnName')}/>
+                     value={configColumnObject['name']?configColumnObject['name']:''} 
+                     onChange={(e) => updateColumnTextBox(props,e,'name')}/>
                   </EuiFormRow>
                </EuiFlexItem>
                <EuiFlexItem>
                   <EuiFormRow label="Label" >
                      <EuiFieldText 
                      disabled={reportsState.columnDeleteButtonVisible}
-                     value={configColumnObject['label']}
+                     value={configColumnObject['label']?configColumnObject['label']:''}
                      onChange={(e) => updateColumnTextBox(props,e,'label')}/>
+                  </EuiFormRow>
+               </EuiFlexItem>
+               <EuiFlexItem>
+                  <EuiFormRow label="Format" >
+                     <EuiFieldText 
+                     disabled={reportsState.columnDeleteButtonVisible}
+                     value={configColumnObject['format']?configColumnObject['format']:''}
+                     onChange={(e) => updateColumnTextBox(props,e,'format')}/>
                   </EuiFormRow>
                </EuiFlexItem>
             </EuiFlexGroup>
@@ -339,7 +358,7 @@ if (reportsState.columnDeleteButtonVisible){
                <EuiSwitch
                   label=""
                   disabled={reportsState.columnDeleteButtonVisible}
-                  checked={configColumnObject['selected']}
+                  checked={configColumnObject['selected']?configColumnObject['selected']:false}
                   onChange={(e) => updateColumnCheckBox(props,e,'selected')}
                   />
                </EuiFormRow>
@@ -349,7 +368,7 @@ if (reportsState.columnDeleteButtonVisible){
                <EuiSwitch
                   label=""
                   disabled={reportsState.columnDeleteButtonVisible}
-                  checked={configColumnObject['sortable']}
+                  checked={configColumnObject['sortable']?configColumnObject['sortable']:false}
                   onChange={(e) => updateColumnCheckBox(props,e,'sortable')}
                   />
                </EuiFormRow>
@@ -359,7 +378,7 @@ if (reportsState.columnDeleteButtonVisible){
                <EuiSwitch
                   label=""
                   disabled={reportsState.columnDeleteButtonVisible}
-                  checked={configColumnObject['dateColumn']}
+                  checked={configColumnObject['dateColumn']?configColumnObject['dateColumn']:false}
                   onChange={(e) => updateColumnCheckBox(props,e,'dateColumn')}
                   />
                </EuiFormRow>
@@ -369,7 +388,7 @@ if (reportsState.columnDeleteButtonVisible){
                <EuiSwitch
                   label=""
                   disabled={reportsState.columnDeleteButtonVisible}
-                  checked={configColumnObject['currencyColumn']}
+                  checked={configColumnObject['currencyColumn']?configColumnObject['currencyColumn']:false}
                   onChange={(e) => updateColumnCheckBox(props,e,'currencyColumn')}
                   />
                </EuiFormRow>
@@ -403,7 +422,7 @@ const actions = {
    addOrUpdateConfigColumn,
    deleteConfigColumn,
    showConfigColumnAdd,
-  showConfigColumnEdit,showConfigColumnDelete
+  showConfigColumnEdit,showConfigColumnDelete,fetchColumnDefinitionsForIndex
 }
 const RuleEngineReportsForm = connect(mapStateToProps, actions)(ruleEngineReportsFrom);
 

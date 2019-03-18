@@ -42,7 +42,8 @@ import {
    UPDATE_REPORT_FORM_CONFIG_COLUMN_ADD,
    UPDATE_REPORT_FORM_CONFIG_COLUMN_EDIT,
    UPDATE_REPORT_FORM_CONFIG_COLUMN_DELETE,
-   DELETE_REPORT_SUCCESS
+   DELETE_REPORT_SUCCESS,
+   UPDATE_CONFIG_COLUMNS
 } from "../actions/types";
 
 import update from 'react-addons-update';
@@ -675,6 +676,21 @@ export default (state = INIT_STATE, action) => {
                         }
                     },
                 })
+            }
+            case UPDATE_CONFIG_COLUMNS:{
+                let index = action.payload.selectedIndex;
+                let columns = action.payload.columns;
+              
+               
+                return update(state, {
+                    reportsState: {
+                        selectedReport:{
+                            config:{
+                                
+                               $merge:{'columns':columns,'indexName':index}
+                            }
+                    }
+                }})
             }
 
         default:
