@@ -7,7 +7,7 @@ import {
     EuiPageContentBody,
     EuiFlexGroup,
     EuiFlexItem,
-    EuiCard, EuiIcon,EuiButton,EuiSpacer,EuiText,EuiLink,EuiButtonIcon
+    EuiCard, EuiIcon,EuiButtonIcon
   
   } from '@elastic/eui';
 
@@ -47,22 +47,22 @@ const cardNodes = icons.map(function (item, index) {
         onClick={() => window.alert('Card clicked')}
         footer={cardFooterContent}
         betaBadgeLabel={item==='AWS'?'Highlighter':undefined}
-        betaBadgeTooltipContent={item==='AWS' ? 'Some Badge Tip' : undefined}
-      />
+        betaBadgeTooltipContent={item==='AWS' ? 'Highlighter Tip' : undefined}/>
     </EuiFlexItem>
   );
 });
-     return ( <EuiPage>
-        <EuiPageBody>
-          <EuiPageContent>
-          <EuiPageContentBody><EuiFlexGroup wrap gutterSize="l">
-              
-     {cardNodes}
-     
-   </EuiFlexGroup> </EuiPageContentBody>
-              </EuiPageContent>
+     return ( 
+            <EuiPage>
+            <EuiPageBody>
+                <EuiPageContent>
+                <EuiPageContentBody>
+                    <EuiFlexGroup wrap gutterSize="l">
+                        {cardNodes}
+                </EuiFlexGroup> 
+                </EuiPageContentBody>
+                </EuiPageContent>
             </EuiPageBody>
-           </EuiPage>)
+            </EuiPage>)
 }
 const mapStateToProps = ({RuleEngineReducer}) => {
     return {

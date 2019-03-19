@@ -158,6 +158,7 @@ const executeOperatorFunction=(operatorValue,args)=>{
   var argsObj = JSON.parse(args);
   let {field, op, values, valueSrcs, valueTypes, opDef, operatorOptions, isForDisplay} = argsObj;
   let functionBody = operatorValue.formatOp;
+  // eslint-disable-next-line
   let excutableFunction = new Function('field', 'op', 'values', 'valueSrcs', 'valueTypes', 'opDef', 'operatorOptions', 'isForDisplay',functionBody);
   let functionResult = excutableFunction(field, op, values, valueSrcs, valueTypes, opDef, operatorOptions, isForDisplay);
   dispatch({
