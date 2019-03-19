@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import ColumnDefinitionContainer from '../columnDefinition/ColumnDefinitionContainer';
 import RuleEngineHome from '../rule-engine/RuleEngineHome';
 import ReportsHome from '../reports/ReportsHome'
+import CardsHome from '../cards/CardsHome'
 import { connect } from 'react-redux';
 import {
   getIndices
@@ -47,6 +48,13 @@ class HomePage extends Component {
       content:(
         <ReportsHome/>
       )
+    },
+    {
+      id:'cardsHome',
+      name:'Cards',
+      content:(
+        <CardsHome/>
+      )
     }
   ];
   }
@@ -62,7 +70,7 @@ class HomePage extends Component {
     return (
       <EuiTabbedContent
         tabs={this.tabs}
-        initialSelectedTab={this.tabs[2]}
+        initialSelectedTab={this.tabs[4]}
       />
     );
   }

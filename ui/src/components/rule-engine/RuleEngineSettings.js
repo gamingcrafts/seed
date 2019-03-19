@@ -73,7 +73,6 @@ render(){
           </EuiFlexItem >
           </EuiFlexGroup>
       <EuiFlexGroup>
-      
         <EuiFlexItem >
         <EuiFormRow
             label="Dropdown Placement"
@@ -109,7 +108,6 @@ render(){
             value={settings['fieldSeparatorDisplay'] ? settings['fieldSeparatorDisplay']: ''}
             onChange={(e) => this.onTextBoxChange(e,'fieldSeparatorDisplay')}/>
           </EuiFormRow>
-          
           <EuiFormRow
             label="Value Label"
             helpText="Help text about render size"
@@ -118,7 +116,6 @@ render(){
             value={settings['valueLabel'] ? settings['valueLabel']: ''}
             onChange={(e) => this.onTextBoxChange(e,'valueLabel')}/>
           </EuiFormRow>
-          
           <EuiFormRow
             label="Value Place Holder"
             helpText="Help text about render size"
@@ -137,7 +134,6 @@ render(){
             value={settings['fieldLabel'] ? settings['fieldLabel']: ''}
             onChange={(e) => this.onTextBoxChange(e,'fieldLabel')}/>
           </EuiFormRow>
-          
           <EuiFormRow
             label="Operator Label"
             helpText="Help text about render size"
@@ -163,8 +159,6 @@ render(){
             value={settings['operatorPlaceholder'] ? settings['operatorPlaceholder']: ''}
             onChange={(e) => this.onTextBoxChange(e,'operatorPlaceholder')}/>
           </EuiFormRow>
-         
-      
           <EuiFormRow
             label="Delete Label"
             helpText="Help text about render size"
@@ -211,36 +205,29 @@ render(){
           <EuiFormRow label="Hide Conj for One">
           <EuiSwitch
           checked={settings['hideConjForOne']}
-          onChange={(e) => this.onCheckBoxChange(e,'hideConjForOne')}
-          />
+          onChange={(e) => this.onCheckBoxChange(e,'hideConjForOne')}/>
           </EuiFormRow>
           <EuiFormRow label="Render Conj as False">
           <EuiSwitch
           checked={settings['renderConjsAsRadios']}
-          onChange={(e) => this.onCheckBoxChange(e,'renderConjsAsRadios')}
-          />
+          onChange={(e) => this.onCheckBoxChange(e,'renderConjsAsRadios')}/>
           </EuiFormRow>
           <EuiFormRow label="Clear Value On Change Field">
           <EuiSwitch
           checked={settings['clearValueOnChangeField']}
-          onChange={(e) => this.onCheckBoxChange(e,'clearValueOnChangeField')}
-          />
+          onChange={(e) => this.onCheckBoxChange(e,'clearValueOnChangeField')}/>
           </EuiFormRow>
           <EuiFormRow label="Clear Value On Change Operator">
           <EuiSwitch
           checked={settings['clearValueOnChangeOp']}
-          onChange={(e) => this.onCheckBoxChange(e,'clearValueOnChangeOp')}
-          />
+          onChange={(e) => this.onCheckBoxChange(e,'clearValueOnChangeOp')}/>
           </EuiFormRow>
           </EuiFlexItem >
-          
           <EuiFlexItem >
-          
           <EuiFormRow label="Set Default Field And Op">
           <EuiSwitch
           checked={settings['setDefaultFieldAndOp']}
-          onChange={(e) => this.onCheckBoxChange(e,'setDefaultFieldAndOp')}
-          />
+          onChange={(e) => this.onCheckBoxChange(e,'setDefaultFieldAndOp')}/>
           </EuiFormRow>
           <EuiFormRow label="Show Labels">
           <EuiSwitch
@@ -289,15 +276,11 @@ render(){
           <EuiFieldNumber
           value={settings['maxNesting'] ? settings['maxNesting']: 0}
           onChange={(e) => this.onNumberBoxChange(e,'maxNesting')}
-          compressed
-        />
+          compressed/>
         </EuiFormRow>
-        
         </EuiFlexItem >
-       
-        </EuiFlexGroup>
-     
-      </EuiPageContentBody>
+       </EuiFlexGroup>
+    </EuiPageContentBody>
           </EuiPageContent>
         </EuiPageBody>
       </EuiPage>
@@ -308,7 +291,7 @@ const mapStateToProps = ({RuleEngineReducer}) => {
     return {
         RuleEngineReducer
     }
-  }
+}
 const actions = {
   getSettings,
   updateTextBox,

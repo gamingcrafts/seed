@@ -29,21 +29,21 @@ import {
     UPDATE_OPERATOR_FUNCTION_RESULT,
     REPORTS_GET_SUCCESS,
     SHOW_ADD_REPORT_MODAL,
-   HIDE_ADD_REPORT_MODAL,
-   UPDATE_REPORT_LIST_TEXT_BOX,
-   CREATE_NEW_REPORT_SUCCESS,
-   SHOW_REPORT_FORM,
-   HIDE_REPORT_FORM,
-   UPDATE_REPORT_FORM_TEXT_BOX,
-   UPDATE_REPORT_SUCCESS,
-   UPDATE_REPORT_FORM_COLUMN_TEXT_BOX,
-   UPDATE_REPORT_FORM_COLUMN_CHECK_BOX,
-   UPDATE_REPORT_FORM_SELECTED_REPORT,
-   UPDATE_REPORT_FORM_CONFIG_COLUMN_ADD,
-   UPDATE_REPORT_FORM_CONFIG_COLUMN_EDIT,
-   UPDATE_REPORT_FORM_CONFIG_COLUMN_DELETE,
-   DELETE_REPORT_SUCCESS,
-   UPDATE_CONFIG_COLUMNS
+    HIDE_ADD_REPORT_MODAL,
+    UPDATE_REPORT_LIST_TEXT_BOX,
+    CREATE_NEW_REPORT_SUCCESS,
+    SHOW_REPORT_FORM,
+    HIDE_REPORT_FORM,
+    UPDATE_REPORT_FORM_TEXT_BOX,
+    UPDATE_REPORT_SUCCESS,
+    UPDATE_REPORT_FORM_COLUMN_TEXT_BOX,
+    UPDATE_REPORT_FORM_COLUMN_CHECK_BOX,
+    UPDATE_REPORT_FORM_SELECTED_REPORT,
+    UPDATE_REPORT_FORM_CONFIG_COLUMN_ADD,
+    UPDATE_REPORT_FORM_CONFIG_COLUMN_EDIT,
+    UPDATE_REPORT_FORM_CONFIG_COLUMN_DELETE,
+    DELETE_REPORT_SUCCESS,
+    UPDATE_CONFIG_COLUMNS
 } from "../actions/types";
 
 import update from 'react-addons-update';
@@ -364,7 +364,6 @@ export default (state = INIT_STATE, action) => {
                     },
                 })
             }
-            
             case UPDATE_SUB_FIELDS_SUCCESS:{
                 let fields = action.payload.fields
                 let addSubFieldKey = '';
@@ -390,9 +389,7 @@ export default (state = INIT_STATE, action) => {
             }
             case UPDATE_LOCAL_UPDATED_SUB_FIELD_LIST:{
                 let fields = action.payload.fields
-              
-                return update(state, {
-                    
+              return update(state, {
                     fieldsState: {
                         updatedFields: {
                            $set:fields
@@ -402,7 +399,7 @@ export default (state = INIT_STATE, action) => {
             }
             case UPDATE_SELECTED_SUB_FIELD_LIST:{
                 let selectedSubFields = [];
-                let {field,subFields} =action.payload;
+                let {subFields} =action.payload;
                 subFields.forEach((subField)=>{
                     
                     selectedSubFields.push(subField.key);

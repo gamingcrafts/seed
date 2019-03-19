@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import RuleEngineSettings from '../rule-engine/RuleEngineSettings';
 import RuleEngineOperators from '../rule-engine/RuleEngineOperators';
 import RuleEngineFields from '../rule-engine/RuleEngineFields';
-import RuleEngineReports from '../rule-engine/RuleEngineReports';
 import { connect } from 'react-redux';
 import {
   getIndices
