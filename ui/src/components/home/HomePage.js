@@ -18,9 +18,6 @@ import {
 class HomePage extends Component {
   constructor(props) {
     super(props);
-
-
-
     this.tabs = [{
       id: 'generalSettings',
       name: 'General Settings',
@@ -63,9 +60,6 @@ class HomePage extends Component {
     this.props.getSettings();
     this.props.getReports();
   }
-
-
-
   render() {
     return (
       <EuiTabbedContent
