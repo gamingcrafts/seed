@@ -19,13 +19,7 @@ import {
 
 const cards = (props)=>{
    let {showAddCardModal,showAddActionModal,cards} = props.CardsReducer;
-   let addModal,addActionModal,cardsContent;
-   if (showAddCardModal) {
-      addModal = <AddCardModal/>
-   }
-   if(showAddActionModal){
-      addActionModal=<AddActionModal/>
-   }
+   let cardsContent;
    if(Object.keys(cards).length>0){
       cardsContent = (
          <Fragment>
@@ -38,14 +32,19 @@ const cards = (props)=>{
    else{
       cardsContent = <NoCardsFound/>
    }
+   if (showAddCardModal) {
+      cardsContent = (<AddCardModal/>)
+   }
+   if(showAddActionModal){
+      cardsContent=<AddActionModal/>
+   }
+   
       return ( 
       <EuiPage>
         <EuiPageBody>
            <EuiPageContent>
               <EuiPageContentBody>
                  {cardsContent}
-                 {addModal}           {/* ---------<AddCardModal/>-------*/}
-                 {addActionModal}
               </EuiPageContentBody>
            </EuiPageContent>
         </EuiPageBody>

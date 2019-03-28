@@ -12,13 +12,16 @@ import {
   EuiModalHeader,
   EuiModalHeaderTitle,
   EuiOverlayMask,
-  EuiSelect
+  EuiSelect,
+  EuiFlexGroup,
+  EuiFlexItem,
+  EuiText
 } from '@elastic/eui';
 import CardsSearchSortBar from './CardsSearchSortBar';
 import CardsList from './CardsList';
 import {
  hideAddActionModal,
-  addOrEditCard,
+ saveCardAction,
   updateCurrentCardValue
 } from '../store/actions/cards-actions';
 
@@ -31,8 +34,8 @@ const updateCurrentCard = (props,e,type)=>{
 
   props.updateCurrentCardValue(updatedValue);
 }
-const addUserGroupCard = (props)=>{
-  props.addOrEditCard();
+const saveAction = (props)=>{
+  props.saveCardAction();
 }
 
 
@@ -45,51 +48,47 @@ const addActionModal = (props)=>{
     { value: 'PUSH', text: 'PUSH' }
   ];
   const addActionForm = (
+    <EuiFlexGroup justifyContent="spaceAround">
+     
     <EuiForm>
-      <EuiFormRow
-        label="Card Action"
-      >
+    <EuiFormRow label="Card Name">
+    <EuiText grow={false}>
+    {currentCard['name']}
+    </EuiText>
+      </EuiFormRow>
+      <EuiFormRow label="Card Action">
         <EuiSelect
           options={options}
           value={currentCard['action']}
           onChange={(e)=>updateCurrentCard(props,e,'action')}
         />
       </EuiFormRow>
-     
-    </EuiForm>
+      <EuiFlexGroup style={{ maxWidth: 600 }}>
+   <EuiFlexItem>
+      <EuiFormRow>
+         <EuiButtonEmpty
+            onClick={()=>hideUserCardActionModal(props)}>
+            Cancel
+         </EuiButtonEmpty>
+      </EuiFormRow>
+   </EuiFlexItem>
+   <EuiFlexItem>
+      <EuiFormRow>
+         <EuiButton onClick={()=>saveAction(props)} fill>
+            Save
+         </EuiButton>
+      </EuiFormRow>
+   </EuiFlexItem>
+   </EuiFlexGroup>
+</EuiForm>
+</EuiFlexGroup>
   );
   
   
-  const addActionModal = (
-            <EuiOverlayMask>
-            <EuiModal
-              onClose={()=>
-                hideUserCardActionModal(props)}>
-              <EuiModalHeader>
-                  <EuiModalHeaderTitle >
-                   Add Action to user group
-                  </EuiModalHeaderTitle>
-              </EuiModalHeader>
-              <EuiModalBody>
-                  {addActionForm}
-              </EuiModalBody>
-              <EuiModalFooter>
-                  <EuiButtonEmpty
-                    onClick={()=>hideUserCardActionModal(props)}>
-                    Cancel
-                  </EuiButtonEmpty>
-                  <EuiButton
-                    onClick={()=>addUserGroupCard(props)}
-                    fill>
-                    Save
-                  </EuiButton>
-              </EuiModalFooter>
-            </EuiModal>
-        </EuiOverlayMask>
-        )
+  
       return ( 
         <Fragment>
-        {addActionModal}
+        {addActionForm}
         </Fragment>
      )
 }
@@ -100,7 +99,7 @@ const mapStateToProps = ({CardsReducer}) => {
 }
 const actions = {
   hideAddActionModal,
-  addOrEditCard,
+  saveCardAction,
   updateCurrentCardValue
 }
 const AddActionModal = connect(mapStateToProps, actions)(addActionModal)

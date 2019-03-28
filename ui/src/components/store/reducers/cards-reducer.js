@@ -62,7 +62,7 @@ export default (state = INIT_STATE, action) => {
    
       return update(state, {
 
-          cards:{
+          filteredCards:{
             $set:updatedCards
           }
         ,

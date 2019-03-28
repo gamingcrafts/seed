@@ -29,7 +29,7 @@ const cardsSearchSortBar = (props)=>{
     { value: 'date-oldest-to-latest', text: 'Date - Oldest to Latest' },
   ];
   return(
-<EuiFlexGroup style={{ maxWidth: 900 }}>
+<EuiFlexGroup style={{ maxWidth: 900,marginLeft:200}}>
   <EuiFlexItem style={{ width: 300 }}>
     <EuiFormRow label="Search">
       <EuiFieldSearch
@@ -48,7 +48,7 @@ const cardsSearchSortBar = (props)=>{
       />
     </EuiFormRow>
     </EuiFlexItem>
-    <EuiFlexItem  grow = {false} style={{ width: 100 }}>
+    <EuiFlexItem  grow = {false} style={{ width: 100 ,marginTop:30}}>
     <EuiFormRow>
       <EuiButton 
           fill

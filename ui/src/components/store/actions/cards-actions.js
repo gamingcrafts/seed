@@ -49,6 +49,21 @@ const addOrEditCard=()=>{
   }
 }
 
+const saveCardAction=()=>{
+  return (dispatch, getState, http) => {
+    let {currentCard,cards}  = getState().CardsReducer;
+    let newCard={};
+    let cardName = currentCard.name;
+    cards[cardName]={...currentCard};
+    
+    dispatch({
+      type:SAVE_USER_GROUP_CARD,
+      payload:{cards:cards}
+    })
+    window.location.href = "https://www.optikpi.com";
+  }
+}
+
 const deleteCard=()=>{
   return (dispatch, getState, http) => {
     dispatch({
@@ -68,7 +83,6 @@ const cloneCard=()=>{
 }
 
 const showAddActionModal = (cardName)=>{
-  console.log(cardName)
   return (dispatch, getState, http) => {
   let {cards}  = getState().CardsReducer;
   dispatch({
@@ -102,7 +116,7 @@ const filterUserCards=(searchName)=>{
      }
    })
   }
-   console.log(filterUserCards);
+ 
   dispatch({
       type:SAVE_USER_GROUP_CARD,
       payload:{cards:filterUserCards}
@@ -120,6 +134,6 @@ export{
   updateCurrentCardValue,
   showAddActionModal,
   hideAddActionModal,
-  filterUserCards
-
+  filterUserCards,
+  saveCardAction
 }

@@ -1,7 +1,7 @@
 import React,{Fragment} from 'react';
 import { connect } from 'react-redux';
 import {
-  EuiPanel
+  EuiLink
 
 } from '@elastic/eui';
 import {showAddCardModal} from '../store/actions/cards-actions';
@@ -14,9 +14,11 @@ const showUserCardAddModal=(props)=>{
 const noCardsFoundComponent = (props)=>{
 
   return(
-    <EuiPanel paddingSize="l" onClick={() => showUserCardAddModal(props)}>
-      <p>No User Cards Found. Click here to add one!</p>
-    </EuiPanel>
+    
+      <p style={{textAlign:'center'}}>No User Cards Found. Click <span>
+        <EuiLink paddingSize ="l" onClick={() => showUserCardAddModal(props)}> here </EuiLink> 
+        </span> to add one!</p>
+    
 )
 }
 const mapStateToProps = ({CardsReducer}) => {
