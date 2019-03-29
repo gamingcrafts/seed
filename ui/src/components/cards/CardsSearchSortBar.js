@@ -8,13 +8,14 @@ import {
     EuiSelect,
     EuiButton
 } from '@elastic/eui';
-import {showAddCardModal,filterUserCards} from '../store/actions/cards-actions';
+import {showAddCardModal,filterUserCards,sortCardsByDate} from '../store/actions/cards-actions';
 const cardsSearch=(props,e)=>{
   props.filterUserCards(e.target.value)
 
 }
 
-const cardsSort=(props)=>{
+const cardsSort=(props,e)=>{
+  props.sortCardsByDate(e.target.value);
 
 }
 const showUserCardAddModal=(props)=>{
@@ -44,7 +45,7 @@ const cardsSearchSortBar = (props)=>{
       <EuiSelect
           options={options}
           value={'Default'}
-          onChange={()=>cardsSort(props)}
+          onChange={(e)=>cardsSort(props,e)}
       />
     </EuiFormRow>
     </EuiFlexItem>
@@ -67,7 +68,8 @@ const mapStateToProps = ({CardsReducer}) => {
 }
 const actions = {
   showAddCardModal,
-  filterUserCards
+  filterUserCards,
+  sortCardsByDate
 }
 const CardsSearchSortBar = connect(mapStateToProps, actions)(cardsSearchSortBar)
 export default CardsSearchSortBar;

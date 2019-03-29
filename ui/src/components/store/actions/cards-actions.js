@@ -40,7 +40,12 @@ const addOrEditCard=()=>{
     let {currentCard,cards}  = getState().CardsReducer;
     let newCard={};
     let cardName = currentCard.name;
+    if(currentCard['created']===undefined){
+      currentCard['created']=new Date();
+    }
+    currentCard['modified']=new Date();
     cards[cardName]={...currentCard};
+
     
     dispatch({
       type:SAVE_USER_GROUP_CARD,
@@ -124,6 +129,57 @@ const filterUserCards=(searchName)=>{
   }
 }
 
+const sortCardsByDate=(order)=>{
+  return (dispatch, getState, http) => {
+    let {cards}  = getState().CardsReducer;
+    let cardsArray=[]
+
+    Object.keys(cards).forEach((card)=>{
+      cardsArray.push(cards[card]);
+    });
+
+    let sortedCards;
+    if(order==='date-latest-to-oldest'){
+      var date_dsc =  (arr, dateProp) =>{
+        return arr.slice().sort(function (a, b) {
+          return a[dateProp] > b[dateProp] ? -1 : 1;
+        });
+      }
+  
+       sortedCards = date_dsc(cardsArray,'created')
+
+    }
+
+    else if(order==='date-oldest-to-latest'){
+      var date_asc =  (arr, dateProp) =>{
+        return arr.slice().sort(function (a, b) {
+          return a[dateProp] < b[dateProp] ? -1 : 1;
+        });
+      }
+  
+       sortedCards = date_asc(cardsArray,'created')
+
+    }
+
+   
+    let sortedCardsObject={}
+    sortedCards.forEach((card)=>{
+      sortedCardsObject[card.name]=card;
+    })
+
+    console.log(sortedCardsObject)
+    
+
+   
+
+    dispatch({
+      type:SAVE_USER_GROUP_CARD,
+      payload:{cards:sortedCardsObject}
+    })
+    }
+   
+}
+
 
 export{
   showAddCardModal,
@@ -135,5 +191,6 @@ export{
   showAddActionModal,
   hideAddActionModal,
   filterUserCards,
-  saveCardAction
+  saveCardAction,
+  sortCardsByDate
 }

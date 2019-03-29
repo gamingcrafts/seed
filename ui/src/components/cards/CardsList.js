@@ -40,7 +40,7 @@ const cardsList = (props)=>{
 let {cards,filteredCards } = props.CardsReducer;
 let noUserCardsFound;
   
-if(Object.keys(filteredCards).length==0||filteredCards===undefined){
+if(Object.keys(filteredCards).length===0||filteredCards===undefined){
 noUserCardsFound = (
     <p>No Cards found for the search criteria</p>
   )
@@ -91,7 +91,6 @@ const cardNodes = Object.keys(filteredCards).map(function (item, index) {
     </EuiFlexItem>
   );
 });
-console.log(filteredCards)
      return (
         <EuiFlexGroup wrap gutterSize="l">
        {cardNodes} 
