@@ -17,6 +17,7 @@ const deleteCardConfirmationModal = (props)=>{
             onConfirm={()=>props.deleteCard()}
             cancelButtonText="No"
             confirmButtonText="Delete"
+            buttonColor="danger"
             defaultFocusedButton={EUI_MODAL_CONFIRM_BUTTON}
           >
           </EuiConfirmModal>

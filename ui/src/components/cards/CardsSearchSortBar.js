@@ -8,7 +8,7 @@ import {
     EuiSelect,
     EuiButton
 } from '@elastic/eui';
-import {showAddCardModal,filterUserCards,sortCardsByDate} from '../store/actions/cards-actions';
+import {showAddCardTypeModal,filterUserCards,sortCardsByDate} from '../store/actions/cards-actions';
 const cardsSearch=(props,e)=>{
   props.filterUserCards(e.target.value)
 
@@ -19,7 +19,7 @@ const cardsSort=(props,e)=>{
 
 }
 const showUserCardAddModal=(props)=>{
-  props.showAddCardModal();
+  props.showAddCardTypeModal();
 
 }
 
@@ -67,7 +67,7 @@ const mapStateToProps = ({CardsReducer}) => {
   }
 }
 const actions = {
-  showAddCardModal,
+  showAddCardTypeModal,
   filterUserCards,
   sortCardsByDate
 }

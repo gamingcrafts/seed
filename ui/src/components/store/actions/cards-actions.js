@@ -11,7 +11,10 @@ import {
   SHOW_EDIT_PAGE,
   HIDE_EDIT_PAGE,
   SHOW_DELETE_MODAL,
-  HIDE_DELETE_MODAL
+  HIDE_DELETE_MODAL,
+  SHOW_ADD_CARD_TYPE_MODAL,
+  HIDE_ADD_CARD_TYPE_MODAL,
+  SET_NEW_CARD_TYPE
 } from "../actions/types";
 
 const showAddCardModal = () => {
@@ -244,6 +247,31 @@ const deleteCard=()=>{
   }
 }
 
+const showAddCardTypeModal=()=>{
+  return (dispatch, getState, http) => {
+    dispatch({
+      type: SHOW_ADD_CARD_TYPE_MODAL
+    })
+  }
+}
+
+const hideAddCardTypeModal=()=>{
+  return (dispatch, getState, http) => {
+    dispatch({
+      type: HIDE_ADD_CARD_TYPE_MODAL
+    })
+  }
+}
+
+const selectNewCardType=(cardType)=>{
+  return (dispatch, getState, http) => {
+    dispatch({
+      type: SET_NEW_CARD_TYPE,
+      payload:{type:cardType}
+    })
+  }
+
+}
 
 export {
   showAddCardModal,
@@ -260,5 +288,8 @@ export {
   showEditPage,
   hideEditPage,
   showDeleteModal,
-  hideDeleteModal
+  hideDeleteModal,
+  showAddCardTypeModal,
+  hideAddCardTypeModal,
+  selectNewCardType
 }

@@ -14,9 +14,12 @@ import EditCardPage from './AddCardPage'
 import NoCardsFound from './NoCardsFound'
 import AddActionPage from'./AddActionPage'
 import DeleteCardConfirmationModal from './DeleteConfirmationModal'
+import AddCardTypeModal from './AddCardTypeModal'
 const cards = (props)=>{
-let {showAddCardModal,showAddActionModal,showDeleteModal,showEditPage,cards} = props.CardsReducer;
-let cardsContent,deleteModal;
+let {showAddCardModal,
+   showAddActionModal,showDeleteModal,
+   showEditPage,cards,showAddCardTypeModal} = props.CardsReducer;
+let cardsContent,deleteModal,addCardTypeModal;
 if(Object.keys(cards).length>0){
 cardsContent = (
 <Fragment>
@@ -53,6 +56,9 @@ if(showDeleteModal){
 deleteModal = 
 <DeleteCardConfirmationModal/>
 }
+if(showAddCardTypeModal){
+   addCardTypeModal=<AddCardTypeModal/>
+}
 return ( 
 <EuiPage>
    <EuiPageBody>
@@ -60,6 +66,7 @@ return (
          <EuiPageContentBody>
             {cardsContent}
             {deleteModal}
+            {addCardTypeModal}
          </EuiPageContentBody>
       </EuiPageContent>
    </EuiPageBody>

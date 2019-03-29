@@ -3,16 +3,16 @@ import { connect } from 'react-redux';
 import {
 EuiLink
 } from '@elastic/eui';
-import {showAddCardModal} from '../store/actions/cards-actions';
+import {showAddCardTypeModal} from '../store/actions/cards-actions';
 const showUserCardAddModal=(props)=>{
-props.showAddCardModal();
+props.showAddCardTypeModal();
 }
 const noCardsFoundComponent = (props)=>{
 return(
 <p style={{textAlign:'center'}}>
    No User Cards Found. Click 
    <span>
-      <EuiLink paddingSize ="l" onClick={() => showUserCardAddModal(props)}> here </EuiLink>
+      <EuiLink paddingSize ="l" onClick={() => showUserCardAddModal(props)}><span> here </span>  </EuiLink>
    </span>
    to add one!
 </p>
@@ -24,7 +24,7 @@ CardsReducer
 }
 }
 const actions = {
-showAddCardModal
+showAddCardTypeModal
 }
 const NoCardsFound = connect(mapStateToProps, actions)(noCardsFoundComponent)
 export default NoCardsFound;

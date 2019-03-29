@@ -12,7 +12,10 @@ import {
   SHOW_EDIT_PAGE,
   HIDE_EDIT_PAGE,
   SHOW_DELETE_MODAL,
-  HIDE_DELETE_MODAL
+  HIDE_DELETE_MODAL,
+  SHOW_ADD_CARD_TYPE_MODAL,
+  HIDE_ADD_CARD_TYPE_MODAL,
+  SET_NEW_CARD_TYPE
 } from "../actions/types";
 import update from 'react-addons-update';
 
@@ -21,6 +24,7 @@ const INIT_STATE = {
   filteredCards:{},
   currentCard:{
     name:'',
+    type:'',
     description:'',
     action:'',
     inUse:false
@@ -28,11 +32,13 @@ const INIT_STATE = {
   showAddCardModal:false,
   showAddActionModal:false,
   showEditPage:false,
-  showDeleteModal:false
+  showDeleteModal:false,
+  showAddCardTypeModal:false
 }
 
 const  EMPTY_CARD = {
   name:'',
+  type:'',
   description:'',
   action:'',
   inUse:false
@@ -169,6 +175,35 @@ export default (state = INIT_STATE, action) => {
         currentCard:{
           $set:EMPTY_CARD
         }
+    })
+    }
+    case SHOW_ADD_CARD_TYPE_MODAL:{
+      return update(state, {
+        showAddCardTypeModal: {
+          $set:true
+        }
+    })
+    }
+    case HIDE_ADD_CARD_TYPE_MODAL:{
+      return update(state, {
+        showAddCardTypeModal: {
+          $set:false
+        }
+    })
+    }
+    case SET_NEW_CARD_TYPE:{
+      return update(state, {
+        showAddCardTypeModal: {
+          $set:false
+        },
+        showAddCardModal:{
+          $set:true
+        },
+        currentCard:{
+          $merge:{
+            'type':action.payload.type
+        }
+      }
     })
     }
     default:
