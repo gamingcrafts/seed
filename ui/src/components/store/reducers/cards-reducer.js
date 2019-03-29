@@ -8,7 +8,9 @@ import {
   UPDATE_CURRENT_CARD,
   SHOW_ADD_ACTION_MODAL,
   HIDE_ADD_ACTION_MODAL,
-  SAVE_FILTERED_CARDs
+  SAVE_FILTERED_CARDs,
+  SHOW_DELETE_MODAL,
+  HIDE_DELETE_MODAL
 } from "../actions/types";
 import update from 'react-addons-update';
 
@@ -22,7 +24,8 @@ const INIT_STATE = {
     inUse:false
   },
   showAddCardModal:false,
-  showAddActionModal:false
+  showAddActionModal:false,
+  showDeleteModal:false
 }
 
 const  EMPTY_CARD = {
@@ -112,6 +115,26 @@ export default (state = INIT_STATE, action) => {
       
       return update(state, {
         showAddActionModal: {
+          $set:false
+        },
+        currentCard:{
+          $set:EMPTY_CARD
+        }
+    })
+    }
+    case SHOW_DELETE_MODAL:{
+      return update(state, {
+        showDeleteModal: {
+          $set:true
+        },
+        currentCard:{
+          $set:action.payload.card
+        }
+    })
+    }
+    case HIDE_DELETE_MODAL:{
+      return update(state, {
+        showDeleteModal: {
           $set:false
         },
         currentCard:{

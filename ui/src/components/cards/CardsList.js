@@ -7,7 +7,7 @@ import {
   
   } from '@elastic/eui';
   
-import { showAddActionModal} from'../store/actions/cards-actions'
+import { showAddActionModal,showDeleteModal} from'../store/actions/cards-actions'
 
 const cardsList = (props)=>{
   
@@ -71,6 +71,7 @@ const cardNodes = Object.keys(filteredCards).map(function (item, index) {
           <EuiFlexItem grow={false}>
           <EuiButtonIcon
           aria-label="Edit User Card"
+          isDisabled={cards[item]['inUse']}
             color="success"
             size="xxxl"
             onClick={() => window.alert('Update clicked')}
@@ -80,9 +81,10 @@ const cardNodes = Object.keys(filteredCards).map(function (item, index) {
           <EuiFlexItem grow={false}>
           <EuiButtonIcon
           aria-label="Delete User Card"
+          isDisabled={cards[item]['inUse']}
             color="danger"
             size="xxxl"
-            onClick={() => window.alert('Delete clicked')}
+            onClick={() => props.showDeleteModal(cards[item]['name'])}
             iconType="trash"
           />
           </EuiFlexItem>
@@ -103,6 +105,6 @@ const mapStateToProps = ({CardsReducer}) => {
       CardsReducer
     }
 }
-const actions = {showAddActionModal}
+const actions = {showAddActionModal,showDeleteModal}
 const CardsList = connect(mapStateToProps, actions)(cardsList)
 export default CardsList;
