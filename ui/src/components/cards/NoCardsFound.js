@@ -1,33 +1,30 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  EuiLink
-
+EuiLink
 } from '@elastic/eui';
 import {showAddCardModal} from '../store/actions/cards-actions';
-
 const showUserCardAddModal=(props)=>{
-  props.showAddCardModal();
-
+props.showAddCardModal();
 }
-
 const noCardsFoundComponent = (props)=>{
-
-  return(
-    
-      <p style={{textAlign:'center'}}>No User Cards Found. Click <span>
-        <EuiLink paddingSize ="l" onClick={() => showUserCardAddModal(props)}> here </EuiLink> 
-        </span> to add one!</p>
-    
+return(
+<p style={{textAlign:'center'}}>
+   No User Cards Found. Click 
+   <span>
+      <EuiLink paddingSize ="l" onClick={() => showUserCardAddModal(props)}> here </EuiLink>
+   </span>
+   to add one!
+</p>
 )
 }
 const mapStateToProps = ({CardsReducer}) => {
-  return {
-    CardsReducer
-  }
+return {
+CardsReducer
+}
 }
 const actions = {
-  showAddCardModal
+showAddCardModal
 }
 const NoCardsFound = connect(mapStateToProps, actions)(noCardsFoundComponent)
 export default NoCardsFound;
