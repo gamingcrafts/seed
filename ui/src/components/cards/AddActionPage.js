@@ -3,22 +3,14 @@ import { connect } from 'react-redux';
 import {
   EuiButton,
   EuiButtonEmpty,
-  EuiFieldText,
   EuiForm,
   EuiFormRow,
-  EuiModal,
-  EuiModalBody,
-  EuiModalFooter,
-  EuiModalHeader,
-  EuiModalHeaderTitle,
-  EuiOverlayMask,
   EuiSelect,
   EuiFlexGroup,
   EuiFlexItem,
   EuiText
 } from '@elastic/eui';
-import CardsSearchSortBar from './CardsSearchSortBar';
-import CardsList from './CardsList';
+
 import {
  hideAddActionModal,
  saveCardAction,
@@ -39,7 +31,7 @@ const saveAction = (props)=>{
 }
 
 
-const addActionModal = (props)=>{
+const addActionPage = (props)=>{
   let {currentCard} = props.CardsReducer;
   let options = [
     { value: '', text: 'Select an Action' },
@@ -102,5 +94,5 @@ const actions = {
   saveCardAction,
   updateCurrentCardValue
 }
-const AddActionModal = connect(mapStateToProps, actions)(addActionModal)
-export default AddActionModal;
+const AddActionPage = connect(mapStateToProps, actions)(addActionPage)
+export default AddActionPage;

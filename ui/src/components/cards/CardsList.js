@@ -1,4 +1,4 @@
-import React,{Fragment} from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import {
     EuiFlexGroup,
@@ -12,31 +12,31 @@ import { showAddActionModal,showDeleteModal} from'../store/actions/cards-actions
 const cardsList = (props)=>{
   
     const icons = ['Rabbitmq', 'Cloud', 'AWS','Kafka','Xpack', 'Kibana','Beats','AWS', 'Cloud','Kafka', 'Xpack','AWS','Rabbitmq', 'Cloud', 'AWS','Kafka'];
-    const cardFooterContent = (
-        <Fragment>
-          <EuiButtonIcon
-          aria-label="Add Action to the Card"
-            color="primary"
-            size="xxxl"
-            onClick={() => props.showAddActionModal('name')}
-            iconType="plusInCircleFilled"
-          />
-          <EuiButtonIcon
-          aria-label="Edit User Card"
-            color="success"
-            size="xxxl"
-            onClick={() => window.alert('Update clicked')}
-            iconType="indexEdit"
-          />
-          <EuiButtonIcon
-          aria-label="Delete User Card"
-            color="danger"
-            size="xxxl"
-            onClick={() => window.alert('Delete clicked')}
-            iconType="trash"
-          />
-        </Fragment>
-      );
+    // const cardFooterContent = (
+    //     <Fragment>
+    //       <EuiButtonIcon
+    //       aria-label="Add Action to the Card"
+    //         color="primary"
+    //         size="xxxl"
+    //         onClick={() => props.showAddActionModal('name')}
+    //         iconType="plusInCircleFilled"
+    //       />
+    //       <EuiButtonIcon
+    //       aria-label="Edit User Card"
+    //         color="success"
+    //         size="xxxl"
+    //         onClick={() => window.alert('Update clicked')}
+    //         iconType="indexEdit"
+    //       />
+    //       <EuiButtonIcon
+    //       aria-label="Delete User Card"
+    //         color="danger"
+    //         size="xxxl"
+    //         onClick={() => window.alert('Delete clicked')}
+    //         iconType="trash"
+    //       />
+    //     </Fragment>
+    //   );
 let {cards,filteredCards } = props.CardsReducer;
 let noUserCardsFound;
   

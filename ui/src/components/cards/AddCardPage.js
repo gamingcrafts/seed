@@ -6,21 +6,13 @@ EuiButtonEmpty,
 EuiFieldText,
 EuiForm,
 EuiFormRow,
-EuiModal,
-EuiModalBody,
-EuiModalFooter,
-EuiModalHeader,
-EuiModalHeaderTitle,
-EuiOverlayMask,
-EuiRange,
-EuiSwitch,
 EuiFlexItem,
 EuiFlexGroup
 } from '@elastic/eui';
-import CardsSearchSortBar from './CardsSearchSortBar';
-import CardsList from './CardsList';
+
 import {hideAddCardModal,addOrEditCard,updateCurrentCardValue} from '../store/actions/cards-actions';
 import { EuiSpacer } from '@elastic/eui';
+
 const hideUserCardAddModal=(props)=>{
 props.hideAddCardModal();
 }
@@ -31,7 +23,7 @@ props.updateCurrentCardValue(updatedValue);
 const addUserGroupCard = (props)=>{
 props.addOrEditCard();
 }
-const addCardModal = (props)=>{
+const addCardPage = (props)=>{
 let {currentCard} = props.CardsReducer;
 const addForm = (
 
@@ -87,5 +79,5 @@ addOrEditCard,
 hideAddCardModal,
 updateCurrentCardValue
 }
-const AddCardModal = connect(mapStateToProps, actions)(addCardModal)
-export default AddCardModal;
+const AddCardPage = connect(mapStateToProps, actions)(addCardPage)
+export default AddCardPage;

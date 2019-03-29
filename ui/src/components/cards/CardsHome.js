@@ -5,16 +5,14 @@ import {
     EuiPageBody,
     EuiPageContent,
     EuiPageContentBody,
-    EuiFlexGroup,
-    EuiFlexItem,
-    EuiCard, EuiIcon,EuiButtonIcon,EuiSpacer
+   EuiSpacer
   
   } from '@elastic/eui';
   import CardsSearchSortBar from './CardsSearchSortBar';
   import CardsList from './CardsList';
-  import AddCardModal from './AddCardModal'
+  import AddCardPage from './AddCardPage'
   import NoCardsFound from './NoCardsFound'
-  import AddActionModal from'./AddActionModal'
+  import AddActionPage from'./AddActionPage'
   import DeleteCardConfirmationModal from './DeleteConfirmationModal'
 
 
@@ -34,10 +32,10 @@ const cards = (props)=>{
       cardsContent = <NoCardsFound/>
    }
    if (showAddCardModal) {
-      cardsContent = (<AddCardModal/>)
+      cardsContent = (<AddCardPage/>)
    }
    if(showAddActionModal){
-      cardsContent=<AddActionModal/>
+      cardsContent=<AddActionPage/>
    }
    if(showDeleteModal){
       deleteModal = <DeleteCardConfirmationModal/>

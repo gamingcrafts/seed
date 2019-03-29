@@ -2,8 +2,8 @@ import {
   SHOW_ADD_CARD_MODAL,
   HIDE_ADD_CARD_MODAL,
   SAVE_USER_GROUP_CARD,
-  EDIT_USER_GROUP_CARD,
-  DELETE_USER_GROUP_CARD,
+  // EDIT_USER_GROUP_CARD,
+  // DELETE_USER_GROUP_CARD,
   CLONE_USER_GROUP_CARD,
   UPDATE_CURRENT_CARD,
   SHOW_ADD_ACTION_MODAL,
@@ -43,7 +43,6 @@ const addOrEditCard = () => {
       currentCard,
       cards
     } = getState().CardsReducer;
-    let newCard = {};
     let cardName = currentCard.name;
     if (currentCard['created'] === undefined) {
       currentCard['created'] = new Date();
@@ -69,7 +68,6 @@ const saveCardAction = () => {
       currentCard,
       cards
     } = getState().CardsReducer;
-    let newCard = {};
     let cardName = currentCard.name;
     cards[cardName] = {
       ...currentCard
