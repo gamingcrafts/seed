@@ -8,6 +8,8 @@ import {
   UPDATE_CURRENT_CARD,
   SHOW_ADD_ACTION_MODAL,
   HIDE_ADD_ACTION_MODAL,
+  SHOW_EDIT_PAGE,
+  HIDE_EDIT_PAGE,
   SHOW_DELETE_MODAL,
   HIDE_DELETE_MODAL
 } from "../actions/types";
@@ -185,6 +187,24 @@ const sortCardsByDate = (order) => {
 
 }
 
+const showEditPage=(cardName)=>{
+  return (dispatch, getState, http) => {
+      let { cards} = getState().CardsReducer;
+      let current = cards[cardName];
+      dispatch({
+        type: SHOW_EDIT_PAGE,
+        payload: {card:current}
+      })
+    }
+}
+  
+  const hideEditPage=()=>{
+    return (dispatch, getState, http) => {
+      dispatch({
+        type: HIDE_EDIT_PAGE
+      })
+    }
+  }
 
 const showDeleteModal=(cardName)=>{
   
@@ -221,9 +241,6 @@ const deleteCard=()=>{
         cards:cards
       }
     })
-    dispatch({
-      type: HIDE_DELETE_MODAL
-    })
   }
 }
 
@@ -240,6 +257,8 @@ export {
   filterUserCards,
   saveCardAction,
   sortCardsByDate,
+  showEditPage,
+  hideEditPage,
   showDeleteModal,
   hideDeleteModal
 }

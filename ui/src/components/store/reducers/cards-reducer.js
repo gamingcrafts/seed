@@ -9,6 +9,8 @@ import {
   SHOW_ADD_ACTION_MODAL,
   HIDE_ADD_ACTION_MODAL,
   SAVE_FILTERED_CARDs,
+  SHOW_EDIT_PAGE,
+  HIDE_EDIT_PAGE,
   SHOW_DELETE_MODAL,
   HIDE_DELETE_MODAL
 } from "../actions/types";
@@ -25,6 +27,7 @@ const INIT_STATE = {
   },
   showAddCardModal:false,
   showAddActionModal:false,
+  showEditPage:false,
   showDeleteModal:false
 }
 
@@ -75,6 +78,12 @@ export default (state = INIT_STATE, action) => {
         showAddActionModal: {
           $set:false
         },
+        showEditPage:{
+          $set:false
+        },
+        showDeleteModal:{
+          $set:false
+        },
         currentCard:{
           $set:EMPTY_CARD
         }
@@ -115,6 +124,26 @@ export default (state = INIT_STATE, action) => {
       
       return update(state, {
         showAddActionModal: {
+          $set:false
+        },
+        currentCard:{
+          $set:EMPTY_CARD
+        }
+    })
+    }
+    case SHOW_EDIT_PAGE:{
+      return update(state, {
+        showEditPage: {
+          $set:true
+        },
+        currentCard:{
+          $set:action.payload.card
+        }
+    })
+    }
+    case HIDE_EDIT_PAGE:{
+      return update(state, {
+        showEditPage: {
           $set:false
         },
         currentCard:{

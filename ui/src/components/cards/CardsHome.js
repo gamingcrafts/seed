@@ -11,13 +11,14 @@ import {
   import CardsSearchSortBar from './CardsSearchSortBar';
   import CardsList from './CardsList';
   import AddCardPage from './AddCardPage'
+  import EditCardPage from './AddCardPage'
   import NoCardsFound from './NoCardsFound'
   import AddActionPage from'./AddActionPage'
   import DeleteCardConfirmationModal from './DeleteConfirmationModal'
 
 
 const cards = (props)=>{
-   let {showAddCardModal,showAddActionModal,showDeleteModal,cards} = props.CardsReducer;
+   let {showAddCardModal,showAddActionModal,showDeleteModal,showEditPage,cards} = props.CardsReducer;
    let cardsContent,deleteModal;
    if(Object.keys(cards).length>0){
       cardsContent = (
@@ -36,6 +37,9 @@ const cards = (props)=>{
    }
    if(showAddActionModal){
       cardsContent=<AddActionPage/>
+   }
+   if(showEditPage){
+      cardsContent=<EditCardPage/>
    }
    if(showDeleteModal){
       deleteModal = <DeleteCardConfirmationModal/>
