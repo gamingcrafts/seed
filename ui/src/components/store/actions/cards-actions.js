@@ -53,10 +53,15 @@ const addOrEditCard = () => {
       cards
     } = getState().CardsReducer;
     let cardName = currentCard.name;
+    let message = 'Card '+cardName +' Saved';
     if (currentCard['created'] === undefined) {
       currentCard['created'] = new Date();
+      message = 'UserGroupCard "'+cardName +'" Created.';
     }
+    else{
     currentCard['modified'] = new Date();
+    message = 'UserGroupCard "'+cardName +'" Updated.';
+    }
     cards[cardName] = {
       ...currentCard
     };
@@ -68,14 +73,10 @@ const addOrEditCard = () => {
         cards: cards
       }
     })
+    
     dispatch(addToast({
-      title: 'Download complete!',
-  color: 'success',
-  text: (
-    <p>
-      Card Saved Success!
-    </p>
-  )
+      title: message,
+      color: 'success'
     }))
   }
 }
@@ -98,6 +99,12 @@ const saveCardAction = () => {
         cards: cards
       }
     })
+    let message = 'Action added to '+cardName+'.';
+
+    dispatch(addToast({
+      title: message,
+      color: 'success'
+    }))
     //window.location.href = "https://www.optikpi.com";
   }
 }
@@ -257,6 +264,11 @@ const deleteCard=()=>{
         cards:cards
       }
     })
+    let message = currentCard.name+' deleted.'
+    dispatch(addToast({
+      title: message,
+      color: 'success'
+    }))
   }
 }
 
