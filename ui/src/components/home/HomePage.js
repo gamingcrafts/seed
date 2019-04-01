@@ -10,9 +10,13 @@ import {
 import {
   getSettings,getReports
 } from '../store/actions/rule-engine-actions';
+import{
+  deleteToast
+} from '../store/actions/toasts-actions';
 
 import {
-  EuiTabbedContent
+  EuiTabbedContent,
+  EuiGlobalToastList
 } from '@elastic/eui';
 
 class HomePage extends Component {
@@ -61,22 +65,30 @@ class HomePage extends Component {
     this.props.getReports();
   }
   render() {
+    let{toasts} = this.props.ToastsReducer;
     return (
+      <Fragment>
       <EuiTabbedContent
         tabs={this.tabs}
         initialSelectedTab={this.tabs[4]}
       />
+      <EuiGlobalToastList
+      toasts={toasts}
+      dismissToast={this.props.deleteToast}
+      toastLifeTimeMs={4000}
+    />
+    </Fragment>
     );
   }
 }
 const mapStateToProps = ({
-    columnDefinitionReducer
+    columnDefinitionReducer,ToastsReducer
   }) => {
     return {
-      columnDefinitionReducer
+      columnDefinitionReducer,ToastsReducer
     }
   }
   const actions = {
-    getIndices,getSettings,getReports
+    getIndices,getSettings,getReports,deleteToast
   }
   export default connect(mapStateToProps, actions)(HomePage)

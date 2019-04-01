@@ -17,6 +17,10 @@ import {
   SET_NEW_CARD_TYPE
 } from "../actions/types";
 
+import React from 'react';
+
+import {addToast} from './toasts-actions';
+
 const showAddCardModal = () => {
   return (dispatch, getState, http) => {
     dispatch({
@@ -64,6 +68,15 @@ const addOrEditCard = () => {
         cards: cards
       }
     })
+    dispatch(addToast({
+      title: 'Download complete!',
+  color: 'success',
+  text: (
+    <p>
+      Card Saved Success!
+    </p>
+  )
+    }))
   }
 }
 
