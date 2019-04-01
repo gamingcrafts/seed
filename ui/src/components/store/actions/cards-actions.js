@@ -17,7 +17,7 @@ import {
   SET_NEW_CARD_TYPE
 } from "../actions/types";
 
-import React from 'react';
+// import React from 'react';
 
 import {addToast} from './toasts-actions';
 

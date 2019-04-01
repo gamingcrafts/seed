@@ -8,9 +8,9 @@ import {
   CUSTOM_MAPPING_FETCHING_FLAG
 } from './types';
 
-import React from 'react';
+// import React from 'react';
 
-import {addToast} from './toasts-actions';
+// import {addToast} from './toasts-actions';
 
 
 const getIndices = () => {
