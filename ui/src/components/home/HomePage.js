@@ -3,6 +3,7 @@ import ColumnDefinitionContainer from '../columnDefinition/ColumnDefinitionConta
 import RuleEngineHome from '../rule-engine/RuleEngineHome';
 import ReportsHome from '../reports/ReportsHome'
 import CardsHome from '../cards/CardsHome'
+import ChartsView from '../cards/ChartsView'
 import { connect } from 'react-redux';
 import {
   getIndices
@@ -55,6 +56,13 @@ class HomePage extends Component {
       name:'Cards',
       content:(
         <CardsHome/>
+      )
+    },
+    {
+      id:'sampleChart',
+      name:'sampleCharts',
+      content:(
+        <ChartsView/>
       )
     }
   ];

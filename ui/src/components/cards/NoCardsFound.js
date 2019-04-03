@@ -12,7 +12,7 @@ return(
 <p style={{textAlign:'center'}}>
    No User Cards Found. Click 
    <span>
-      <EuiLink paddingSize ="l" onClick={() => showUserCardAddModal(props)}><span> here </span>  </EuiLink>
+      <EuiLink  onClick={() => showUserCardAddModal(props)}><span> here </span>  </EuiLink>
    </span>
    to add one!
 </p>
