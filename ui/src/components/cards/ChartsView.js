@@ -23,7 +23,7 @@ this.pieRef = React.createRef();
 this.timeSeriesRef = React.createRef();
 }
 
-componentWillReceiveProps(nextProps) {
+componentDidMount() {
 /**
 * Timeseries data
 */
@@ -55,8 +55,7 @@ return (
 <EuiPanel>
 <EuiFlexGroup>
 <EuiFlexItem>
-<div
-ref={this.timeSeriesRef}
+<div ref={this.timeSeriesRef}
 style={{ height: '250px' }} />
 </EuiFlexItem>
 <EuiFlexItem>
