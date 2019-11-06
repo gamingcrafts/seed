@@ -20,5 +20,3 @@ Open [http://localhost:8000/documentation#/](http://localhost:8000/documentation
 Some changes to check the merge automation
 
 Updated Line 1
-Updated Line 2
-Updated Line 3
