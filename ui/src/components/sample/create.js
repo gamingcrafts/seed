@@ -1,14 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
+
 import ReactJson from 'react-json-view'
 
 import {
   EuiButton
 } from '@elastic/eui';
 
-import {
-  createSample
-} from '../store/actions/samples-action'
+
 import { EuiSpacer } from '@elastic/eui';
 
 class CreateSample extends React.Component {
@@ -37,7 +35,7 @@ class CreateSample extends React.Component {
   }
 
   save = () => {
-    this.props.createSample(this.state.json)
+    //this.props.createSample(this.state.json)
   }
 
   render() {
@@ -57,10 +55,5 @@ class CreateSample extends React.Component {
   }
 }
 
-const mapStateToProps = ({ sampleStore }) => {
-  return { sampleStore }
-}
 
-export default connect(mapStateToProps, {
-  createSample
-})(CreateSample)
+export default CreateSample

@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import {
   EuiBasicTable
@@ -10,7 +9,8 @@ import ReactJson from 'react-json-view';
 class ViewSamples extends React.Component {
 
   render() {
-    const { samples } = this.props.sampleReducer;
+  
+      const samples  = [{"id":1,"content":{"test":"test"}}]
 
     const columns = [{
       field: 'id',
@@ -31,8 +31,5 @@ class ViewSamples extends React.Component {
   }
 }
 
-const mapStateToProps = ({ sampleReducer }) => {
-  return { sampleReducer }
-}
 
-export default connect(mapStateToProps, null)(ViewSamples)
+export default ViewSamples

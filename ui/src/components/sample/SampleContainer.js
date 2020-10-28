@@ -1,11 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import CreateSample from './create';
 import ViewSamples from './view';
-import {
-  getSamples
-} from '../store/actions/samples-action';
-
 import {
   EuiPage,
   EuiPageBody,
@@ -14,16 +9,18 @@ import {
 import { EuiSpacer } from '@elastic/eui';
 class SampleContainer extends React.Component {
 
+
   componentDidMount() {
-    this.props.getSamples();
+  
   }
 
+  
   render() {
     return (
       <EuiPage>
         <EuiPageBody>
           <EuiPageContent>
-            <ViewSamples />
+            <ViewSamples/>
             <EuiSpacer size="xl"/>
             <CreateSample />
           </EuiPageContent>
@@ -33,10 +30,4 @@ class SampleContainer extends React.Component {
   }
 }
 
-const mapStateToProps = ({ sampleReducer }) => {
-  return { sampleReducer }
-}
-
-export default connect(mapStateToProps, {
-  getSamples
-})(SampleContainer)
+export default SampleContainer
