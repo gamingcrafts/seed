@@ -6,6 +6,7 @@ import {
 } from '@elastic/eui';
 
 import { EuiSpacer } from '@elastic/eui';
+import { useSamplesStore } from "../../store/samplesStore";
 
 function CreateSample() {
   const [json, setJson] = useState({
@@ -24,9 +25,8 @@ function CreateSample() {
     setJson(e.updated_src);
   }
 
-  const save = () => {
-    //this.props.createSample(this.state.json)
-  }
+  const store = useSamplesStore();
+  const { addSample } = store;
 
   return (
     <React.Fragment>
@@ -37,7 +37,7 @@ function CreateSample() {
                  onEdit={onEdit}
                  onDelete={onDelete} />
       <EuiSpacer size="s"/>
-      <EuiButton onClick={save}>Save</EuiButton>
+      <EuiButton onClick={() => {addSample(json) }}>Save</EuiButton>
     </React.Fragment>
   );
 }

@@ -1,10 +1,13 @@
 import React from 'react';
 import { EuiBasicTable } from '@elastic/eui';
 import ReactJson from 'react-json-view';
+import { Observer } from "mobx-react-lite";
+import { useSamplesStore } from "../../store/samplesStore";
 
 function ViewSamples() {
 
-  const samples  = [{ "id": 1,"content": { "test": "test" } }];
+  const store = useSamplesStore();
+  const { samples } = store;
 
   const columns = [{
     field: 'id',
@@ -16,10 +19,12 @@ function ViewSamples() {
   }];
 
   return (
+    <Observer>{() =>
       <EuiBasicTable
           items={samples}
           columns={columns}
       />
+    }</Observer>
   );
 }
 

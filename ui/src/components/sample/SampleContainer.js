@@ -17,7 +17,7 @@ function SampleContainer() {
     <EuiPage>
       <EuiPageBody>
         <EuiPageContent>
-          <ViewSamples/>
+          <ViewSamples />
           <EuiSpacer size="xl"/>
           <CreateSample />
         </EuiPageContent>
