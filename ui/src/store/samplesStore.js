@@ -23,5 +23,9 @@ export const createSamplesStore = () => {
     addSample(item) {
       this.samples.push(item);
     },
+
+    setSamples(samples) {
+      this.samples.replace(samples);
+    }
   };
 }

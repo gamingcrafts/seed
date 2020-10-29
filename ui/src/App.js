@@ -6,9 +6,6 @@ import {SamplesStoreProvider} from "./store/samplesStore";
 import {EuiPageContent} from "@elastic/eui";
 
 function App() {
-  const axiosInstance = axios.create({
-  });
-
   return (
     <SamplesStoreProvider>
       <SampleContainer />
