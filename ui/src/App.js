@@ -1,19 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 import axios from 'axios';
 import SampleContainer from './components/sample/SampleContainer';
 
-const axiosInstance = axios.create({
-});
+function App() {
+  const axiosInstance = axios.create({
+  });
 
-
-
-class App extends Component {
-  render() {
-    return (
-        <SampleContainer />
-    );
-  }
+  return (
+    <SampleContainer />
+  );
 }
 
 export default App;
