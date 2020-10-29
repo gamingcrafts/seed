@@ -1,5 +1,6 @@
 import React from "react";
 import { useLocalObservable } from "mobx-react-lite";
+import axios from "axios";
 
 const StoreContext = React.createContext(null);
 
@@ -21,7 +22,13 @@ export const createSamplesStore = () => {
     samples: [],
 
     addSample(item) {
-      this.samples.push(item);
+      axios.post('http://localhost:8000/samples', item)
+        .then(response => {
+          this.samples.push(response.data);
+        })
+        .catch((error) => {
+          console.log("An error occurred while trying to send a new JSON to the server:" + error);
+      });
     },
 
     setSamples(samples) {

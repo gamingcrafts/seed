@@ -7,11 +7,22 @@ import {
   EuiPageContent
 } from '@elastic/eui'
 import { EuiSpacer } from '@elastic/eui';
+import axios from "axios";
+import {useSamplesStore} from "../../store/samplesStore";
 
 function SampleContainer() {
-  useEffect(() => {
 
-  })
+  const { setSamples } = useSamplesStore();
+
+  useEffect(() => {
+    axios.get("http://localhost:8000/samples")
+      .then(res => {
+        console.log(res.data);
+        setSamples(res.data);
+      }).catch((error) => {
+      console.log("Error" + error);
+    })
+  }, [setSamples]);
 
   return (
     <EuiPage>
