@@ -1,33 +1,40 @@
-import React from 'react';
-import CreateSample from './create';
-import ViewSamples from './view';
+import React, {useEffect} from 'react';
+import CreateSample from './CreateSample';
+import ViewSamples from './ViewSamples';
 import {
   EuiPage,
   EuiPageBody,
   EuiPageContent
 } from '@elastic/eui'
 import { EuiSpacer } from '@elastic/eui';
-class SampleContainer extends React.Component {
+import axios from "axios";
+import {useSamplesStore} from "../../store/samplesStore";
 
+function SampleContainer() {
 
-  componentDidMount() {
-  
-  }
+  const { setSamples } = useSamplesStore();
 
-  
-  render() {
-    return (
-      <EuiPage>
-        <EuiPageBody>
-          <EuiPageContent>
-            <ViewSamples/>
-            <EuiSpacer size="xl"/>
-            <CreateSample />
-          </EuiPageContent>
-        </EuiPageBody>
-      </EuiPage>
-    )
-  }
+  useEffect(() => {
+    axios.get("http://localhost:8000/samples")
+      .then(res => {
+        console.log(res.data);
+        setSamples(res.data);
+      }).catch((error) => {
+      console.log("Error" + error);
+    })
+  }, [setSamples]);
+
+  return (
+    <EuiPage>
+      <EuiPageBody>
+        <EuiPageContent>
+          <ViewSamples />
+          <EuiSpacer size="xl"/>
+          <CreateSample />
+        </EuiPageContent>
+      </EuiPageBody>
+    </EuiPage>
+  );
 }
 
-export default SampleContainer
+export default SampleContainer;

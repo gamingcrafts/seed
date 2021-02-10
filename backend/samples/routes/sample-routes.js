@@ -10,7 +10,11 @@ module.exports = function (server) {
     },
     options: {
       description: 'Gets the list of Samples',
-      tags: ['api']
+      tags: ['api'],
+      cors: {
+        origin: ['*'],
+        additionalHeaders: ['cache-control', 'x-requested-with']
+      }
     }
   });
 
@@ -23,6 +27,10 @@ module.exports = function (server) {
     options: {
       description: 'Create a Sample',
       tags: ['api'],
+      cors: {
+        origin: ['*'],
+        additionalHeaders: ['cache-control', 'x-requested-with']
+      },
       validate: {
         payload: {
           content: Joi.object().required(),
@@ -42,6 +50,10 @@ module.exports = function (server) {
     options: {
       description: 'Delete a Sample',
       tags: ['api'],
+      cors: {
+        origin: ['*'],
+        additionalHeaders: ['cache-control', 'x-requested-with']
+      },
       validate: {
         params: {
           id: Joi.string().required()
