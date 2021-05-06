@@ -43,7 +43,7 @@
     "file-loader": "4.3.0",
     "fork-ts-checker-webpack-plugin-alt": "0.4.14",
     "fs-extra": "^8.1.0",
-    "highcharts": "^8.0.0",
+    "highcharts": "^9.0.0",
     "highcharts-react-official": "^3.0.0",
     "html-react-parser": "^0.10.1",
     "html-webpack-plugin": "4.0.0-beta.11",
