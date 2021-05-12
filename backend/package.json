@@ -19,7 +19,7 @@
     "joi": "^14.3.1",
     "later": "snachiap/later",
     "libphonenumber-js": "^1.7.52",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "log4js": "^6.1.2",
     "moment": "^2.24.0",
     "moment-round": "^1.0.1",
