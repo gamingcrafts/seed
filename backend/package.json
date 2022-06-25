@@ -25,7 +25,7 @@
     "moment-round": "^1.0.1",
     "moment-timezone": "^0.5.25",
     "mysql": "^2.17.1",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "papaparse": "5.2.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.7",
