@@ -23,7 +23,7 @@
     "log4js": "^6.1.2",
     "moment": "^2.24.0",
     "moment-round": "^1.0.1",
-    "moment-timezone": "^0.5.25",
+    "moment-timezone": "^0.5.35",
     "mysql": "^2.17.1",
     "node-fetch": "^2.6.0",
     "papaparse": "5.2.0",
